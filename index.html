@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utpal Raj | Portfolio 2025</title>
+
+    <link
+        href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&f[]=satoshi@300,400,500,700,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Satoshi', 'sans-serif'],
+                        display: ['Clash Display', 'sans-serif']
+                    },
+                    colors: {
+                        'void': '#050505',
+                        'card-bg': 'rgba(20, 20, 20, 0.6)',
+                        'neon-cyan': '#00f3ff',
+                        'neon-purple': '#bd00ff',
+                        'neon-green': '#00ff9d',
+                        'neon-yellow': '#ffe600',
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 10s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --cursor-size: 20px;
+            --cursor-hover-size: 60px;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        @media (min-width: 768px) {
+            html {
+                font-size: 18px;
+            }
+        }
+
+        body {
+            background-color: #050505;
+            color: #e5e5e5;
+            overflow-x: hidden;
+            /* UPDATED: Default cursor is now visible */
+            cursor: auto;
+        }
+
+        /* --- ADVANCED CURSOR (Visual Follower Only) --- */
+        @media (hover: hover) and (pointer: fine) {
+            #custom-cursor {
+                display: block;
+            }
+
+            /* UPDATED: Removed body { cursor: none; } so system pointer stays visible */
+        }
+
+        /* Hide custom cursor on mobile to fix click issues */
+        @media (hover: none) {
+            #custom-cursor {
+                display: none;
+            }
+        }
+
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s;
+            mix-blend-mode: difference;
+            display: none;
+        }
+
+        #custom-cursor.hovered {
+            width: var(--cursor-hover-size);
+            height: var(--cursor-hover-size);
+            background: rgba(0, 243, 255, 0.2);
+            border-color: #00f3ff;
+            backdrop-filter: blur(2px);
+        }
+
+        /* --- CYBER GRID BACKGROUND --- */
+        .cyber-grid {
+            position: fixed;
+            bottom: -30%;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background-image: linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(500px) rotateX(60deg);
+            z-index: -1;
+            opacity: 0.3;
+            animation: grid-move 20s linear infinite;
+            mask-image: linear-gradient(to top, black 0%, transparent 80%);
+            pointer-events: none;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(40px);
+            }
+        }
+
+        /* --- 3D TILT CARD --- */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+        }
+
+        .tilt-content {
+            transform: translateZ(20px);
+        }
+
+        /* --- HOLOGRAPHIC SHINE --- */
+        /* CYBERPUNK CERT CARD REWORK */
+        .holo-card {
+            height: auto !important;
+            padding: 2rem !important;
+            background: rgba(10, 10, 10, 0.65) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px) saturate(180%);
+            transition: all 0.3s ease;
+        }
+
+        .holo-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 0, 221, 0.5);
+            box-shadow: 0 0 25px rgba(255, 0, 221, 0.4),
+                inset 0 0 15px rgba(255, 0, 221, 0.2);
+        }
+
+        /* Smaller height & tighter spacing */
+        .holo-card h4 {
+            font-size: 1.6rem !important;
+        }
+
+        .holo-card p {
+            font-size: 0.95rem !important;
+            margin-bottom: 1.25rem !important;
+        }
+
+        .holo-card .badge {
+            font-size: 0.65rem;
+            padding: 4px 10px;
+        }
+
+        /* Cyberpunk neon text glow */
+        .cyber-glow {
+            text-shadow: 0 0 8px currentColor, 0 0 18px currentColor;
+        }
+
+
+        /* --- PRELOADER --- */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: #050505;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+        }
+
+        .console-lines {
+            color: #00ff9d;
+            font-size: 14px;
+            text-align: left;
+            width: 300px;
+            height: 150px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+
+        .blink {
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Magnetic Button Base */
+        .magnetic-btn {
+            display: inline-block;
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+    </style>
+</head>
+
+<body class="selection:bg-neon-cyan selection:text-black">
+
+    <div id="custom-cursor"></div>
+
+    <div
+        class="fixed inset-0 z-[-2] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-150 contrast-150 pointer-events-none">
+    </div>
+    <div class="cyber-grid"></div>
+    <canvas id="bg-canvas" class="fixed inset-0 z-[-1]"></canvas>
+
+    <div class="preloader" id="preloader">
+        <div class="console-lines" id="console-output"></div>
+
+        <div class="text-center w-64">
+            <div class="flex justify-between text-xs text-neon-cyan mb-2 uppercase tracking-widest font-bold">
+                <span>System_Boot</span>
+                <span id="loader-text">0%</span>
+            </div>
+            <div class="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
+                <div class="h-full bg-neon-cyan w-0" id="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="fixed top-4 left-0 w-full z-50 px-4 md:px-0">
+        <div
+            class="mx-auto max-w-[1200px] px-6 py-4 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full transition-all duration-300 hover:border-neon-cyan/30 shadow-lg shadow-black/50">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-display font-bold text-white tracking-tighter hover-trigger"
+                    data-text="UR">
+                    <span class="text-neon-cyan">&lt;</span>UR<span class="text-neon-cyan">/&gt;</span>
+                </a>
+
+                <div class="hidden md:flex gap-10 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">
+                    <a href="#about" class="magnetic-btn hover:text-white hover-trigger py-2">About</a>
+                    <a href="#education" class="magnetic-btn hover:text-white hover-trigger py-2">Stats</a>
+                    <a href="#skills" class="magnetic-btn hover:text-white hover-trigger py-2">Stack</a>
+                    <a href="#projects" class="magnetic-btn hover:text-white hover-trigger py-2">Work</a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <a href="#contact" class="hidden md:block magnetic-btn hover-trigger">
+                        <div
+                            class="px-6 py-2 bg-white text-black rounded-full text-xs font-bold uppercase hover:bg-neon-cyan transition-colors">
+                            Contact
+                        </div>
+                    </a>
+                    <button id="menu-btn" class="md:hidden text-white text-2xl hover-trigger p-2">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu"
+        class="fixed inset-0 z-[60] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 text-3xl font-display font-bold text-white uppercase translate-y-[-100%] transition-transform duration-500">
+        <a href="#about" class="mobile-link hover:text-neon-cyan">About</a>
+        <a href="#education" class="mobile-link hover:text-neon-cyan">Stats</a>
+        <a href="#skills" class="mobile-link hover:text-neon-cyan">Stack</a>
+        <a href="#projects" class="mobile-link hover:text-neon-cyan">Work</a>
+        <a href="#contact"
+            class="mobile-link text-neon-cyan mt-4 text-2xl border border-neon-cyan px-8 py-3 rounded-full">Contact
+            Me</a>
+
+        <button id="close-menu-btn" class="absolute top-8 right-8 text-4xl text-gray-400 p-2">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <main class="relative w-full overflow-hidden">
+
+        <section class="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
+            <div
+                class="absolute top-[15%] left-4 md:top-1/4 md:left-10 w-12 h-12 md:w-24 md:h-24 border-t-2 border-l-2 border-neon-cyan/30 rounded-tl-3xl">
+            </div>
+            <div
+                class="absolute bottom-[15%] right-4 md:bottom-1/4 md:right-10 w-12 h-12 md:w-24 md:h-24 border-b-2 border-r-2 border-neon-purple/30 rounded-br-3xl">
+            </div>
+
+            <div class="container mx-auto px-4 md:px-6 text-center relative z-10">
+                <div
+                    class="inline-block px-4 py-2 rounded-full border border-neon-green/30 bg-neon-green/5 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-6 md:mb-8 animate-fade-up opacity-0 text-neon-green">
+                    <span class="w-1.5 h-1.5 rounded-full bg-neon-green inline-block mr-2 animate-pulse"></span>System
+                    Online
+                </div>
+
+                <h1 class="font-display text-[15vw] md:text-[13vw] leading-[0.9] md:leading-[0.8] font-bold text-white mb-6 md:mb-8 mix-blend-exclusion"
+                    id="hero-title">
+                    UTPAL RAJ
+                </h1>
+
+                <div class="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-12 text-gray-400 text-sm md:text-xl font-mono animate-fade-up opacity-0"
+                    id="hero-subtitle">
+                    <span class="hover:text-neon-cyan transition-colors">CSE_Undergrad</span>
+                    <span class="hidden md:block w-px h-5 bg-gray-700"></span>
+                    <span class="hover:text-neon-purple transition-colors">Full_Stack</span>
+                    <span class="hidden md:block w-px h-5 bg-gray-700"></span>
+                    <span class="hover:text-neon-yellow transition-colors">Problem_Solver</span>
+                </div>
+
+                <div class="mt-12 md:mt-16 animate-fade-up opacity-0 pb-10 md:pb-0">
+                    <a href="#projects" class="hover-trigger relative inline-flex group">
+                        <div
+                            class="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt">
+                        </div>
+                        <button
+                            class="relative inline-flex items-center justify-center px-8 py-4 md:px-10 md:py-5 text-sm md:text-base font-bold text-white transition-all duration-200 bg-void font-display uppercase tracking-widest rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+                            Explore Work
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 md:py-32 relative z-10">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+                <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+                    <div>
+                        <span
+                            class="text-xs md:text-sm font-bold text-neon-cyan uppercase tracking-[0.2em] mb-4 block scramble-text">01
+                            // The Philosophy</span>
+                        <h2
+                            class="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 md:mb-8 leading-tight">
+                            Logic is my <br><span
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">Language.</span>
+                        </h2>
+                        <p class="text-gray-400 text-base md:text-xl leading-relaxed mb-8">
+                            I construct narratives with data and build digital cathedrals with code. Currently
+                            architecting the future at <span class="text-white font-bold">SRM Institute of Science &
+                                Technology</span>.
+                        </p>
+                        <a href="resume.pdf" download class="mt-4 inline-flex items-center gap-3 px-5 py-3 
+          border border-neon-cyan text-neon-cyan font-bold 
+          rounded-lg text-sm md:text-base 
+          hover:bg-neon-cyan hover:text-black 
+          transition-all duration-300">
+                            <i class="fa-solid fa-download"></i>
+                            Download Resume
+                        </a>
+
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 md:gap-4">
+                        <div class="tilt-card hover-trigger">
+                            <div
+                                class="holo-card p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/5 group">
+                                <i
+                                    class="fa-solid fa-code text-3xl md:text-5xl text-gray-500 group-hover:text-neon-cyan mb-2 md:mb-4 transition-colors tilt-content"></i>
+                                <span
+                                    class="font-bold text-xs md:text-lg text-white tracking-widest tilt-content">DSA</span>
+                            </div>
+                        </div>
+                        <div class="tilt-card hover-trigger">
+                            <div
+                                class="holo-card p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/5 group">
+                                <i
+                                    class="fa-solid fa-brain text-3xl md:text-5xl text-gray-500 group-hover:text-neon-purple mb-2 md:mb-4 transition-colors tilt-content"></i>
+                                <span class="font-bold text-xs md:text-lg text-white tracking-widest tilt-content">AI /
+                                    ML</span>
+                            </div>
+                        </div>
+                        <div class="tilt-card hover-trigger">
+                            <div
+                                class="holo-card p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/5 group">
+                                <i
+                                    class="fa-solid fa-globe text-3xl md:text-5xl text-gray-500 group-hover:text-neon-green mb-2 md:mb-4 transition-colors tilt-content"></i>
+                                <span
+                                    class="font-bold text-xs md:text-lg text-white tracking-widest tilt-content">WEB</span>
+                            </div>
+                        </div>
+                        <div class="tilt-card hover-trigger">
+                            <div
+                                class="holo-card p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/5 group">
+                                <i
+                                    class="fa-solid fa-robot text-3xl md:text-5xl text-gray-500 group-hover:text-neon-yellow mb-2 md:mb-4 transition-colors tilt-content"></i>
+                                <span
+                                    class="font-bold text-xs md:text-lg text-white tracking-widest tilt-content">AGENTS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="py-20 md:py-32 relative z-10">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+                <span
+                    class="text-xs md:text-sm font-bold text-white uppercase tracking-[0.2em] mb-4 block scramble-text">02
+                    // The Foundation</span>
+
+                <div class="grid md:grid-cols-2 gap-12 md:gap-16 mt-8 md:mt-12">
+                    <div class="space-y-8 md:space-y-12">
+                        <div class="relative pl-6 md:pl-8 border-l border-white/10 group">
+                            <div
+                                class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-neon-cyan rounded-full shadow-[0_0_10px_#00f3ff]">
+                            </div>
+                            <h3
+                                class="text-xl md:text-3xl font-bold text-white group-hover:text-neon-cyan transition-colors">
+                                B.Tech CSE (Data Science)</h3>
+                            <p class="text-gray-500 mt-2 text-sm md:text-lg">SRM Institute of Science & Technology</p>
+                            <p class="text-neon-cyan font-mono text-sm mt-1">2023 - 2027</p>
+                        </div>
+                        <div class="relative pl-6 md:pl-8 border-l border-white/10 group">
+                            <div
+                                class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-gray-600 rounded-full group-hover:bg-white transition-colors">
+                            </div>
+                            <h3
+                                class="text-xl md:text-3xl font-bold text-white group-hover:text-white transition-colors">
+                                Intermediate</h3>
+                            <p class="text-gray-500 mt-2 text-sm md:text-lg">St. Thomas Senior Secondary School</p>
+                            <p class="text-gray-600 font-mono text-sm mt-1">2020 - 2022</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 md:gap-4">
+                        <div class="tilt-card hover-trigger">
+                            <div
+                                class="bg-[#0a0a0a] border border-white/5 p-4 md:p-8 rounded-xl hover:border-neon-yellow/50 transition-colors h-full">
+                                <div class="text-2xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2">Rank 1
+                                </div>
+                                <div class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest">OSSome Hacks
+                                    2.0</div>
+                            </div>
+                        </div>
+                        <div class="tilt-card hover-trigger">
+                            <div
+                                class="bg-[#0a0a0a] border border-white/5 p-4 md:p-8 rounded-xl hover:border-neon-green/50 transition-colors h-full">
+                                <div class="text-2xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2">300+
+                                </div>
+                                <div class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest">DSA Solved
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tilt-card hover-trigger">
+                            <div
+                                class="bg-[#0a0a0a] border border-white/5 p-4 md:p-8 rounded-xl hover:border-neon-cyan/50 transition-colors h-full">
+                                <div class="text-2xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2">9.53
+                                </div>
+                                <div class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest">CGPA</div>
+                            </div>
+                        </div>
+                        <div class="tilt-card hover-trigger">
+                            <div
+                                class="bg-[#0a0a0a] border border-white/5 p-4 md:p-8 rounded-xl hover:border-neon-purple/50 transition-colors h-full">
+                                <div class="text-2xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2">1.6k+
+                                </div>
+                                <div class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest">Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20 md:py-32 relative z-10">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+                <span
+                    class="text-xs md:text-sm font-bold text-neon-purple uppercase tracking-[0.2em] mb-4 block scramble-text">03
+                    // The Arsenal</span>
+                <h2 class="text-4xl md:text-6xl font-display font-bold text-white mb-10 md:mb-16">Tech Stack</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="tilt-card hover-trigger">
+                        <div
+                            class="holo-card p-6 md:p-8 h-full rounded-2xl bg-gradient-to-b from-white/5 to-transparent border border-white/5 group">
+                            <h3
+                                class="text-xl md:text-2xl font-bold text-white mb-6 md:mb-8 border-b border-white/10 pb-4">
+                                Languages</h3>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div
+                                    class="flex flex-col items-center gap-2 group-hover:-translate-y-1 transition-transform duration-300">
+                                    <i class="fa-brands fa-python text-3xl md:text-4xl text-yellow-400"></i><span
+                                        class="text-xs md:text-sm text-gray-500">Python</span>
+                                </div>
+                                <div
+                                    class="flex flex-col items-center gap-2 group-hover:-translate-y-1 transition-transform duration-300 delay-75">
+                                    <i class="fa-solid fa-code text-3xl md:text-4xl text-blue-400"></i><span
+                                        class="text-xs md:text-sm text-gray-500">C++</span>
+                                </div>
+                                <div
+                                    class="flex flex-col items-center gap-2 group-hover:-translate-y-1 transition-transform duration-300 delay-100">
+                                    <i class="fa-brands fa-java text-3xl md:text-4xl text-orange-500"></i><span
+                                        class="text-xs md:text-sm text-gray-500">Java</span>
+                                </div>
+                                <div
+                                    class="flex flex-col items-center gap-2 group-hover:-translate-y-1 transition-transform duration-300 delay-150">
+                                    <i class="fa-solid fa-database text-3xl md:text-4xl text-gray-300"></i><span
+                                        class="text-xs md:text-sm text-gray-500">SQL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tilt-card hover-trigger">
+                        <div class="holo-card p-6 md:p-8 h-full rounded-2xl bg-gradient-to-b 
+                from-white/5 to-transparent border border-white/10 group">
+
+                            <h3 class="text-lg md:text-xl font-bold text-white mb-6 md:mb-8 
+                   border-b border-white/10 pb-4">
+                                Web & Tools
+                            </h3>
+
+                            <div class="grid grid-cols-2 gap-4">
+
+                                <!-- JavaScript -->
+                                <div class="flex flex-col items-center gap-1 
+                        group-hover:-translate-y-1 transition-transform duration-300">
+                                    <i class="fa-brands fa-js text-[22px] md:text-[28px] text-yellow-300"></i>
+                                    <span class="text-[8px] md:text-[10px] text-gray-500">JavaScript</span>
+                                </div>
+
+                                <!-- HTML -->
+                                <div class="flex flex-col items-center gap-1 
+                        group-hover:-translate-y-1 transition-transform duration-300 delay-75">
+                                    <i class="fa-brands fa-html5 text-[22px] md:text-[28px] text-orange-500"></i>
+                                    <span class="text-[8px] md:text-[10px] text-gray-500">HTML5</span>
+                                </div>
+
+                                <!-- CSS -->
+                                <div class="flex flex-col items-center gap-1 
+                        group-hover:-translate-y-1 transition-transform duration-300 delay-100">
+                                    <i class="fa-brands fa-css3-alt text-[22px] md:text-[28px] text-blue-400"></i>
+                                    <span class="text-[8px] md:text-[10px] text-gray-500">CSS3</span>
+                                </div>
+
+                                <!-- Tkinter -->
+                                <div class="flex flex-col items-center gap-1 
+                        group-hover:-translate-y-1 transition-transform duration-300 delay-200">
+                                    <i
+                                        class="fa-regular fa-window-maximize text-[22px] md:text-[28px] text-cyan-300"></i>
+                                    <span class="text-[8px] md:text-[10px] text-gray-500">Tkinter</span>
+                                </div>
+
+                                <!-- OpenCV -->
+                                <div class="flex flex-col items-center gap-1 
+                        group-hover:-translate-y-1 transition-transform duration-300 delay-300">
+                                    <i class="fa-regular fa-eye text-[22px] md:text-[28px] text-green-400"></i>
+                                    <span class="text-[8px] md:text-[10px] text-gray-500">OpenCV</span>
+                                </div>
+
+                                <!-- SQL -->
+                                <div class="flex flex-col items-center gap-1 
+                        group-hover:-translate-y-1 transition-transform duration-300 delay-500">
+                                    <i class="fa-solid fa-database text-[22px] md:text-[28px] text-purple-400"></i>
+                                    <span class="text-[8px] md:text-[10px] text-gray-500">SQL</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="tilt-card hover-trigger">
+                        <div
+                            class="holo-card p-6 md:p-8 h-full rounded-2xl bg-gradient-to-b from-white/5 to-transparent border border-white/5 group">
+                            <h3
+                                class="text-xl md:text-2xl font-bold text-white mb-6 md:mb-8 border-b border-white/10 pb-4">
+                                Core</h3>
+                            <ul class="space-y-4 text-sm md:text-base text-gray-400">
+                                <li class="flex items-center gap-3"><span
+                                        class="w-2 h-2 bg-neon-green rounded-full"></span>Data Structures</li>
+                                <li class="flex items-center gap-3"><span
+                                        class="w-2 h-2 bg-neon-green rounded-full"></span>Algorithms</li>
+                                <li class="flex items-center gap-3"><span
+                                        class="w-2 h-2 bg-neon-green rounded-full"></span>DBMS</li>
+                                <li class="flex items-center gap-3"><span
+                                        class="w-2 h-2 bg-neon-green rounded-full"></span>OOPs</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tilt-card hover-trigger">
+                        <div
+                            class="bg-black/80 p-6 h-full rounded-2xl border border-neon-green/30 font-mono text-sm md:text-lg relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none">
+                            </div>
+                            <div
+                                class="text-neon-green mb-4 border-b border-neon-green/20 pb-2 text-base md:text-xl font-bold">
+                                > Human_OS.exe</div>
+                            <div class="space-y-4 text-neon-green/80">
+                                <p>[+] Leadership initialized...</p>
+                                <p>[+] Teamwork protocols active...</p>
+                                <p>[+] Adaptability: 100%</p>
+                                <p class="animate-pulse">_Ready for deployment</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 md:py-32 relative z-10">
+            <div class="container mx-auto px-4 md:px-6 max-w-6xl">
+                <span
+                    class="text-xs md:text-sm font-bold text-neon-green uppercase tracking-[0.2em] mb-4 block scramble-text">04
+                    // Experience</span>
+
+                <div class="tilt-card mt-8 md:mt-12 hover-trigger">
+                    <div
+                        class="holo-card p-6 md:p-12 rounded-3xl border-l-4 border-neon-cyan relative overflow-hidden group">
+                        <div
+                            class="absolute -right-20 -top-20 w-48 h-48 md:w-96 md:h-96 bg-neon-cyan/10 rounded-full blur-[60px] md:blur-[100px] group-hover:bg-neon-cyan/20 transition-all duration-500">
+                        </div>
+
+                        <div class="relative z-10 flex flex-col md:flex-row justify-between items-start gap-4 md:gap-6">
+                            <div>
+                                <h3 class="text-2xl md:text-4xl font-bold text-white">Optivix AI</h3>
+                                <p class="text-neon-cyan font-mono mt-1 md:mt-2 text-base md:text-lg">Frontend Developer
+                                    Intern</p>
+                            </div>
+                            <div
+                                class="px-4 py-1 md:px-5 md:py-2 border border-white/10 rounded-full text-xs md:text-sm font-mono text-gray-400">
+                                Aug '25 - Oct '25
+                            </div>
+                        </div>
+
+                        <p
+                            class="relative z-10 text-gray-300 mt-6 md:mt-8 text-sm md:text-xl max-w-3xl leading-relaxed">
+                            Spearheaded the frontend overhaul for an AI agent platform. Translated complex backend
+                            workflows into a seamless, modular UI for non-technical stakeholders.
+                        </p>
+
+                        <div class="relative z-10 grid grid-cols-2 gap-4 md:gap-8 mt-8 md:mt-10">
+                            <div>
+                                <div class="text-2xl md:text-4xl font-display font-bold text-white">40%</div>
+                                <div class="text-xs md:text-sm text-gray-500 uppercase mt-1">SEO Growth</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl md:text-4xl font-display font-bold text-white">100%</div>
+                                <div class="text-xs md:text-sm text-gray-500 uppercase mt-1">Modular UI</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 md:py-32 relative z-10">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+                <span
+                    class="text-xs md:text-sm font-bold text-neon-cyan uppercase tracking-[0.2em] mb-4 block scramble-text">05
+                    // The Craft</span>
+                <h2 class="text-4xl md:text-7xl font-display font-bold text-white mb-12 md:mb-20">Selected Works</h2>
+
+                <div class="space-y-20 md:space-y-32">
+                    <div class="group grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                        <div class="order-2 md:order-1">
+                            <h3
+                                class="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4 group-hover:text-neon-cyan transition-colors">
+                                Text Comparison Tool</h3>
+                            <p class="text-base md:text-xl text-gray-400 mb-6 md:mb-8 leading-relaxed">
+                                A desktop NLP application for plagiarism detection and version control. Utilizes <span
+                                    class="text-white">difflib</span> and <span class="text-white">NLTK</span> for
+                                word-by-word analysis with >95% accuracy.
+                            </p>
+                            <div class="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8">
+                                <span
+                                    class="px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm border border-white/10 rounded-full text-gray-400">Python</span>
+                                <span
+                                    class="px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm border border-white/10 rounded-full text-gray-400">Tkinter</span>
+                                <span
+                                    class="px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm border border-white/10 rounded-full text-gray-400">NLP</span>
+                            </div>
+                            <a href="https://github.com/utpal16raj09/Text_Comparison_Tool" target="_blank"
+                                class="hover-trigger inline-flex items-center gap-2 text-white border-b border-neon-cyan pb-1 text-sm md:text-base uppercase tracking-widest hover:text-neon-cyan transition-colors">
+                                View Source <i class="fa-solid fa-arrow-right -rotate-45"></i>
+                            </a>
+                        </div>
+                        <div class="order-1 md:order-2 tilt-card hover-trigger">
+                            <div
+                                class="h-64 md:h-[450px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-cyan/50 transition-colors">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10">
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000"
+                                    alt="Code"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                        <div class="tilt-card hover-trigger">
+                            <div
+                                class="h-64 md:h-[450px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-purple/50 transition-colors">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10">
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000"
+                                    alt="AI"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110">
+                            </div>
+                        </div>
+                        <div class="pl-0 md:pl-10">
+                            <h3
+                                class="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4 group-hover:text-neon-purple transition-colors">
+                                Age & Gender Detection</h3>
+                            <p class="text-base md:text-xl text-gray-400 mb-6 md:mb-8 leading-relaxed">
+                                Real-time biometric analysis pipeline integrating <span class="text-white">Caffe Deep
+                                    Learning</span> models via OpenCV. Predicts demographics from live webcam feed with
+                                low latency.
+                            </p>
+                            <div class="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8">
+                                <span
+                                    class="px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm border border-white/10 rounded-full text-gray-400">OpenCV</span>
+                                <span
+                                    class="px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm border border-white/10 rounded-full text-gray-400">Caffe</span>
+                                <span
+                                    class="px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm border border-white/10 rounded-full text-gray-400">Python</span>
+                            </div>
+                            <a href="https://github.com/utpal16raj09/Age_Gender_Detection" target="_blank"
+                                class="hover-trigger inline-flex items-center gap-2 text-white border-b border-neon-purple pb-1 text-sm md:text-base uppercase tracking-widest hover:text-neon-purple transition-colors">
+                                View Source <i class="fa-solid fa-arrow-right -rotate-45"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="group grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                        <div class="order-2 md:order-1">
+                            <h3
+                                class="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4 group-hover:text-neon-yellow transition-colors">
+                                Personal Text Editor</h3>
+                            <p class="text-base md:text-xl text-gray-400 mb-6 md:mb-8 leading-relaxed">
+                                A lightweight, distraction-free text editor built with <span
+                                    class="text-white">Tkinter</span>. Supports bold/italic formatting, font resizing,
+                                and file save/load operations.
+                            </p>
+                            <div class="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8">
+                                <span
+                                    class="px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm border border-white/10 rounded-full text-gray-400">Python</span>
+                                <span
+                                    class="px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm border border-white/10 rounded-full text-gray-400">Tkinter</span>
+                                <span
+                                    class="px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm border border-white/10 rounded-full text-gray-400">GUI</span>
+                            </div>
+                            <a href="https://github.com/utpal16raj09/web.git" target="_blank"
+                                class="hover-trigger inline-flex items-center gap-2 text-white border-b border-neon-yellow pb-1 text-sm md:text-base uppercase tracking-widest hover:text-neon-yellow transition-colors">
+                                View Source <i class="fa-solid fa-arrow-right -rotate-45"></i>
+                            </a>
+                        </div>
+                        <div class="order-1 md:order-2 tilt-card hover-trigger">
+                            <div
+                                class="h-64 md:h-[450px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-yellow/50 transition-colors">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10">
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?q=80&w=1000"
+                                    alt="Editor"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                        <div class="tilt-card hover-trigger">
+                            <div
+                                class="h-64 md:h-[450px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-green/50 transition-colors">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10">
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1000"
+                                    alt="Image Processing"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110">
+                            </div>
+                        </div>
+
+                        <div class="pl-0 md:pl-10">
+                            <h3
+                                class="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4 group-hover:text-neon-green transition-colors">
+                                Image Enhancement Tool
+                            </h3>
+
+                            <p class="text-base md:text-xl text-gray-400 mb-6 md:mb-8 leading-relaxed">
+                                Desktop utility for real-time image manipulation. Features
+                                <span class="text-white">background removal (rembg)</span>,
+                                <span class="text-white">grayscale conversion</span>, and
+                                <span class="text-white">Gaussian blur</span> using OpenCV.
+                            </p>
+
+                            <div class="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8">
+                                <span
+                                    class="px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm border border-white/10 rounded-full text-gray-400">Python</span>
+                                <span
+                                    class="px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm border border-white/10 rounded-full text-gray-400">OpenCV</span>
+                                <span
+                                    class="px-3 py-1 md:px-4 md:py-2 text-xs md:text-sm border border-white/10 rounded-full text-gray-400">rembg</span>
+                            </div>
+
+                            <a href="https://github.com/utpal16raj09/image_enhancement" target="_blank"
+                                class="hover-trigger inline-flex items-center gap-2 text-white border-b border-neon-green pb-1 text-sm md:text-base uppercase tracking-widest hover:text-neon-green transition-colors">
+                                View Source <i class="fa-solid fa-arrow-right -rotate-45"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="certs" class="py-24 relative z-10">
+            <div class="container mx-auto px-6 max-w-7xl">
+
+                <div class="mb-16">
+                    <span class="text-sm font-bold text-neon-cyan uppercase tracking-[0.2em] scramble-text">
+                        06 // The Proof
+                    </span>
+                    <h2 class="text-4xl md:text-6xl font-display font-bold text-white mt-3">Certifications</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- CARD TEMPLATE (Neon Blue Theme Applied to All) -->
+                    <!-- CARD 1 -->
+                    <div class="tilt-card hover-trigger">
+                        <div class="holo-card p-6 rounded-2xl border-b-2 border-neon-cyan/50 
+                            bg-black/40 backdrop-blur-md hover:bg-black/60 transition-all">
+
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="text-xs font-bold uppercase border border-neon-cyan/40 
+                                    text-neon-cyan px-2 py-0.5 rounded-full">
+                                    NPTEL
+                                </div>
+                                <i class="fa-brands fa-java text-3xl text-neon-cyan"></i>
+                            </div>
+
+                            <h4 class="text-xl font-bold text-white mb-2">Programming in Java</h4>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-3">
+                                Advanced OOP, DS & system design concepts.
+                            </p>
+
+                            <a href="https://drive.google.com/file/d/1W66dlpwkyN2KLsRsYOoprS2dh9WBt_5h/view"
+                                class="inline-flex items-center gap-2 text-neon-cyan text-sm hover:text-cyan-300">
+                                <i class="fa-solid fa-eye"></i> View
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- CARD 2 -->
+                    <div class="tilt-card hover-trigger">
+                        <div class="holo-card p-6 rounded-2xl border-b-2 border-neon-cyan/50 
+                            bg-black/40 backdrop-blur-md hover:bg-black/60 transition-all">
+
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="text-xs font-bold uppercase border border-neon-cyan/40 
+                                    text-neon-cyan px-2 py-0.5 rounded-full">
+                                    IBM
+                                </div>
+                                <i class="fa-brands fa-python text-3xl text-neon-cyan"></i>
+                            </div>
+
+                            <h4 class="text-xl font-bold text-white mb-2">Python for Data Science</h4>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-3">NumPy, Pandas & analytics.</p>
+
+                            <a href="https://drive.google.com/file/d/1NXyKfPURriLZFegIbaDLdxp2qrREX-8C/view"
+                                class="inline-flex items-center gap-2 text-neon-cyan text-sm hover:text-cyan-300">
+                                <i class="fa-solid fa-eye"></i> View
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- CARD 3 -->
+                    <div class="tilt-card hover-trigger">
+                        <div class="holo-card p-6 rounded-2xl border-b-2 border-neon-cyan/50 
+                            bg-black/40 backdrop-blur-md hover:bg-black/60 transition-all">
+
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="text-xs font-bold uppercase border border-neon-cyan/40 
+                                    text-neon-cyan px-2 py-0.5 rounded-full">
+                                    MathWorks
+                                </div>
+                                <i class="fa-solid fa-brain text-3xl text-neon-cyan"></i>
+                            </div>
+
+                            <h4 class="text-xl font-bold text-white mb-2">Deep Learning & ML</h4>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-3">Neural networks & pipelines.</p>
+
+                            <a href="https://drive.google.com/drive/folders/1kAiZ0PsNvMlEl_L4zcY6qTVjezXV7CJq"
+                                class="inline-flex items-center gap-2 text-neon-cyan text-sm hover:text-cyan-300">
+                                <i class="fa-solid fa-eye"></i> View
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- CARD 4 -->
+                    <div class="tilt-card hover-trigger">
+                        <div class="holo-card p-6 rounded-2xl border-b-2 border-neon-cyan/50 
+                            bg-black/40 backdrop-blur-md hover:bg-black/60 transition-all">
+
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="text-xs font-bold uppercase border border-neon-cyan/40 
+                                    text-neon-cyan px-2 py-0.5 rounded-full">
+                                    MathWorks
+                                </div>
+                                <i class="fa-solid fa-eye text-3xl text-neon-cyan"></i>
+                            </div>
+
+                            <h4 class="text-xl font-bold text-white mb-2">Image Processing</h4>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-3">MATLAB image & CV workflows.</p>
+
+                            <a href="https://drive.google.com/drive/folders/1kAiZ0PsNvMlEl_L4zcY6qTVjezXV7CJq"
+                                class="inline-flex items-center gap-2 text-neon-cyan text-sm hover:text-cyan-300">
+                                <i class="fa-solid fa-eye"></i> View
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- CARD 5 -->
+                    <div class="tilt-card hover-trigger">
+                        <div class="holo-card p-6 rounded-2xl border-b-2 border-neon-cyan/50 
+                            bg-black/40 backdrop-blur-md hover:bg-black/60 transition-all">
+
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="text-xs font-bold uppercase border border-neon-cyan/40 
+                                    text-neon-cyan px-2 py-0.5 rounded-full">
+                                    Coursera
+                                </div>
+                                <i class="fa-solid fa-c text-3xl text-neon-cyan"></i>
+                            </div>
+
+                            <h4 class="text-xl font-bold text-white mb-2">C for Everyone</h4>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-3">Pointers & memory handling.</p>
+
+                            <a href="https://drive.google.com/file/d/1568u1C35Ax2E5rOHMtatdxSUNtV5Mgye/view"
+                                class="inline-flex items-center gap-2 text-neon-cyan text-sm hover:text-cyan-300">
+                                <i class="fa-solid fa-eye"></i> View
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- CARD 6 -->
+                    <div class="tilt-card hover-trigger">
+                        <div class="holo-card p-6 rounded-2xl border-b-2 border-neon-cyan/50 
+                            bg-black/40 backdrop-blur-md hover:bg-black/60 transition-all">
+
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="text-xs font-bold uppercase border border-neon-cyan/40 
+                                    text-neon-cyan px-2 py-0.5 rounded-full">
+                                    HackWithIndia
+                                </div>
+                                <i class="fa-solid fa-award text-3xl text-neon-cyan"></i>
+                            </div>
+
+                            <h4 class="text-xl font-bold text-white mb-2">Achievement</h4>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-3">Competitive programming excellence.
+                            </p>
+
+                            <a href="https://drive.google.com/file/d/1C_8rULt-7cnYGXke4fpQ2G05IFLSsF3o/view"
+                                class="inline-flex items-center gap-2 text-neon-cyan text-sm hover:text-cyan-300">
+                                <i class="fa-solid fa-eye"></i> View
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 md:py-32 relative z-10 border-t border-white/5">
+            <div class="container mx-auto px-4 md:px-6 text-center">
+                <h2 class="text-5xl md:text-[10rem] font-display font-bold text-white mb-8 md:mb-12 tracking-tighter">
+                    What's Next?</h2>
+                <p class="text-gray-400 text-lg md:text-2xl mb-12 md:mb-16">Open to Internships & Full-Time Roles.</p>
+
+                <a href="mailto:utpalraj1609@gmail.com" class="hover-trigger inline-block relative group max-w-full">
+                    <div class="absolute -inset-1 bg-neon-cyan/40 rounded-xl blur-lg opacity-25 
+            group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
+                    </div>
+
+                    <div
+                        class="relative px-6 py-4 md:px-12 md:py-6 bg-black rounded-xl border border-white/10 text-base md:text-3xl font-bold text-white group-hover:text-white transition-colors break-all">
+                        utpalraj1609@gmail.com
+                    </div>
+                </a>
+
+                <div class="flex justify-center gap-8 md:gap-12 mt-16 md:mt-24">
+                    <a href="https://github.com/utpal16raj09" target="_blank"
+                        class="text-3xl md:text-4xl text-gray-500 hover:text-white hover:scale-125 transition-all hover-trigger"><i
+                            class="fa-brands fa-github"></i></a>
+                    <a href="https://linkedin.com/in/utpal-raj-0380b6284" target="_blank"
+                        class="text-3xl md:text-4xl text-gray-500 hover:text-white hover:scale-125 transition-all hover-trigger"><i
+                            class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://x.com/utpal_raj1609" target="_blank"
+                        class="text-3xl md:text-4xl text-gray-500 hover:text-white hover:scale-125 transition-all hover-trigger"><i
+                            class="fa-brands fa-twitter"></i></a>
+                </div>
+                <div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+
+                    <!-- LEFT: CYBERPUNK TEXT (now on the left) -->
+                    <div class="flex items-center md:items-start justify-center md:justify-end 
+            pt-20 md:pt-40 pr-4">
+
+                        <h2
+                            class="font-display font-bold text-white text-4xl md:text-7xl leading-tight tracking-tight text-right">
+                            <span class="text-neon-cyan">Stay Connected.</span><br>
+                            <span class="text-neon-cyan">Let’s Build</span><br>
+                            The Future.
+                        </h2>
+                    </div>
+
+                    <!-- RIGHT: CONTACT FORM -->
+                    <div class="holo-card p-6 md:p-8 rounded-2xl bg-black/40 backdrop-blur-xl 
+                border border-white/10 hover:border-neon-cyan transition-all">
+
+                        <h3 class="text-3xl font-display font-bold text-white mb-6 flex items-center gap-2">
+                            <span class="text-neon-cyan">&gt;</span> Contact Me
+                        </h3>
+
+                        <form class="space-y-5">
+
+                            <!-- NAME -->
+                            <div>
+                                <label class="text-neon-cyan text-xs font-mono uppercase tracking-wider">Your
+                                    Name</label>
+                                <input type="text" placeholder="Enter your name" class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
+                           text-white focus:border-neon-cyan outline-none transition-all text-sm">
+                            </div>
+
+                            <!-- EMAIL -->
+                            <div>
+                                <label class="text-neon-cyan text-xs font-mono uppercase tracking-wider">Your
+                                    Email</label>
+                                <input type="email" placeholder="Enter your email" class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
+                           text-white focus:border-neon-cyan outline-none transition-all text-sm">
+                            </div>
+
+                            <!-- SUBJECT -->
+                            <div>
+                                <label class="text-neon-cyan text-xs font-mono uppercase tracking-wider">Subject</label>
+                                <input type="text" placeholder="Enter subject" class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
+                           text-white focus:border-neon-cyan outline-none transition-all text-sm">
+                            </div>
+
+                            <!-- MESSAGE -->
+                            <div>
+                                <label class="text-neon-cyan text-xs font-mono uppercase tracking-wider">Message</label>
+                                <textarea rows="4" placeholder="Type your message..."
+                                    class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
+                           text-white focus:border-neon-cyan outline-none transition-all text-sm resize-none"></textarea>
+                            </div>
+
+                            <!-- BUTTON -->
+                            <button type="submit" class="w-full py-3 bg-black border border-white/10 rounded-lg text-white font-bold 
+                       text-base hover:border-neon-cyan hover:text-neon-cyan transition-all">
+                                SEND MESSAGE
+                            </button>
+
+                        </form>
+                    </div>
+
+                </div>
+
+
+                <div class="mt-16 md:mt-24 text-[10px] md:text-sm text-gray-700 font-mono">
+                    DESIGNED & DEVELOPED BY UTPAL RAJ © 2025
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- 1. UTILITIES & CLASSES ---
+
+        class TextScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                this.update = this.update.bind(this);
+            }
+            setText(newText) {
+                const oldText = this.el.innerText;
+                const length = Math.max(oldText.length, newText.length);
+                const promise = new Promise((resolve) => this.resolve = resolve);
+                this.queue = [];
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 40);
+                    const end = start + Math.floor(Math.random() * 40);
+                    this.queue.push({ from, to, start, end });
+                }
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+                return promise;
+            }
+            update() {
+                let output = '';
+                let complete = 0;
+                for (let i = 0, n = this.queue.length; i < n; i++) {
+                    let { from, to, start, end, char } = this.queue[i];
+                    if (this.frame >= end) {
+                        complete++;
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (!char || Math.random() < 0.8) {
+                            char = this.randomChar();
+                            this.queue[i].char = char;
+                        }
+                        output += `<span class="text-neon-cyan">${char}</span>`;
+                    } else {
+                        output += from;
+                    }
+                }
+                this.el.innerHTML = output;
+                if (complete === this.queue.length) {
+                    this.resolve();
+                } else {
+                    this.frameRequest = requestAnimationFrame(this.update);
+                    this.frame++;
+                }
+            }
+            randomChar() {
+                return this.chars[Math.floor(Math.random() * this.chars.length)];
+            }
+        }
+
+        // --- 2. SYSTEM INITIALIZING PRELOADER ---
+        const preloader = document.getElementById('preloader');
+        const loaderBar = document.getElementById('loader-bar');
+        const loaderText = document.getElementById('loader-text');
+        const consoleOutput = document.getElementById('console-output');
+
+        // Boot logs for the effect
+        const bootLogs = [
+            "Initializing kernel...",
+            "Loading modules: [GPU] [NET] [AI]...",
+            "Mounting file system...",
+            "Decrypting user profile...",
+            "Access granted.",
+            "Starting interface..."
+        ];
+
+        let logIndex = 0;
+
+        function addLog() {
+            if (logIndex < bootLogs.length) {
+                const p = document.createElement('div');
+                p.innerHTML = `> ${bootLogs[logIndex]}`;
+                consoleOutput.appendChild(p);
+                consoleOutput.scrollTop = consoleOutput.scrollHeight; // Auto scroll
+                logIndex++;
+                setTimeout(addLog, Math.random() * 300 + 100);
+            }
+        }
+
+        // Start logs immediately
+        addLog();
+
+        const removePreloader = () => {
+            if (typeof gsap === 'undefined') {
+                preloader.style.display = 'none';
+                return;
+            }
+
+            gsap.to(preloader, {
+                yPercent: -100,
+                duration: 1,
+                ease: "power4.inOut",
+                onComplete: () => {
+                    const heroTitle = document.getElementById('hero-title');
+                    const fx = new TextScramble(heroTitle);
+                    fx.setText('UTPAL RAJ');
+
+                    gsap.to('.animate-fade-up', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        stagger: 0.2
+                    });
+                }
+            });
+        };
+
+        let progress = 0;
+        const loadInterval = setInterval(() => {
+            progress += Math.random() * 5;
+            if (progress > 100) progress = 100;
+
+            if (loaderBar) loaderBar.style.width = `${progress}%`;
+            if (loaderText) loaderText.innerText = `${Math.floor(progress)}%`;
+
+            if (progress >= 100) {
+                clearInterval(loadInterval);
+                // Ensure logs are done before removing
+                setTimeout(removePreloader, 800);
+            }
+        }, 50);
+
+        // --- 3. LENIS SMOOTH SCROLL ---
+        try {
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                mouseMultiplier: 1,
+                smoothTouch: false,
+                touchMultiplier: 2,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+        } catch (e) {
+            console.warn("Lenis Scroll failed:", e);
+        }
+
+        // --- 4. CUSTOM CURSOR (Only logic needed, CSS handles visibility) ---
+        const cursor = document.getElementById('custom-cursor');
+        const hoverTriggers = document.querySelectorAll('.hover-trigger');
+
+        if (cursor) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            hoverTriggers.forEach(trigger => {
+                trigger.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                trigger.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+            });
+        }
+
+        // --- 5. TEXT SCRAMBLE ON SCROLL ---
+        const titles = document.querySelectorAll('.scramble-text');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const fx = new TextScramble(el);
+                    fx.setText(el.innerText);
+                    observer.unobserve(el);
+                }
+            });
+        });
+        titles.forEach(title => observer.observe(title));
+
+        // --- 6. 3D TILT EFFECT (Disabled on mobile to prevent scrolling issues) ---
+        if (window.innerWidth > 768) {
+            const tiltCards = document.querySelectorAll('.tilt-card');
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const xPct = x / rect.width;
+                    const yPct = y / rect.height;
+                    const xRot = (0.5 - yPct) * 20;
+                    const yRot = (xPct - 0.5) * 20;
+
+                    card.style.transform = `perspective(1000px) rotateX(${xRot}deg) rotateY(${yRot}deg) scale3d(1.05, 1.05, 1.05)`;
+
+                    const holo = card.querySelector('.holo-card');
+                    if (holo) {
+                        holo.style.setProperty('--mouse-x', `${x}px`);
+                        holo.style.setProperty('--mouse-y', `${y}px`);
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                });
+            });
+        }
+
+        // --- 7. MAGNETIC BUTTONS (Desktop only) ---
+        if (window.innerWidth > 768) {
+            const magneticBtns = document.querySelectorAll('.magnetic-btn');
+            magneticBtns.forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = 'translate(0px, 0px)';
+                });
+            });
+        }
+
+        // --- 8. CANVAS BACKGROUND (Optimized for Mobile) ---
+        try {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let w, h;
+            let particles = [];
+            // Reduce particle count divisor for mobile (higher number = fewer particles)
+            const particleDivisor = window.innerWidth < 768 ? 25000 : 15000;
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+                initParticles();
+            }
+
+            function initParticles() {
+                particles = [];
+                const count = Math.floor(w * h / particleDivisor);
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * w,
+                        y: Math.random() * h,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        size: Math.random() * 1.5
+                    });
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, w, h);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.strokeStyle = 'rgba(0, 243, 255, 0.1)';
+
+                for (let i = 0; i < particles.length; i++) {
+                    let p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = w;
+                    if (p.x > w) p.x = 0;
+                    if (p.y < 0) p.y = h;
+                    if (p.y > h) p.y = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Reduce connection distance check on mobile for performance
+                    const connectDist = window.innerWidth < 768 ? 60 : 100;
+
+                    for (let j = i + 1; j < particles.length; j++) {
+                        let p2 = particles[j];
+                        let dx = p.x - p2.x;
+                        let dy = p.y - p2.y;
+                        let dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < connectDist) {
+                            ctx.lineWidth = 1 - (dist / connectDist);
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            animate();
+        } catch (e) {
+            console.warn("Canvas failed:", e);
+        }
+
+        // --- 9. MOBILE MENU TOGGLE ---
+        const menuBtn = document.getElementById('menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            const isOpen = mobileMenu.style.transform === 'translateY(0%)';
+            mobileMenu.style.transform = isOpen ? 'translateY(-100%)' : 'translateY(0%)';
+        }
+
+        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+    </script>
+</body>
+
+</html>
