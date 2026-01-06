@@ -665,6 +665,61 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
+                    <div class="project-card group cursor-pointer relative tilt-card" onclick="openProjectModal('architect')">
+                        <div
+                            class="h-64 md:h-[350px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-yellow transition-all duration-500 shadow-lg">
+                            <img src="architect.png"
+                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                            <div
+                                class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity">
+                            </div>
+                            <div class="absolute bottom-6 left-6 z-20">
+                                <h3
+                                    class="text-2xl font-bold text-white group-hover:text-neon-yellow transition-colors">
+                                    The Architect</h3>
+                                <p class="text-neon-yellow text-[10px] font-mono mt-1 uppercase tracking-[0.2em]">AI Code Studio</p>
+                            </div>
+                            <div
+                                class="absolute top-0 right-0 w-16 h-16 bg-neon-yellow/10 blur-2xl group-hover:bg-neon-yellow/30 transition-all">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card group cursor-pointer relative tilt-card" onclick="openProjectModal('docify')">
+                        <div
+                            class="h-64 md:h-[350px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-purple transition-all duration-500 shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000"
+                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                            <div
+                                class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity">
+                            </div>
+                            <div class="absolute bottom-6 left-6 z-20">
+                                <h3
+                                    class="text-2xl font-bold text-white group-hover:text-neon-purple transition-colors">
+                                    Docify</h3>
+                                <p class="text-neon-purple text-[10px] font-mono mt-1 uppercase tracking-[0.2em]">LLM Doc Generator</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card group cursor-pointer relative tilt-card"
+                        onclick="openProjectModal('perfwatch')">
+                        <div
+                            class="h-64 md:h-[350px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-cyan transition-all duration-500">
+                            <img src="perfwatch.png"
+                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                            <div
+                                class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity">
+                            </div>
+                            <div class="absolute bottom-6 left-6 z-20">
+                                <h3 class="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors">
+                                    PerfWatch</h3>
+                                <p class="text-neon-cyan text-xs font-mono mt-1 uppercase tracking-widest">Click to
+                                    Expand_</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="project-card group cursor-pointer relative tilt-card"
                         onclick="openProjectModal('text-tool')">
                         <div
@@ -703,24 +758,6 @@
                     </div>
 
                     <div class="project-card group cursor-pointer relative tilt-card"
-                        onclick="openProjectModal('perfwatch')">
-                        <div
-                            class="h-64 md:h-[350px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-cyan transition-all duration-500">
-                            <img src="perfwatch.png"
-                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                            <div
-                                class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity">
-                            </div>
-                            <div class="absolute bottom-6 left-6 z-20">
-                                <h3 class="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors">
-                                    PerfWatch</h3>
-                                <p class="text-neon-cyan text-xs font-mono mt-1 uppercase tracking-widest">Click to
-                                    Expand_</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card group cursor-pointer relative tilt-card"
                         onclick="openProjectModal('image-tool')">
                         <div
                             class="h-64 md:h-[350px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-purple transition-all duration-500">
@@ -738,31 +775,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="project-card group cursor-pointer relative tilt-card"
-                        onclick="openProjectModal('editor')">
-                        <div
-                            class="h-64 md:h-[350px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-yellow transition-all duration-500 shadow-lg">
-                            <img src="https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?q=80&w=1000"
-                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-
-                            <div
-                                class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity">
-                            </div>
-
-                            <div class="absolute bottom-6 left-6 z-20">
-                                <h3
-                                    class="text-2xl font-bold text-white group-hover:text-neon-yellow transition-colors">
-                                    Personal Text Editor</h3>
-                                <p class="text-neon-yellow text-[10px] font-mono mt-1 uppercase tracking-[0.2em]">Click
-                                    to Expand_</p>
-                            </div>
-
-                            <div
-                                class="absolute top-0 right-0 w-16 h-16 bg-neon-yellow/10 blur-2xl group-hover:bg-neon-yellow/30 transition-all">
-                            </div>
-                        </div>
-                    </div>
-
+                    
                 </div>
             </div>
         </section>
@@ -1042,7 +1055,23 @@
     </main>
 
     <script>
-        const projectData = {
+const projectData = {
+            'architect': {
+                title: 'The Architect',
+                description: 'A deep static code analysis studio powered by AI. It features a configurable prompt-engine with multiple depth levels (from summary to god-mode). I implemented modular analysis layers including design intent, trust boundaries, mental models, simulator scenarios, and knowledge checks.',
+                tech: ['JavaScript', 'HTML5', 'CSS3', 'API Integration'],
+                features: ['Configurable Prompt Engine', 'Modular Analysis Layers', 'Deep Static Analysis'],
+                link: 'https://github.com/utpal16raj09/architect.git',
+                color: '#ffe600'
+            },
+            'docify': {
+                title: 'Docify',
+                description: 'An ongoing Python-based NLP tool that analyzes GitHub repositories to automatically generate structured explanations and README documentation. Features repository parsing, preprocessing pipelines for file hierarchy analysis, and LLM-driven workflows to infer project architecture.',
+                tech: ['Python', 'NLP', 'LLM APIs', 'Git'],
+                features: ['Repo Parsing Pipeline', 'Auto-README Generation', 'LLM Context Inference'],
+                link: 'https://github.com/utpal16raj09/docify.git',
+                color: '#bd00ff'
+            },
             'text-tool': {
                 title: 'Text Comparison Tool',
                 description: 'Developed a desktop-based NLP application to compare textual documents word-by-word, achieving over 95% accuracy in textual similarity detection. Implemented similarity scoring and difference highlighting using nltk and difflib.',
@@ -1495,7 +1524,6 @@
 </body>
 
 </html>
-
 
 
 
