@@ -225,27 +225,31 @@
             z-index: 1;
         }
 
+        .animated-border-card {
+            position: relative;
+            background: #0a0a0a;
+            border-radius: 1rem;
+            overflow: hidden;
+            z-index: 1;
+            --border-color: #00f3ff;
+            /* default */
+        }
+
+        /* rotating border */
         .animated-border-card::before {
-            content: '';
+            content: "";
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 250%;
-            height: 250%;
-            background: conic-gradient(transparent, transparent, transparent, #555);
-            transform: translate(-50%, -50%);
-            animation: rotate 4s linear infinite;
+            inset: -150%;
+            background: conic-gradient(transparent 0deg,
+                    transparent 270deg,
+                    var(--border-color) 360deg);
+            animation: rotateBorder 5s linear infinite;
             z-index: -2;
-            transition: background 0.3s;
         }
 
-        .animated-border-card:hover::before {
-            /* Hot Pink Neon Gradient on Hover */
-            background: conic-gradient(transparent, transparent, #ff00ff, #ff00ff);
-        }
-
+        /* inner mask */
         .animated-border-card::after {
-            content: '';
+            content: "";
             position: absolute;
             inset: 2px;
             background: #0a0a0a;
@@ -253,8 +257,14 @@
             z-index: -1;
         }
 
-        .animated-border-card:hover {
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+        @keyframes rotateBorder {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @keyframes rotate {
@@ -572,92 +582,117 @@
 
         <section id="skills" class="py-20 md:py-32 relative z-10">
             <div class="container mx-auto px-4 md:px-6 max-w-7xl text-left">
+
                 <span
                     class="text-xs md:text-sm font-bold text-neon-purple uppercase tracking-[0.2em] mb-4 block scramble-text">
                     03 // The Arsenal
                 </span>
-                <h2 class="text-4xl md:text-6xl font-display font-bold text-white mb-10 md:mb-16">Tech Stack</h2>
+
+                <h2 class="text-4xl md:text-6xl font-display font-bold text-white mb-10 md:mb-16">
+                    Tech Stack
+                </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
+                    <!-- ================= LANGUAGES ================= -->
                     <div class="tilt-card hover-trigger">
-                        <div class="animated-border-card p-6 md:p-8 h-full">
-                            <h3
-                                class="text-xl font-bold text-white mb-8 border-b border-white/10 pb-4 flex items-center gap-2">
-                                <span class="text-neon-pink">></span> Languages
+                        <div class="animated-border-card p-6 md:p-8 h-full" style="--border-color:#00f3ff;">
+                            <h3 class="text-xl font-bold text-white mb-8 border-b border-white/10 pb-4 font-mono">
+                                &gt; Languages
                             </h3>
-                            <ul class="space-y-5 text-sm md:text-base text-gray-300 font-mono">
-                                <li class="flex items-center gap-4 group/item">
-                                    <i
-                                        class="fa-solid fa-code text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
-                                    <span>C / C++</span>
+
+                            <ul class="grid grid-cols-2 gap-x-12 gap-y-10 place-items-center">
+
+                                <li class="group">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+                                        class="w-10 h-10 md:w-12 md:h-12 transition-transform duration-300 group-hover:scale-110"
+                                        alt="C++" />
                                 </li>
-                                <li class="flex items-center gap-4 group/item">
-                                    <i
-                                        class="fa-brands fa-python text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
-                                    <span>Python</span>
+
+                                <li class="group">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg"
+                                        class="w-10 h-10 md:w-12 md:h-12 transition-transform duration-300 group-hover:scale-110"
+                                        alt="C" />
                                 </li>
-                                <li class="flex items-center gap-4 group/item">
-                                    <i
-                                        class="fa-brands fa-java text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
-                                    <span>Java(Intermediate)</span>
+
+                                <li class="group">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                                        class="w-10 h-10 md:w-12 md:h-12 transition-transform duration-300 group-hover:scale-110"
+                                        alt="Python" />
                                 </li>
-                                <li class="flex items-center gap-4 group/item">
-                                    <i
-                                        class="fa-brands fa-js text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
-                                    <span>JavaScript</span>
+
+                                <li class="group">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+                                        class="w-10 h-10 md:w-12 md:h-12 transition-transform duration-300 group-hover:scale-110"
+                                        alt="Java" />
                                 </li>
+
                             </ul>
+
                         </div>
                     </div>
 
+                    <!-- ================= FRAMEWORKS ================= -->
                     <div class="tilt-card hover-trigger">
-                        <div class="animated-border-card p-6 md:p-8 h-full">
-                            <h3
-                                class="text-xl font-bold text-white mb-8 border-b border-white/10 pb-4 flex items-center gap-2">
-                                <span class="text-neon-pink">></span> Frameworks
+                        <div class="animated-border-card p-6 md:p-8 h-full" style="--border-color:#bd00ff;">
+                            <h3 class="text-xl font-bold text-white mb-8 border-b border-white/10 pb-4 font-mono">
+                                &gt; Frameworks & Runtime
                             </h3>
-                            <ul class="space-y-5 text-sm md:text-base text-gray-300 font-mono">
-                                <li class="flex items-center gap-4 group/item">
-                                    <i
-                                        class="fa-brands fa-react text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
-                                    <span>React + Vite</span>
-                                </li>
-                                <li class="flex items-center gap-4 group/item">
-                                    <i
-                                        class="fa-solid fa-wind text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
-                                    <span>Tailwind CSS</span>
-                                </li>
-                                <li class="flex items-center gap-4 group/item">
-                                    <i
-                                        class="fa-brands fa-node-js text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
-                                    <span>Express (APIs)</span>
-                                </li>
-                                <li class="flex items-center gap-4 group/item">
-                                    <i
-                                        class="fa-solid fa-leaf text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
-                                    <span>Spring Boot</span>
-                                </li>
+
+                            <ul class="grid grid-cols-4 gap-8 place-items-center mt-6">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                                    class="w-8 h-8">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                                    class="w-8 h-8">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                                    class="h-6">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                                    class="w-8 h-8">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                                    class="w-8 h-8">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+                                    class="w-8 h-8 invert opacity-80">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+                                    class="w-8 h-8">
+
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
+                                    class="w-8 h-8">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+                                    class="w-8 h-8">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+                                    class="w-8 h-8 invert opacity-80">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg"
+                                    class="w-8 h-8">
+
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                                    class="w-8 h-8 opacity-70" title="NLTK">
+
                             </ul>
+
                         </div>
                     </div>
 
+                    <!-- ================= HACKER TERMINAL ================= -->
                     <div class="tilt-card hover-trigger">
-                        <div class="animated-border-card p-6 md:p-8 h-full font-mono text-sm relative">
-                            <div class="text-neon-pink mb-4 border-b border-neon-pink/20 pb-2 text-base font-bold">
-                                > Tools_Concepts.exe
+                        <div class="animated-border-card p-6 md:p-8 h-full font-mono text-sm"
+                            style="--border-color:#00ff9d;">
+
+                            <div class="text-neon-green mb-4 border-b border-neon-green/30 pb-2 text-base font-bold">
+                                root@utpal:~$ system_check
                             </div>
 
-                            <div class="space-y-2 text-neon-pink/80 text-[16px]">
-                                <p class="flex items-center gap-2"><i class="fa-brands fa-git-alt"></i> [+] Git / GitHub
+                            <div class="space-y-2 text-neon-green/80 text-[15px]">
+                                <p>[✔] Git / GitHub</p>
+                                <p>[✔] Linux / CLI</p>
+                                <p>[✔] Browser DevTools</p>
+                                <p>[✔] Performance Profiling</p>
+                                <p>[✔] DSA / OOPs</p>
+                                <p>[✔] DBMS / SQL</p>
+                                <p class="mt-4 text-neon-green animate-pulse">
+                                    STATUS: AUTHORIZED
                                 </p>
-                                <p class="flex items-center gap-2"><i class="fa-solid fa-terminal"></i> [+] DevTools</p>
-                                <p class="flex items-center gap-2"><i class="fa-solid fa-gauge-high"></i> [+] Perf APIs
-                                </p>
-                                <p class="flex items-center gap-2"><i class="fa-solid fa-brain"></i> [+] DSA / OOPs</p>
-                                <p class="flex items-center gap-2"><i class="fa-solid fa-database"></i> [+] DBMS</p>
-                                <p class="mt-4 text-neon-pink animate-pulse">_System_Core_Optimized</p>
                             </div>
+
                         </div>
                     </div>
 
