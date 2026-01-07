@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Utpal Raj | Portfolio 2025</title>
+    <title>Utpal Raj | Portfolio 2026</title>
 
     <link
         href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&f[]=satoshi@300,400,500,700,900&display=swap"
@@ -29,15 +29,27 @@
                         'card-bg': 'rgba(20, 20, 20, 0.6)',
                         'neon-cyan': '#00f3ff',
                         'neon-purple': '#bd00ff',
+                        'neon-pink': '#ff00ff',
                         'neon-green': '#00ff9d',
                         'neon-yellow': '#ffe600',
                     },
-                    backgroundImage: {
-                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                    },
                     animation: {
                         'spin-slow': 'spin 10s linear infinite',
-                    }
+                        'tilt': 'tilt 10s infinite linear',
+                    },
+                    keyframes: {
+                        tilt: {
+                            '0%, 50%, 100%': {
+                                transform: 'rotate(0deg)',
+                            },
+                            '25%': {
+                                transform: 'rotate(1deg)',
+                            },
+                            '75%': {
+                                transform: 'rotate(-1deg)',
+                            },
+                        },
+                    },
                 }
             }
         }
@@ -63,20 +75,16 @@
             background-color: #050505;
             color: #e5e5e5;
             overflow-x: hidden;
-            /* UPDATED: Default cursor is now visible */
             cursor: auto;
         }
 
-        /* --- ADVANCED CURSOR (Visual Follower Only) --- */
+        /* --- ADVANCED CURSOR --- */
         @media (hover: hover) and (pointer: fine) {
             #custom-cursor {
                 display: block;
             }
-
-            /* UPDATED: Removed body { cursor: none; } so system pointer stays visible */
         }
 
-        /* Hide custom cursor on mobile to fix click issues */
         @media (hover: none) {
             #custom-cursor {
                 display: none;
@@ -136,6 +144,68 @@
             }
         }
 
+        /* --- MOVING BORDER LOGIC (Universal) --- */
+        .moving-border {
+            position: relative;
+            overflow: hidden;
+            background: #0a0a0a;
+            border-radius: 1rem;
+            z-index: 1;
+            /* Default static border */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: border-color 0.3s ease;
+            /* Variable for border color - defaults to white */
+            --border-color: #ffffff;
+        }
+
+        .moving-border::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            /* Uses the CSS variable for color */
+            background: conic-gradient(transparent 0deg,
+                    transparent 270deg,
+                    var(--border-color) 360deg);
+            transform: translate(-50%, -50%);
+            animation: rotateBorder 4s linear infinite;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Inner background to mask the center */
+        .moving-border::after {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            /* Border thickness */
+            background: #0a0a0a;
+            border-radius: 0.95rem;
+            z-index: -1;
+        }
+
+        .moving-border:hover::before {
+            opacity: 1;
+        }
+
+        .moving-border:hover {
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes rotateBorder {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
         /* --- 3D TILT CARD --- */
         .tilt-card {
             transform-style: preserve-3d;
@@ -146,41 +216,55 @@
             transform: translateZ(20px);
         }
 
-        /* --- HOLOGRAPHIC SHINE --- */
-        /* CYBERPUNK CERT CARD REWORK */
-        .holo-card {
-            height: auto !important;
-            padding: 2rem !important;
-            background: rgba(10, 10, 10, 0.65) !important;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px) saturate(180%);
-            transition: all 0.3s ease;
+        /* --- MOVING GLOWING BORDER (For Arsenal/Stack) --- */
+        .animated-border-card {
+            position: relative;
+            background: #050505;
+            border-radius: 1rem;
+            overflow: hidden;
+            z-index: 1;
         }
 
-        .holo-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(255, 0, 221, 0.5);
-            box-shadow: none;
+        .animated-border-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background: conic-gradient(transparent, transparent, transparent, #555);
+            transform: translate(-50%, -50%);
+            animation: rotate 4s linear infinite;
+            z-index: -2;
+            transition: background 0.3s;
         }
 
-        /* Smaller height & tighter spacing */
-        .holo-card h4 {
-            font-size: 1.6rem !important;
+        .animated-border-card:hover::before {
+            /* Hot Pink Neon Gradient on Hover */
+            background: conic-gradient(transparent, transparent, #ff00ff, #ff00ff);
         }
 
-        .holo-card p {
-            font-size: 0.95rem !important;
-            margin-bottom: 1.25rem !important;
+        .animated-border-card::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: #0a0a0a;
+            border-radius: inherit;
+            z-index: -1;
         }
 
-        .holo-card .badge {
-            font-size: 0.65rem;
-            padding: 4px 10px;
+        .animated-border-card:hover {
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
         }
 
-        /* Cyberpunk neon text glow */
-        .cyber-glow {
-            text-shadow: 0 0 8px currentColor, 0 0 18px currentColor;
+        @keyframes rotate {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
 
 
@@ -259,11 +343,14 @@
                     <span class="text-neon-cyan">&lt;</span>UR<span class="text-neon-cyan">/&gt;</span>
                 </a>
 
-                <div class="hidden md:flex gap-10 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">
+                <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">
                     <a href="#about" class="magnetic-btn hover:text-white hover-trigger py-2">About</a>
-                    <a href="#education" class="magnetic-btn hover:text-white hover-trigger py-2">Stats</a>
                     <a href="#skills" class="magnetic-btn hover:text-white hover-trigger py-2">Stack</a>
-                    <a href="#projects" class="magnetic-btn hover:text-white hover-trigger py-2">Work</a>
+                    <a href="#profiles" class="magnetic-btn hover:text-white hover-trigger py-2">Activity</a>
+
+                    <a href="#experience" class="magnetic-btn hover:text-white hover-trigger py-2">Experience</a>
+
+                    <a href="#projects" class="magnetic-btn hover:text-white hover-trigger py-2">Projects</a>
                 </div>
 
                 <div class="flex items-center gap-4">
@@ -284,8 +371,10 @@
     <div id="mobile-menu"
         class="fixed inset-0 z-[60] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 text-3xl font-display font-bold text-white uppercase translate-y-[-100%] transition-transform duration-500">
         <a href="#about" class="mobile-link hover:text-neon-cyan">About</a>
-        <a href="#education" class="mobile-link hover:text-neon-cyan">Stats</a>
         <a href="#skills" class="mobile-link hover:text-neon-cyan">Stack</a>
+        <a href="#profiles" class="mobile-link hover:text-neon-yellow">Profiles</a>
+        <a href="#activity" class="mobile-link hover:text-neon-green">Activity</a>
+        <a href="#experience" class="mobile-link hover:text-neon-purple">Timeline</a>
         <a href="#projects" class="mobile-link hover:text-neon-cyan">Work</a>
         <a href="#contact"
             class="mobile-link text-neon-cyan mt-4 text-2xl border border-neon-cyan px-8 py-3 rounded-full">Contact
@@ -296,7 +385,7 @@
         </button>
     </div>
 
-    <main class="relative w-full overflow-hidden">
+    <main class="relative w-full">
 
         <section class="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
             <div
@@ -371,8 +460,8 @@
 
                     <div class="grid grid-cols-2 gap-3 md:gap-4">
                         <div class="tilt-card hover-trigger">
-                            <div
-                                class="holo-card p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/5 group">
+                            <div class="moving-border p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent group"
+                                style="--border-color: #00f3ff;">
                                 <i
                                     class="fa-solid fa-code text-3xl md:text-5xl text-gray-500 group-hover:text-neon-cyan mb-2 md:mb-4 transition-colors tilt-content"></i>
                                 <span
@@ -380,8 +469,8 @@
                             </div>
                         </div>
                         <div class="tilt-card hover-trigger">
-                            <div
-                                class="holo-card p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/5 group">
+                            <div class="moving-border p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent group"
+                                style="--border-color: #bd00ff;">
                                 <i
                                     class="fa-solid fa-brain text-3xl md:text-5xl text-gray-500 group-hover:text-neon-purple mb-2 md:mb-4 transition-colors tilt-content"></i>
                                 <span class="font-bold text-xs md:text-lg text-white tracking-widest tilt-content">AI /
@@ -389,8 +478,8 @@
                             </div>
                         </div>
                         <div class="tilt-card hover-trigger">
-                            <div
-                                class="holo-card p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/5 group">
+                            <div class="moving-border p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent group"
+                                style="--border-color: #00ff9d;">
                                 <i
                                     class="fa-solid fa-globe text-3xl md:text-5xl text-gray-500 group-hover:text-neon-green mb-2 md:mb-4 transition-colors tilt-content"></i>
                                 <span
@@ -398,8 +487,8 @@
                             </div>
                         </div>
                         <div class="tilt-card hover-trigger">
-                            <div
-                                class="holo-card p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/5 group">
+                            <div class="moving-border p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent group"
+                                style="--border-color: #ffe600;">
                                 <i
                                     class="fa-solid fa-robot text-3xl md:text-5xl text-gray-500 group-hover:text-neon-yellow mb-2 md:mb-4 transition-colors tilt-content"></i>
                                 <span
@@ -412,7 +501,7 @@
         </section>
 
         <section id="education" class="py-20 md:py-32 relative z-10">
-            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl text-left">
                 <span
                     class="text-xs md:text-sm font-bold text-white uppercase tracking-[0.2em] mb-4 block scramble-text">02
                     // The Foundation</span>
@@ -443,8 +532,8 @@
 
                     <div class="grid grid-cols-2 gap-3 md:gap-4">
                         <div class="tilt-card hover-trigger">
-                            <div
-                                class="bg-[#0a0a0a] border border-white/5 p-4 md:p-8 rounded-xl hover:border-neon-yellow/50 transition-colors h-full">
+                            <div class="moving-border p-4 md:p-8 h-full flex flex-col justify-center rounded-xl bg-[#0a0a0a]"
+                                style="--border-color: #ffe600;">
                                 <div class="text-2xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2">Rank 1
                                 </div>
                                 <div class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest">OSSome Hacks
@@ -452,8 +541,8 @@
                             </div>
                         </div>
                         <div class="tilt-card hover-trigger">
-                            <div
-                                class="bg-[#0a0a0a] border border-white/5 p-4 md:p-8 rounded-xl hover:border-neon-green/50 transition-colors h-full">
+                            <div class="moving-border p-4 md:p-8 h-full flex flex-col justify-center rounded-xl bg-[#0a0a0a]"
+                                style="--border-color: #00ff9d;">
                                 <div class="text-2xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2">300+
                                 </div>
                                 <div class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest">DSA Solved
@@ -461,16 +550,16 @@
                             </div>
                         </div>
                         <div class="tilt-card hover-trigger">
-                            <div
-                                class="bg-[#0a0a0a] border border-white/5 p-4 md:p-8 rounded-xl hover:border-neon-cyan/50 transition-colors h-full">
+                            <div class="moving-border p-4 md:p-8 h-full flex flex-col justify-center rounded-xl bg-[#0a0a0a]"
+                                style="--border-color: #00f3ff;">
                                 <div class="text-2xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2">9.53
                                 </div>
                                 <div class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest">CGPA</div>
                             </div>
                         </div>
                         <div class="tilt-card hover-trigger">
-                            <div
-                                class="bg-[#0a0a0a] border border-white/5 p-4 md:p-8 rounded-xl hover:border-neon-purple/50 transition-colors h-full">
+                            <div class="moving-border p-4 md:p-8 h-full flex flex-col justify-center rounded-xl bg-[#0a0a0a]"
+                                style="--border-color: #bd00ff;">
                                 <div class="text-2xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2">1.6k+
                                 </div>
                                 <div class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest">Rating</div>
@@ -482,7 +571,7 @@
         </section>
 
         <section id="skills" class="py-20 md:py-32 relative z-10">
-            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl text-left">
                 <span
                     class="text-xs md:text-sm font-bold text-neon-purple uppercase tracking-[0.2em] mb-4 block scramble-text">
                     03 // The Arsenal
@@ -492,31 +581,30 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                     <div class="tilt-card hover-trigger">
-                        <div
-                            class="holo-card p-6 md:p-8 h-full rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 group">
+                        <div class="animated-border-card p-6 md:p-8 h-full">
                             <h3
                                 class="text-xl font-bold text-white mb-8 border-b border-white/10 pb-4 flex items-center gap-2">
-                                <span class="text-neon-cyan">></span> Languages
+                                <span class="text-neon-pink">></span> Languages
                             </h3>
                             <ul class="space-y-5 text-sm md:text-base text-gray-300 font-mono">
                                 <li class="flex items-center gap-4 group/item">
                                     <i
-                                        class="fa-solid fa-code text-neon-cyan text-xl group-hover/item:scale-125 transition-transform"></i>
+                                        class="fa-solid fa-code text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
                                     <span>C / C++</span>
                                 </li>
                                 <li class="flex items-center gap-4 group/item">
                                     <i
-                                        class="fa-brands fa-python text-neon-cyan text-xl group-hover/item:scale-125 transition-transform"></i>
+                                        class="fa-brands fa-python text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
                                     <span>Python</span>
                                 </li>
                                 <li class="flex items-center gap-4 group/item">
                                     <i
-                                        class="fa-brands fa-java text-neon-cyan text-xl group-hover/item:scale-125 transition-transform"></i>
+                                        class="fa-brands fa-java text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
                                     <span>Java(Intermediate)</span>
                                 </li>
                                 <li class="flex items-center gap-4 group/item">
                                     <i
-                                        class="fa-brands fa-js text-neon-cyan text-xl group-hover/item:scale-125 transition-transform"></i>
+                                        class="fa-brands fa-js text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
                                     <span>JavaScript</span>
                                 </li>
                             </ul>
@@ -524,31 +612,30 @@
                     </div>
 
                     <div class="tilt-card hover-trigger">
-                        <div
-                            class="holo-card p-6 md:p-8 h-full rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 group">
+                        <div class="animated-border-card p-6 md:p-8 h-full">
                             <h3
                                 class="text-xl font-bold text-white mb-8 border-b border-white/10 pb-4 flex items-center gap-2">
-                                <span class="text-neon-purple">></span> Frameworks
+                                <span class="text-neon-pink">></span> Frameworks
                             </h3>
                             <ul class="space-y-5 text-sm md:text-base text-gray-300 font-mono">
                                 <li class="flex items-center gap-4 group/item">
                                     <i
-                                        class="fa-brands fa-react text-neon-purple text-xl group-hover/item:scale-125 transition-transform"></i>
+                                        class="fa-brands fa-react text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
                                     <span>React + Vite</span>
                                 </li>
                                 <li class="flex items-center gap-4 group/item">
                                     <i
-                                        class="fa-solid fa-wind text-neon-purple text-xl group-hover/item:scale-125 transition-transform"></i>
+                                        class="fa-solid fa-wind text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
                                     <span>Tailwind CSS</span>
                                 </li>
                                 <li class="flex items-center gap-4 group/item">
                                     <i
-                                        class="fa-brands fa-node-js text-neon-purple text-xl group-hover/item:scale-125 transition-transform"></i>
+                                        class="fa-brands fa-node-js text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
                                     <span>Express (APIs)</span>
                                 </li>
                                 <li class="flex items-center gap-4 group/item">
                                     <i
-                                        class="fa-solid fa-leaf text-neon-purple text-xl group-hover/item:scale-125 transition-transform"></i>
+                                        class="fa-solid fa-leaf text-neon-pink text-xl group-hover/item:scale-125 transition-transform"></i>
                                     <span>Spring Boot</span>
                                 </li>
                             </ul>
@@ -556,17 +643,12 @@
                     </div>
 
                     <div class="tilt-card hover-trigger">
-                        <div
-                            class="bg-black/80 p-6 md:p-8 h-full rounded-2xl border border-neon-green/30 font-mono text-sm relative overflow-hidden">
-                            <div
-                                class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none">
-                            </div>
-
-                            <div class="text-neon-green mb-4 border-b border-neon-green/20 pb-2 text-base font-bold">
+                        <div class="animated-border-card p-6 md:p-8 h-full font-mono text-sm relative">
+                            <div class="text-neon-pink mb-4 border-b border-neon-pink/20 pb-2 text-base font-bold">
                                 > Tools_Concepts.exe
                             </div>
 
-                            <div class="space-y-2 text-neon-green/80 text-[16px]">
+                            <div class="space-y-2 text-neon-pink/80 text-[16px]">
                                 <p class="flex items-center gap-2"><i class="fa-brands fa-git-alt"></i> [+] Git / GitHub
                                 </p>
                                 <p class="flex items-center gap-2"><i class="fa-solid fa-terminal"></i> [+] DevTools</p>
@@ -574,7 +656,7 @@
                                 </p>
                                 <p class="flex items-center gap-2"><i class="fa-solid fa-brain"></i> [+] DSA / OOPs</p>
                                 <p class="flex items-center gap-2"><i class="fa-solid fa-database"></i> [+] DBMS</p>
-                                <p class="mt-4 text-neon-green animate-pulse">_System_Core_Optimized</p>
+                                <p class="mt-4 text-neon-pink animate-pulse">_System_Core_Optimized</p>
                             </div>
                         </div>
                     </div>
@@ -582,200 +664,406 @@
                 </div>
             </div>
         </section>
-     <section class="py-20 md:py-24 relative z-10">
-    <div class="container mx-auto px-4 md:px-6 max-w-5xl"> <span class="text-xs md:text-sm font-bold text-neon-green uppercase tracking-[0.2em] mb-4 block scramble-text">
-            04 // Experience
-        </span>
 
-        <div class="tilt-card mt-6 md:mt-8 hover-trigger">
-            <div class="holo-card p-6 md:p-8 rounded-2xl border-l-4 border-neon-cyan relative overflow-hidden group">
-                
-                <div class="absolute -right-16 -top-16 w-32 h-32 md:w-64 md:h-64 bg-neon-cyan/10 rounded-full blur-[50px] md:blur-[80px] group-hover:bg-neon-cyan/20 transition-all duration-500">
+        <section id="profiles" class="py-20 md:py-32 relative z-10">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl text-left">
+
+                <!-- ===== PROFILES HEADER ===== -->
+                <span
+                    class="text-xs md:text-sm font-bold text-neon-yellow uppercase tracking-[0.2em] mb-4 block scramble-text">
+                    04 // The Grind
+                </span>
+
+                <h2 class="text-4xl md:text-6xl font-display font-bold text-white mb-12">
+                    Competitive <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-yellow to-orange-500">
+                        Profiles
+                    </span>
+                </h2>
+
+                <!-- ===== PROFILES GRID ===== -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+
+                    <!-- LeetCode -->
+                    <a href="https://leetcode.com/u/raj_1609utpal/" target="_blank"
+                        class="tilt-card hover-trigger group">
+                        <div class="moving-border h-full p-6 flex flex-col items-center justify-center gap-4 bg-black/40"
+                            style="--border-color: #FFA116;">
+                            <div
+                                class="w-16 h-16 rounded-full bg-[#FFA116]/10 flex items-center justify-center shadow-[0_0_15px_rgba(255,161,22,0.2)] group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-code text-2xl text-[#FFA116]"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white tracking-wide">LeetCode</h3>
+                            <div
+                                class="px-4 py-1 rounded-full border border-[#FFA116]/30 text-[#FFA116] text-xs font-mono uppercase">
+                                View Profile
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- GFG -->
+                    <a href="https://www.geeksforgeeks.org/user/utpalraxs5e/" target="_blank"
+                        class="tilt-card hover-trigger group">
+                        <div class="moving-border h-full p-6 flex flex-col items-center justify-center gap-4 bg-black/40"
+                            style="--border-color: #2f8d46;">
+                            <div
+                                class="w-16 h-16 rounded-full bg-[#2f8d46]/10 flex items-center justify-center shadow-[0_0_15px_rgba(47,141,70,0.2)] group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-terminal text-2xl text-[#2f8d46]"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white tracking-wide">GeeksForGeeks</h3>
+                            <div
+                                class="px-4 py-1 rounded-full border border-[#2f8d46]/30 text-[#2f8d46] text-xs font-mono uppercase">
+                                View Profile
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Code360 -->
+                    <a href="https://www.naukri.com/code360/profile/raj_utpal1609" target="_blank"
+                        class="tilt-card hover-trigger group">
+                        <div class="moving-border h-full p-6 flex flex-col items-center justify-center gap-4 bg-black/40"
+                            style="--border-color: #DD6C00;">
+                            <div
+                                class="w-16 h-16 rounded-full bg-[#DD6C00]/10 flex items-center justify-center shadow-[0_0_15px_rgba(221,108,0,0.2)] group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-ninja text-2xl text-[#DD6C00]"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white tracking-wide">Code360</h3>
+                            <div
+                                class="px-4 py-1 rounded-full border border-[#DD6C00]/30 text-[#DD6C00] text-xs font-mono uppercase">
+                                View Profile
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Codeforces -->
+                    <a href="https://codeforces.com/profile/utpalraj1609" target="_blank"
+                        class="tilt-card hover-trigger group">
+                        <div class="moving-border h-full p-6 flex flex-col items-center justify-center gap-4 bg-black/40"
+                            style="--border-color: #318CE7;">
+                            <div
+                                class="w-16 h-16 rounded-full bg-[#318CE7]/10 flex items-center justify-center shadow-[0_0_15px_rgba(49,140,231,0.2)] group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-chart-simple text-2xl text-[#318CE7]"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white tracking-wide">CodeForces</h3>
+                            <div
+                                class="px-4 py-1 rounded-full border border-[#318CE7]/30 text-[#318CE7] text-xs font-mono uppercase">
+                                View Profile
+                            </div>
+                        </div>
+                    </a>
+
                 </div>
 
-                <div class="relative z-10 flex flex-col md:flex-row justify-between items-start gap-3 md:gap-4">
-                    <div>
-                        <h3 class="text-xl md:text-3xl font-bold text-white">Optivix AI</h3>
-                        <p class="text-neon-cyan font-mono mt-1 text-sm md:text-base">Frontend Developer Intern</p>
+
+                <!-- ===== ACTIVITY GRID ===== -->
+                <!-- ===== ACTIVITY GRID ===== -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                    <!-- LeetCode Heatmap -->
+                    <div class="tilt-card hover-trigger h-full">
+                        <div class="moving-border p-0 h-full flex flex-col bg-black/60"
+                            style="--border-color: #FFA116;">
+
+                            <div class="p-6 pb-2">
+                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-fire text-[#FFA116]"></i> LeetCode Heatmap
+                                </h3>
+                            </div>
+
+                            <div class="p-4 flex-1 flex justify-center items-center overflow-x-auto">
+                                <img src="https://leetcard.jacoblin.cool/raj_1609utpal?ext=heatmap&theme=dark&border=0&radius=10"
+                                    alt="LeetCode Heatmap" class="max-w-full h-auto rounded-lg opacity-90">
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="px-3 py-1 border border-white/10 rounded-full text-xs font-mono text-gray-400">
-                        Aug '25 - Oct '25
+
+                    <!-- GitHub Heatmap -->
+                    <div class="tilt-card hover-trigger h-full">
+                        <div class="moving-border p-0 h-full flex flex-col bg-black/60"
+                            style="--border-color: #00f3ff;">
+
+                            <div class="p-6 pb-2">
+                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                    <i class="fa-brands fa-github text-neon-cyan"></i> GitHub Contributions
+                                </h3>
+                            </div>
+
+                            <div class="p-4 flex-1 flex justify-center items-center overflow-x-auto">
+                                <img src="https://ghchart.rshah.org/00f3ff/utpal16raj09" alt="GitHub Contribution Graph"
+                                    class="max-w-full h-auto min-w-[300px] rounded-lg opacity-80 invert hue-rotate-180 brightness-150 contrast-125">
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+
+
+        <section id="experience" class="py-20 md:py-32 relative z-10">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div class="lg:col-span-1">
+                    <div class="sticky top-32">
+                        <span
+                            class="text-xs md:text-sm font-bold text-neon-green uppercase tracking-[0.2em] mb-4 block scramble-text">
+                            05 // The Journey
+                        </span>
+                        <h2 class="text-4xl md:text-6xl font-display font-bold text-white mb-6">
+                            Career <br> <span
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-emerald-600">Timeline</span>
+                        </h2>
+                        <p class="text-gray-400 text-sm">
+                            My professional journey in tech, from internships to active team contributions.
+                        </p>
                     </div>
                 </div>
 
-                <p class="relative z-10 text-gray-300 mt-4 md:mt-6 text-sm md:text-base max-w-3xl leading-relaxed">
-                    Spearheaded the frontend overhaul for an AI agent platform. Translated complex backend workflows into a seamless, modular UI for non-technical stakeholders.
-                </p>
-
-                <div class="relative z-10 grid grid-cols-2 gap-4 mt-6 md:mt-8">
-                    <div>
-                        <div class="text-xl md:text-3xl font-display font-bold text-white">14%</div>
-                        <div class="text-[10px] md:text-xs text-gray-500 uppercase mt-1">SEO Growth</div>
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="tilt-card hover-trigger">
+                        <div class="moving-border p-6 md:p-8 relative group" style="--border-color: #00ff9d;">
+                            <div
+                                class="relative z-10 flex flex-col md:flex-row justify-between items-start gap-3 md:gap-4">
+                                <div>
+                                    <h3 class="text-xl md:text-3xl font-bold text-white">Tagzzs</h3>
+                                    <p class="text-neon-green font-mono mt-1 text-sm md:text-base">Developer</p>
+                                </div>
+                                <div
+                                    class="px-3 py-1 border border-white/10 rounded-full text-xs font-mono text-gray-400">
+                                    2025 - Present
+                                </div>
+                            </div>
+                            <p class="relative z-10 text-gray-300 mt-4 md:mt-6 text-sm md:text-base leading-relaxed">
+                                Active member of the core development team at Tagzzs, an AI-powered knowledge
+                                management platform.
+                                Contributing to modern frontend architecture, AI-driven features (tagging, insights,
+                                neural graph),
+                                and occasional backend enhancements.
+                            </p>
+                            <div class="relative z-10 grid grid-cols-2 gap-4 mt-6">
+                                <div>
+                                    <div class="text-xl font-display font-bold text-white">Core Team</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Active Contributor</div>
+                                </div>
+                                <div>
+                                    <div class="text-xl font-display font-bold text-white">Full-Stack</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Frontend Focus</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <div class="text-xl md:text-3xl font-display font-bold text-white">100%</div>
-                        <div class="text-[10px] md:text-xs text-gray-500 uppercase mt-1">Modular UI</div>
+
+                    <div class="tilt-card hover-trigger">
+                        <div class="moving-border p-6 md:p-8 relative group" style="--border-color: #00f3ff;">
+                            <div
+                                class="relative z-10 flex flex-col md:flex-row justify-between items-start gap-3 md:gap-4">
+                                <div>
+                                    <h3 class="text-xl md:text-3xl font-bold text-white">Optivix AI</h3>
+                                    <p class="text-neon-cyan font-mono mt-1 text-sm md:text-base">Frontend Developer
+                                    </p>
+                                </div>
+                                <div
+                                    class="px-3 py-1 border border-white/10 rounded-full text-xs font-mono text-gray-400">
+                                    Aug '25 - Oct '25
+                                </div>
+                            </div>
+                            <p class="relative z-10 text-gray-300 mt-4 md:mt-6 text-sm md:text-base leading-relaxed">
+                                Led the design and implementation of the dashboard and end-to-end UI/UX for an AI agent
+                                platform, crafting a clean landing page and simplifying complex backend workflows into a
+                                cohesive, user-centric experience.
+                            </p>
+                            <div class="relative z-10 grid grid-cols-2 gap-4 mt-6">
+                                <div>
+                                    <div class="text-xl font-display font-bold text-white">UI Revamp</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Design & UX Overhaul</div>
+                                </div>
+                                <div>
+                                    <div class="text-xl font-display font-bold text-white">Componentized</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Reusable UI System</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="tilt-card hover-trigger">
+                        <div class="moving-border p-6 md:p-8 relative group" style="--border-color: #bd00ff;">
+                            <div
+                                class="relative z-10 flex flex-col md:flex-row justify-between items-start gap-3 md:gap-4">
+                                <div>
+                                    <h3 class="text-xl md:text-3xl font-bold text-white">Freelance</h3>
+                                    <p class="text-neon-purple font-mono mt-1 text-sm md:text-base">Web Developer
+                                    </p>
+                                </div>
+                                <div
+                                    class="px-3 py-1 border border-white/10 rounded-full text-xs font-mono text-gray-400">
+                                    2025 - Present
+                                </div>
+                            </div>
+                            <p class="relative z-10 text-gray-300 mt-4 md:mt-6 text-sm md:text-base leading-relaxed">
+                                Designed dynamic, interactive single-page websites with fully functional UI/UX,
+                                including animations, client-side logic, and working contact and email workflows,
+                                delivering production-ready experiences end to end. </p>
+                            <div class="relative z-10 grid grid-cols-2 gap-4 mt-6">
+                                <div>
+                                    <div class="text-xl font-display font-bold text-white">Multi-Client</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Landing Pages</div>
+                                </div>
+                                <div>
+                                    <div class="text-xl font-display font-bold text-white">UI/UX Owned</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Design → Delivery</div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="tilt-card mt-6 md:mt-8 hover-trigger">
-            <div class="holo-card p-6 md:p-8 rounded-2xl border-l-4 border-fuchsia-500 relative overflow-hidden group">
-                
-                <div class="absolute -right-16 -top-16 w-32 h-32 md:w-64 md:h-64 bg-fuchsia-500/10 rounded-full blur-[50px] md:blur-[80px] group-hover:bg-fuchsia-500/20 transition-all duration-500">
-                </div>
-
-                <div class="relative z-10 flex flex-col md:flex-row justify-between items-start gap-3 md:gap-4">
-                    <div>
-                        <h3 class="text-xl md:text-3xl font-bold text-white">Freelance</h3>
-                        <p class="text-fuchsia-400 font-mono mt-1 text-sm md:text-base">Web Developer</p>
-                    </div>
-                    <div class="px-3 py-1 border border-white/10 rounded-full text-xs font-mono text-gray-400">
-                        2025 - Present
-                    </div>
-                </div>
-
-                <p class="relative z-10 text-gray-300 mt-4 md:mt-6 text-sm md:text-base max-w-3xl leading-relaxed">
-                    Delivered production-ready, client-facing websites using React, JavaScript, and Tailwind CSS. Managed end-to-end delivery from requirement clarification to deployment.
-                </p>
-
-                <div class="relative z-10 grid grid-cols-2 gap-4 mt-6 md:mt-8">
-                    <div>
-                        <div class="text-lg md:text-2xl font-display font-bold text-white">End-to-End</div>
-                        <div class="text-[10px] md:text-xs text-gray-500 uppercase mt-1">Delivery</div>
-                    </div>
-                    <div>
-                        <div class="text-lg md:text-2xl font-display font-bold text-white">Web Dev</div>
-                        <div class="text-[10px] md:text-xs text-gray-500 uppercase mt-1">Client-Facing</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
         <section id="projects" class="py-20 md:py-32 relative z-10">
             <div class="container mx-auto px-4 md:px-6 max-w-7xl">
-                <span
-                    class="text-xs md:text-sm font-bold text-neon-cyan uppercase tracking-[0.2em] mb-4 block scramble-text">
-                    05 // The Craft
-                </span>
-                <h2 class="text-4xl md:text-7xl font-display font-bold text-white mb-12 md:mb-20">Selected Works</h2>
+                <div class="flex flex-col lg:flex-row gap-12 lg:gap-20">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                    <div class="project-card group cursor-pointer relative tilt-card" onclick="openProjectModal('architect')">
-                        <div
-                            class="h-64 md:h-[350px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-yellow transition-all duration-500 shadow-lg">
-                            <img src="architect.png"
-                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                            <div
-                                class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity">
-                            </div>
-                            <div class="absolute bottom-6 left-6 z-20">
-                                <h3
-                                    class="text-2xl font-bold text-white group-hover:text-neon-yellow transition-colors">
-                                    The Architect</h3>
-                                <p class="text-neon-yellow text-[10px] font-mono mt-1 uppercase tracking-[0.2em]">AI Code Studio</p>
-                            </div>
-                            <div
-                                class="absolute top-0 right-0 w-16 h-16 bg-neon-yellow/10 blur-2xl group-hover:bg-neon-yellow/30 transition-all">
-                            </div>
+                    <div class="lg:w-1/3 lg:sticky lg:top-32 lg:self-start h-fit">
+                        <span
+                            class="text-xs md:text-sm font-bold text-neon-cyan uppercase tracking-[0.2em] mb-4 block scramble-text">
+                            06 // The Craft
+                        </span>
+                        <h2 class="text-4xl md:text-7xl font-display font-bold text-white mb-6 md:mb-8">
+                            Selected <br> <span
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-blue-500">Works</span>
+                        </h2>
+                        <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-8 hidden lg:block">
+                            A collection of digital experiences, tools, and systems architected with precision. Each
+                            project represents a unique challenge solved through code.
+                        </p>
+                        <div class="hidden lg:block w-20 h-1 rounded-full">
                         </div>
                     </div>
 
-                    <div class="project-card group cursor-pointer relative tilt-card" onclick="openProjectModal('docify')">
-                        <div
-                            class="h-64 md:h-[350px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-purple transition-all duration-500 shadow-lg">
-                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000"
-                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                            <div
-                                class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity">
-                            </div>
-                            <div class="absolute bottom-6 left-6 z-20">
-                                <h3
-                                    class="text-2xl font-bold text-white group-hover:text-neon-purple transition-colors">
-                                    Docify</h3>
-                                <p class="text-neon-purple text-[10px] font-mono mt-1 uppercase tracking-[0.2em]">LLM Doc Generator</p>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8">
 
-                    <div class="project-card group cursor-pointer relative tilt-card"
-                        onclick="openProjectModal('perfwatch')">
-                        <div
-                            class="h-64 md:h-[350px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-cyan transition-all duration-500">
-                            <img src="perfwatch.png"
-                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                            <div
-                                class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity">
-                            </div>
-                            <div class="absolute bottom-6 left-6 z-20">
-                                <h3 class="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors">
-                                    PerfWatch</h3>
-                                <p class="text-neon-cyan text-xs font-mono mt-1 uppercase tracking-widest">Click to
-                                    Expand_</p>
+                        <div class="project-card cursor-pointer relative tilt-card"
+                            onclick="openProjectModal('architect')">
+                            <div class="moving-border h-64 md:h-[350px] group relative"
+                                style="--border-color: #ffe600;">
+                                <img src="architect.png"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                                <div
+                                    class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
+                                </div>
+                                <div class="absolute bottom-6 left-6 z-20">
+                                    <h3
+                                        class="text-2xl font-bold text-white group-hover:text-neon-yellow transition-colors">
+                                        The Architect</h3>
+                                    <p class="text-neon-yellow text-[10px] font-mono mt-1 uppercase tracking-[0.2em]">AI
+                                        Code Studio</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="project-card group cursor-pointer relative tilt-card"
-                        onclick="openProjectModal('text-tool')">
-                        <div
-                            class="h-64 md:h-[350px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-cyan transition-all duration-500">
-                            <img src="text.png"
-                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                            <div
-                                class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity">
-                            </div>
-                            <div class="absolute bottom-6 left-6 z-20">
-                                <h3 class="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors">
-                                    Text Comparison Tool</h3>
-                                <p class="text-neon-cyan text-xs font-mono mt-1 uppercase tracking-widest">Click to
-                                    Expand_</p>
+                        <div class="project-card cursor-pointer relative tilt-card"
+                            onclick="openProjectModal('docify')">
+                            <div class="moving-border h-64 md:h-[350px] group relative"
+                                style="--border-color: #bd00ff;">
+                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                                <div
+                                    class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
+                                </div>
+                                <div class="absolute bottom-6 left-6 z-20">
+                                    <h3
+                                        class="text-2xl font-bold text-white group-hover:text-neon-purple transition-colors">
+                                        Docify</h3>
+                                    <p class="text-neon-purple text-[10px] font-mono mt-1 uppercase tracking-[0.2em]">
+                                        LLM
+                                        Doc Generator</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="project-card group cursor-pointer relative tilt-card"
-                        onclick="openProjectModal('biometrics')">
-                        <div
-                            class="h-64 md:h-[350px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-purple transition-all duration-500">
-                            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000"
-                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                            <div
-                                class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity">
-                            </div>
-                            <div class="absolute bottom-6 left-6 z-20">
-                                <h3
-                                    class="text-2xl font-bold text-white group-hover:text-neon-purple transition-colors">
-                                    Age & Gender Detection</h3>
-                                <p class="text-neon-purple text-xs font-mono mt-1 uppercase tracking-widest">Click to
-                                    Expand_</p>
+                        <div class="project-card cursor-pointer relative tilt-card"
+                            onclick="openProjectModal('perfwatch')">
+                            <div class="moving-border h-64 md:h-[350px] group relative"
+                                style="--border-color: #00f3ff;">
+                                <img src="perfwatch.png"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                                <div
+                                    class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
+                                </div>
+                                <div class="absolute bottom-6 left-6 z-20">
+                                    <h3
+                                        class="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors">
+                                        PerfWatch</h3>
+                                    <p class="text-neon-cyan text-xs font-mono mt-1 uppercase tracking-widest">Click to
+                                        Expand_</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="project-card group cursor-pointer relative tilt-card"
-                        onclick="openProjectModal('image-tool')">
-                        <div
-                            class="h-64 md:h-[350px] rounded-2xl overflow-hidden relative border border-white/10 group-hover:border-neon-purple transition-all duration-500">
-                            <img src="image.png"
-                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                            <div
-                                class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity">
-                            </div>
-                            <div class="absolute bottom-6 left-6 z-20">
-                                <h3
-                                    class="text-2xl font-bold text-white group-hover:text-neon-purple transition-colors">
-                                    Image Enhancement Tool</h3>
-                                <p class="text-neon-purple text-xs font-mono mt-1 uppercase tracking-widest">Click to
-                                    Expand_</p>
+                        <div class="project-card cursor-pointer relative tilt-card"
+                            onclick="openProjectModal('text-tool')">
+                            <div class="moving-border h-64 md:h-[350px] group relative"
+                                style="--border-color: #00f3ff;">
+                                <img src="text.png"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                                <div
+                                    class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
+                                </div>
+                                <div class="absolute bottom-6 left-6 z-20">
+                                    <h3
+                                        class="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors">
+                                        Text Comparison Tool</h3>
+                                    <p class="text-neon-cyan text-xs font-mono mt-1 uppercase tracking-widest">Click to
+                                        Expand_</p>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="project-card cursor-pointer relative tilt-card"
+                            onclick="openProjectModal('biometrics')">
+                            <div class="moving-border h-64 md:h-[350px] group relative"
+                                style="--border-color: #bd00ff;">
+                                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                                <div
+                                    class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
+                                </div>
+                                <div class="absolute bottom-6 left-6 z-20">
+                                    <h3
+                                        class="text-2xl font-bold text-white group-hover:text-neon-purple transition-colors">
+                                        Age & Gender Detection</h3>
+                                    <p class="text-neon-purple text-xs font-mono mt-1 uppercase tracking-widest">Click
+                                        to
+                                        Expand_</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card cursor-pointer relative tilt-card"
+                            onclick="openProjectModal('image-tool')">
+                            <div class="moving-border h-64 md:h-[350px] group relative"
+                                style="--border-color: #00ff9d;">
+                                <img src="image.png"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                                <div
+                                    class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
+                                </div>
+                                <div class="absolute bottom-6 left-6 z-20">
+                                    <h3
+                                        class="text-2xl font-bold text-white group-hover:text-neon-green transition-colors">
+                                        Image Enhancement Tool</h3>
+                                    <p class="text-neon-green text-xs font-mono mt-1 uppercase tracking-widest">Click to
+                                        Expand_</p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    
                 </div>
             </div>
         </section>
@@ -794,30 +1082,29 @@
                 </div>
             </div>
         </div>
+
         <section id="certs" class="py-24 relative z-10">
-            <div class="container mx-auto px-6 max-w-7xl">
+            <div class="container mx-auto px-6 max-w-7xl text-left">
 
                 <div class="mb-16">
                     <span class="text-sm font-bold text-neon-cyan uppercase tracking-[0.2em] scramble-text">
-                        06 // The Proof
+                        07 // The Proof
                     </span>
                     <h2 class="text-4xl md:text-6xl font-display font-bold text-white mt-3">Certifications</h2>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <!-- CARD TEMPLATE (Neon Blue Theme Applied to All) -->
-                    <!-- CARD 1 -->
                     <div class="tilt-card hover-trigger">
-                        <div class="holo-card p-6 rounded-2xl border-b-2 border-neon-cyan/50 
-                            bg-black/40 backdrop-blur-md hover:bg-black/60 transition-all">
+                        <div class="moving-border p-6 rounded-2xl bg-black/40 backdrop-blur-md"
+                            style="--border-color: #ffe600;">
 
                             <div class="flex justify-between items-start mb-3">
-                                <div class="text-xs font-bold uppercase border border-neon-cyan/40 
-                                    text-neon-cyan px-2 py-0.5 rounded-full">
+                                <div class="text-xs font-bold uppercase border border-neon-yellow/40 
+                            text-neon-yellow px-2 py-0.5 rounded-full">
                                     NPTEL
                                 </div>
-                                <i class="fa-brands fa-java text-3xl text-neon-cyan"></i>
+                                <i class="fa-brands fa-java text-3xl text-neon-yellow"></i>
                             </div>
 
                             <h4 class="text-xl font-bold text-white mb-2">Programming in Java</h4>
@@ -826,89 +1113,89 @@
                             </p>
 
                             <a href="https://drive.google.com/file/d/1W66dlpwkyN2KLsRsYOoprS2dh9WBt_5h/view"
-                                class="inline-flex items-center gap-2 text-neon-cyan text-sm hover:text-cyan-300">
+                                class="inline-flex items-center gap-2 text-neon-yellow text-sm hover:text-yellow-300">
                                 <i class="fa-solid fa-eye"></i> View
                             </a>
                         </div>
                     </div>
 
-                    <!-- CARD 2 -->
                     <div class="tilt-card hover-trigger">
-                        <div class="holo-card p-6 rounded-2xl border-b-2 border-neon-cyan/50 
-                            bg-black/40 backdrop-blur-md hover:bg-black/60 transition-all">
+                        <div class="moving-border p-6 rounded-2xl bg-black/40 backdrop-blur-md"
+                            style="--border-color: #ff00ff;">
 
                             <div class="flex justify-between items-start mb-3">
-                                <div class="text-xs font-bold uppercase border border-neon-cyan/40 
-                                    text-neon-cyan px-2 py-0.5 rounded-full">
+                                <div class="text-xs font-bold uppercase border border-neon-pink/40 
+                            text-neon-pink px-2 py-0.5 rounded-full">
                                     IBM
                                 </div>
-                                <i class="fa-brands fa-python text-3xl text-neon-cyan"></i>
+                                <i class="fa-brands fa-python text-3xl text-neon-pink"></i>
                             </div>
 
                             <h4 class="text-xl font-bold text-white mb-2">Python for Data Science</h4>
                             <p class="text-gray-400 text-sm leading-relaxed mb-3">NumPy, Pandas & analytics.</p>
 
                             <a href="https://drive.google.com/file/d/1NXyKfPURriLZFegIbaDLdxp2qrREX-8C/view"
-                                class="inline-flex items-center gap-2 text-neon-cyan text-sm hover:text-cyan-300">
+                                class="inline-flex items-center gap-2 text-neon-pink text-sm hover:text-pink-300">
                                 <i class="fa-solid fa-eye"></i> View
                             </a>
                         </div>
                     </div>
 
-                    <!-- CARD 3 -->
                     <div class="tilt-card hover-trigger">
-                        <div class="holo-card p-6 rounded-2xl border-b-2 border-neon-cyan/50 
-                            bg-black/40 backdrop-blur-md hover:bg-black/60 transition-all">
+                        <div class="moving-border p-6 rounded-2xl bg-black/40 backdrop-blur-md"
+                            style="--border-color: #00ff9d;">
 
                             <div class="flex justify-between items-start mb-3">
-                                <div class="text-xs font-bold uppercase border border-neon-cyan/40 
-                                    text-neon-cyan px-2 py-0.5 rounded-full">
+                                <div class="text-xs font-bold uppercase border border-neon-green/40 
+                            text-neon-green px-2 py-0.5 rounded-full">
                                     MathWorks
                                 </div>
-                                <i class="fa-solid fa-brain text-3xl text-neon-cyan"></i>
+                                <i class="fa-solid fa-brain text-3xl text-neon-green"></i>
                             </div>
 
                             <h4 class="text-xl font-bold text-white mb-2">Deep Learning & ML</h4>
                             <p class="text-gray-400 text-sm leading-relaxed mb-3">Neural networks & pipelines.</p>
 
                             <a href="https://drive.google.com/drive/folders/1kAiZ0PsNvMlEl_L4zcY6qTVjezXV7CJq"
-                                class="inline-flex items-center gap-2 text-neon-cyan text-sm hover:text-cyan-300">
+                                class="inline-flex items-center gap-2 text-neon-green text-sm hover:text-green-300">
                                 <i class="fa-solid fa-eye"></i> View
                             </a>
                         </div>
                     </div>
 
-                    <!-- CARD 4 -->
                     <div class="tilt-card hover-trigger">
-                        <div class="holo-card p-6 rounded-2xl border-b-2 border-neon-cyan/50 
-                            bg-black/40 backdrop-blur-md hover:bg-black/60 transition-all">
+                        <div class="moving-border p-6 rounded-2xl bg-black/40 backdrop-blur-md"
+                            style="--border-color: #ff0059;">
 
                             <div class="flex justify-between items-start mb-3">
-                                <div class="text-xs font-bold uppercase border border-neon-cyan/40 
-                                    text-neon-cyan px-2 py-0.5 rounded-full">
+                                <div class="text-xs font-bold uppercase border border-[#ff0059]/40 
+                  text-[#ff0059] px-2 py-0.5 rounded-full">
                                     MathWorks
                                 </div>
-                                <i class="fa-solid fa-eye text-3xl text-neon-cyan"></i>
+                                <i class="fa-solid fa-eye text-3xl text-[#ff0059]"></i>
                             </div>
 
                             <h4 class="text-xl font-bold text-white mb-2">Image Processing</h4>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-3">MATLAB image & CV workflows.</p>
+
+                            <p class="text-gray-400 text-sm leading-relaxed mb-3">
+                                MATLAB-based image processing workflows.
+                            </p>
 
                             <a href="https://drive.google.com/drive/folders/1kAiZ0PsNvMlEl_L4zcY6qTVjezXV7CJq"
-                                class="inline-flex items-center gap-2 text-neon-cyan text-sm hover:text-cyan-300">
+                                class="inline-flex items-center gap-2 text-[#ff0059] text-sm hover:text-[#ff3377] transition-colors">
                                 <i class="fa-solid fa-eye"></i> View
                             </a>
+
                         </div>
                     </div>
 
-                    <!-- CARD 5 -->
                     <div class="tilt-card hover-trigger">
-                        <div class="holo-card p-6 rounded-2xl border-b-2 border-neon-cyan/50 
-                            bg-black/40 backdrop-blur-md hover:bg-black/60 transition-all">
+                        <div class="moving-border p-6 rounded-2xl bg-black/40 backdrop-blur-md"
+                            style="--border-color: #00f3ff;">
 
                             <div class="flex justify-between items-start mb-3">
                                 <div class="text-xs font-bold uppercase border border-neon-cyan/40 
-                                    text-neon-cyan px-2 py-0.5 rounded-full">
+                            text-neon-cyan px-2 py-0.5 rounded-full">
                                     Coursera
                                 </div>
                                 <i class="fa-solid fa-c text-3xl text-neon-cyan"></i>
@@ -924,17 +1211,16 @@
                         </div>
                     </div>
 
-                    <!-- CARD 6 -->
                     <div class="tilt-card hover-trigger">
-                        <div class="holo-card p-6 rounded-2xl border-b-2 border-neon-cyan/50 
-                            bg-black/40 backdrop-blur-md hover:bg-black/60 transition-all">
+                        <div class="moving-border p-6 rounded-2xl bg-black/40 backdrop-blur-md"
+                            style="--border-color: #FF5722;">
 
                             <div class="flex justify-between items-start mb-3">
-                                <div class="text-xs font-bold uppercase border border-neon-cyan/40 
-                                    text-neon-cyan px-2 py-0.5 rounded-full">
+                                <div class="text-xs font-bold uppercase border border-orange-500/40 
+                            text-orange-500 px-2 py-0.5 rounded-full">
                                     HackWithIndia
                                 </div>
-                                <i class="fa-solid fa-award text-3xl text-neon-cyan"></i>
+                                <i class="fa-solid fa-award text-3xl text-orange-500"></i>
                             </div>
 
                             <h4 class="text-xl font-bold text-white mb-2">Achievement</h4>
@@ -942,7 +1228,7 @@
                             </p>
 
                             <a href="https://drive.google.com/file/d/1C_8rULt-7cnYGXke4fpQ2G05IFLSsF3o/view"
-                                class="inline-flex items-center gap-2 text-neon-cyan text-sm hover:text-cyan-300">
+                                class="inline-flex items-center gap-2 text-orange-500 text-sm hover:text-orange-300">
                                 <i class="fa-solid fa-eye"></i> View
                             </a>
                         </div>
@@ -960,7 +1246,7 @@
 
                 <a href="mailto:utpalraj1609@gmail.com" class="hover-trigger inline-block relative group max-w-full">
                     <div class="absolute -inset-1 bg-neon-cyan/40 rounded-xl blur-lg opacity-25 
-            group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
+    group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
                     </div>
 
                     <div
@@ -980,12 +1266,10 @@
                         class="text-3xl md:text-4xl text-gray-500 hover:text-white hover:scale-125 transition-all hover-trigger"><i
                             class="fa-brands fa-twitter"></i></a>
                 </div>
-                <div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
 
-                    <!-- LEFT: CYBERPUNK TEXT (now on the left) -->
-                    <div class="flex items-center md:items-start justify-center md:justify-end 
-            pt-20 md:pt-40 pr-4">
+                <div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-start text-left">
 
+                    <div class="flex items-center md:items-start justify-center md:justify-end pt-20 md:pt-40 pr-4">
                         <h2
                             class="font-display font-bold text-white text-4xl md:text-7xl leading-tight tracking-tight text-right">
                             <span class="text-neon-cyan">Stay Connected.</span><br>
@@ -994,68 +1278,58 @@
                         </h2>
                     </div>
 
-                    <!-- RIGHT: CONTACT FORM -->
-                    <div class="holo-card p-6 md:p-8 rounded-2xl bg-black/40 backdrop-blur-xl 
-                border border-white/10 hover:border-neon-cyan transition-all">
+                    <div class="moving-border p-6 md:p-8 rounded-2xl bg-black/40 backdrop-blur-xl md:mr-12 lg:mr-32"
+                        style="--border-color: #00f3ff;">
 
                         <h3 class="text-3xl font-display font-bold text-white mb-6 flex items-center gap-2">
                             <span class="text-neon-cyan">&gt;</span> Contact Me
                         </h3>
 
                         <form class="space-y-5">
-
-                            <!-- NAME -->
                             <div>
                                 <label class="text-neon-cyan text-xs font-mono uppercase tracking-wider">Your
                                     Name</label>
                                 <input type="text" placeholder="Enter your name" class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
-                           text-white focus:border-neon-cyan outline-none transition-all text-sm">
+                   text-white focus:border-neon-cyan outline-none transition-all text-sm">
                             </div>
 
-                            <!-- EMAIL -->
                             <div>
                                 <label class="text-neon-cyan text-xs font-mono uppercase tracking-wider">Your
                                     Email</label>
                                 <input type="email" placeholder="Enter your email" class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
-                           text-white focus:border-neon-cyan outline-none transition-all text-sm">
+                   text-white focus:border-neon-cyan outline-none transition-all text-sm">
                             </div>
 
-                            <!-- SUBJECT -->
                             <div>
                                 <label class="text-neon-cyan text-xs font-mono uppercase tracking-wider">Subject</label>
                                 <input type="text" placeholder="Enter subject" class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
-                           text-white focus:border-neon-cyan outline-none transition-all text-sm">
+                   text-white focus:border-neon-cyan outline-none transition-all text-sm">
                             </div>
 
-                            <!-- MESSAGE -->
                             <div>
                                 <label class="text-neon-cyan text-xs font-mono uppercase tracking-wider">Message</label>
-                                <textarea rows="4" placeholder="Type your message..."
-                                    class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
-                           text-white focus:border-neon-cyan outline-none transition-all text-sm resize-none"></textarea>
+                                <textarea rows="4" placeholder="Type your message..." class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
+                   text-white focus:border-neon-cyan outline-none transition-all text-sm resize-none"></textarea>
                             </div>
 
-                            <!-- BUTTON -->
                             <button type="submit" class="w-full py-3 bg-black border border-white/10 rounded-lg text-white font-bold 
-                       text-base hover:border-neon-cyan hover:text-neon-cyan transition-all">
+                text-base hover:border-neon-cyan hover:text-neon-cyan transition-all">
                                 SEND MESSAGE
                             </button>
-
                         </form>
                     </div>
 
                 </div>
 
-
-                <div class="mt-16 md:mt-24 text-[10px] md:text-sm text-gray-700 font-mono">
-                    DESIGNED & DEVELOPED BY UTPAL RAJ © 2025
+                <div class="mt-16 md:mt-24 text-[10px] md:text-sm text-gray-700 font-mono text-center">
+                    DESIGNED & DEVELOPED BY UTPAL RAJ © 2026
                 </div>
             </div>
         </section>
     </main>
 
     <script>
-const projectData = {
+        const projectData = {
             'architect': {
                 title: 'The Architect',
                 description: 'A deep static code analysis studio powered by AI. It features a configurable prompt-engine with multiple depth levels (from summary to god-mode). I implemented modular analysis layers including design intent, trust boundaries, mental models, simulator scenarios, and knowledge checks.',
@@ -1267,15 +1541,15 @@ const projectData = {
         const loaderText = document.getElementById('loader-text');
         const consoleOutput = document.getElementById('console-output');
 
-        // Boot logs for the effect
         const bootLogs = [
-            "Initializing kernel...",
-            "Loading modules: [GPU] [NET] [AI]...",
-            "Mounting file system...",
-            "Decrypting user profile...",
-            "Access granted.",
-            "Starting interface..."
+            "Bootstrapping runtime environment...",
+            "Loading core modules: scheduler, I/O, memory...",
+            "Initializing network stack (TCP/IP)...",
+            "Verifying system integrity...",
+            "User context loaded successfully.",
+            "Interface ready."
         ];
+
 
         let logIndex = 0;
 
@@ -1401,11 +1675,7 @@ const projectData = {
 
                     card.style.transform = `perspective(1000px) rotateX(${xRot}deg) rotateY(${yRot}deg) scale3d(1.05, 1.05, 1.05)`;
 
-                    const holo = card.querySelector('.holo-card');
-                    if (holo) {
-                        holo.style.setProperty('--mouse-x', `${x}px`);
-                        holo.style.setProperty('--mouse-y', `${y}px`);
-                    }
+                    // Removed holo logic here as we removed the class
                 });
 
                 card.addEventListener('mouseleave', () => {
@@ -1524,7 +1794,3 @@ const projectData = {
 </body>
 
 </html>
-
-
-
-
