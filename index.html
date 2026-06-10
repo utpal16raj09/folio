@@ -1,1494 +1,1305 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Utpal Raj | Portfolio 2026</title>
-
+    <script>
+        (function () {
+            const s = localStorage.getItem('theme');
+            const d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (s === 'dark' || (!s && d)) document.documentElement.classList.add('dark');
+            else document.documentElement.classList.remove('dark');
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&f[]=satoshi@300,400,500,700,900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Playpen+Sans:wght@300;400;500;700&display=swap"
         rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
-
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Satoshi', 'sans-serif'],
-                        display: ['Clash Display', 'sans-serif']
-                    },
-                    colors: {
-                        'void': '#050505',
-                        'card-bg': 'rgba(20, 20, 20, 0.6)',
-                        'neon-cyan': '#00f3ff',
-                        'neon-purple': '#bd00ff',
-                        'neon-pink': '#ff00ff',
-                        'neon-green': '#00ff9d',
-                        'neon-yellow': '#ffe600',
-                    },
-                    animation: {
-                        'spin-slow': 'spin 10s linear infinite',
-                        'tilt': 'tilt 10s infinite linear',
-                    },
-                    keyframes: {
-                        tilt: {
-                            '0%, 50%, 100%': {
-                                transform: 'rotate(0deg)',
-                            },
-                            '25%': {
-                                transform: 'rotate(1deg)',
-                            },
-                            '75%': {
-                                transform: 'rotate(-1deg)',
-                            },
-                        },
-                    },
+                    fontFamily: { sans: ['Satoshi', 'sans-serif'], hand: ['Caveat', 'cursive'], sketch: ['Playpen Sans', 'cursive'] },
+                    colors: { 'ink': '#1c1e21', 'paper': '#fcfaf2', 'chalk': '#f3f4f6', 'board': '#181a1c', 'accent': '#e85d04', 'accent2': '#4361ee' },
                 }
             }
         }
     </script>
-
     <style>
         :root {
-            --cursor-size: 20px;
-            --cursor-hover-size: 60px;
+            --bg: #fcfaf2;
+            --text: #1c1e21;
+            --card: #fffdf8;
+            --border: #1c1e21;
+            --shadow: #1c1e21;
+            --muted: #6b7280;
+            --accent: #e85d04;
+            --accent2: #4361ee;
+            --line: rgba(28, 30, 33, 0.08);
+            --spiral: #8b7355;
         }
 
-        html {
-            font-size: 16px;
+        html.dark {
+            --bg: #181a1c;
+            --text: #f3f4f6;
+            --card: #202225;
+            --border: #f3f4f6;
+            --shadow: #f3f4f6;
+            --muted: #9ca3af;
+            --accent: #fb923c;
+            --accent2: #818cf8;
+            --line: rgba(255, 255, 255, 0.06);
+            --spiral: #c4a97d;
         }
 
-        @media (min-width: 768px) {
-            html {
-                font-size: 18px;
-            }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
+        html,
         body {
-            background-color: #050505;
-            color: #e5e5e5;
-            overflow-x: hidden;
-            cursor: auto;
-        }
-
-        /* --- ADVANCED CURSOR --- */
-        @media (hover: hover) and (pointer: fine) {
-            #custom-cursor {
-                display: block;
-            }
-        }
-
-        @media (hover: none) {
-            #custom-cursor {
-                display: none;
-            }
-        }
-
-        #custom-cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: var(--cursor-size);
-            height: var(--cursor-size);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s;
-            mix-blend-mode: difference;
-            display: none;
-        }
-
-        #custom-cursor.hovered {
-            width: var(--cursor-hover-size);
-            height: var(--cursor-hover-size);
-            background: rgba(0, 243, 255, 0.2);
-            border-color: #00f3ff;
-            backdrop-filter: blur(2px);
-        }
-
-        /* --- CYBER GRID BACKGROUND --- */
-        .cyber-grid {
-            position: fixed;
-            bottom: -30%;
-            left: -50%;
-            width: 200%;
             height: 100%;
-            background-image: linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px);
-            background-size: 40px 40px;
-            transform: perspective(500px) rotateX(60deg);
-            z-index: -1;
-            opacity: 0.3;
-            animation: grid-move 20s linear infinite;
-            mask-image: linear-gradient(to top, black 0%, transparent 80%);
-            pointer-events: none;
-        }
-
-        @keyframes grid-move {
-            0% {
-                transform: perspective(500px) rotateX(60deg) translateY(0);
-            }
-
-            100% {
-                transform: perspective(500px) rotateX(60deg) translateY(40px);
-            }
-        }
-
-        /* --- MOVING BORDER (Thick + Glowy + Fast Hover) --- */
-        .moving-border {
-            position: relative;
             overflow: hidden;
-            background: #0a0a0a;
-            border-radius: 1rem;
-            z-index: 1;
-
-            /* thicker static fallback */
-            border: 2px solid rgba(255, 255, 255, 0.15);
-
-            /* tuning knobs */
-            --border-color: #00f3ff;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Satoshi', sans-serif;
+            transition: background 0.4s, color 0.4s;
         }
 
-        /* rotating glowing border */
-        .moving-border::before {
-            content: "";
-            position: absolute;
-            inset: -150%;
-
-            background: conic-gradient(transparent 0deg,
-                    transparent 250deg,
-                    var(--border-color) 360deg);
-
-            z-index: -2;
-
-            /* thicker glow */
-            filter:
-                blur(0.5px) drop-shadow(0 0 6px var(--border-color)) drop-shadow(0 0 14px rgba(0, 243, 255, 0.6));
-
-            animation: rotateBorder 5s linear infinite;
-            animation-play-state: paused;
-
-            opacity: 0;
-            transition: opacity 0.12s ease;
-            /* FAST hover */
-        }
-
-        /* inner mask = border thickness */
-        .moving-border::after {
-            content: "";
-            position: absolute;
-            inset: 3px;
-            /* ← thickness control */
-            background: #0a0a0a;
-            border-radius: inherit;
-            z-index: -1;
-        }
-
-        /* hover trigger */
-        .moving-border:hover::before {
-            animation-play-state: running;
-            opacity: 1;
-        }
-
-        /* polish */
-        .moving-border:hover {
-            border-color: transparent;
-            box-shadow:
-                0 0 18px rgba(0, 0, 0, 0.6),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-        }
-
-        /* rotation */
-        @keyframes rotateBorder {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* --- 3D TILT CARD --- */
-        .tilt-card {
-            transform-style: preserve-3d;
-            transform: perspective(1000px);
-        }
-
-        .tilt-content {
-            transform: translateZ(20px);
-        }
-
-        /* --- MOVING GLOWING BORDER (For Arsenal/Stack) --- */
-        .animated-border-card {
+        /* --- NOTEBOOK CONTAINER --- */
+        .notebook {
             position: relative;
-            background: #050505;
-            border-radius: 1rem;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .animated-border-card {
-            position: relative;
-            background: #0a0a0a;
-            border-radius: 1rem;
-            overflow: hidden;
-            z-index: 1;
-            --border-color: #00f3ff;
-            /* default */
-        }
-
-        /* rotating border */
-        .animated-border-card::before {
-            content: "";
-            position: absolute;
-            inset: -150%;
-            background: conic-gradient(transparent 0deg,
-                    transparent 270deg,
-                    var(--border-color) 360deg);
-            animation: rotateBorder 5s linear infinite;
-            z-index: -2;
-        }
-
-        /* inner mask */
-        .animated-border-card::after {
-            content: "";
-            position: absolute;
-            inset: 2px;
-            background: #0a0a0a;
-            border-radius: inherit;
-            z-index: -1;
-        }
-
-        @keyframes rotateBorder {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes rotate {
-            0% {
-                transform: translate(-50%, -50%) rotate(0deg);
-            }
-
-            100% {
-                transform: translate(-50%, -50%) rotate(360deg);
-            }
-        }
-
-
-        /* --- PRELOADER --- */
-        .preloader {
-            position: fixed;
-            inset: 0;
-            background: #050505;
-            z-index: 10000;
+            width: 100%;
+            height: 100%;
+            perspective: 2000px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            font-family: 'Courier New', monospace;
+            justify-content: center;
+            padding: 0 4vw;
         }
 
-        .console-lines {
-            color: #00ff9d;
-            font-size: 14px;
-            text-align: left;
-            width: 300px;
-            height: 150px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            opacity: 0.7;
+        .book {
+            position: relative;
+            width: min(1100px, 92vw);
+            height: min(750px, 90vh);
+            transform-style: preserve-3d;
         }
 
-        .blink {
-            animation: blinker 1s linear infinite;
+        /* --- ALL ANIMATION KEYFRAMES --- */
+        @keyframes draw-path {
+            to {
+                stroke-dashoffset: 0;
+            }
         }
 
-        @keyframes blinker {
-            50% {
+        @keyframes draw-loop {
+            0% {
+                stroke-dashoffset: 2400;
+            }
+
+            70% {
+                stroke-dashoffset: 0;
+            }
+
+            85% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes erase-loop {
+
+            0%,
+            70% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+
+            100% {
+                stroke-dashoffset: -2400;
                 opacity: 0;
             }
         }
 
-        /* Magnetic Button Base */
-        .magnetic-btn {
+        @keyframes pen-move {
+            0% {
+                offset-distance: 0%;
+            }
+
+            100% {
+                offset-distance: 100%;
+            }
+        }
+
+        @keyframes float-bob {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-1deg);
+            }
+
+            50% {
+                transform: translateY(-12px) rotate(1deg);
+            }
+        }
+
+        @keyframes float-bob2 {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(2deg);
+            }
+
+            50% {
+                transform: translateY(-8px) rotate(-2deg);
+            }
+        }
+
+        @keyframes float-bob3 {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-0.5deg);
+            }
+
+            50% {
+                transform: translateY(-6px) rotate(0.5deg);
+            }
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                opacity: 0.35;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin-slow {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes ring-shine {
+
+            0%,
+            100% {
+                box-shadow: inset 0 0 0 0 transparent, 2px 2px 0 var(--spiral);
+            }
+
+            50% {
+                box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.15), 2px 2px 4px var(--spiral);
+            }
+        }
+
+        /* Hero illustration */
+        .scribble-hero {
+            animation: float-bob 5s ease-in-out infinite;
+        }
+
+        .scribble-hero-2 {
+            animation: float-bob2 6.5s ease-in-out infinite;
+        }
+
+        .scribble-hero-3 {
+            animation: float-bob3 7.2s ease-in-out infinite;
+        }
+
+        .draw-anim {
+            stroke-dasharray: 800;
+            stroke-dashoffset: 800;
+            animation: draw-path 2.4s ease forwards;
+        }
+
+        .draw-anim-2 {
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: draw-path 1.8s 0.3s ease forwards;
+        }
+
+        .draw-anim-3 {
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            animation: draw-path 1.4s 0.6s ease forwards;
+        }
+
+        .dot-pulse {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        /* Contact looping draw */
+        .contact-loop-draw {
+            stroke-dasharray: 2400;
+            stroke-dashoffset: 2400;
+            animation: draw-loop 7s 0.5s ease-in-out infinite;
+        }
+
+        .contact-loop-draw-2 {
+            stroke-dasharray: 1600;
+            stroke-dashoffset: 1600;
+            animation: draw-loop 6s 1.5s ease-in-out infinite;
+        }
+
+        .contact-loop-draw-3 {
+            stroke-dasharray: 900;
+            stroke-dashoffset: 900;
+            animation: draw-loop 5s 2.5s ease-in-out infinite;
+        }
+
+        .contact-float {
+            animation: float-bob3 8s ease-in-out infinite;
+        }
+
+        .spin-glyph {
+            animation: spin-slow 20s linear infinite;
+            transform-origin: center;
+        }
+
+        /* --- SPIRAL SPINE --- */
+        .spine {
+            position: absolute;
+            left: -28px;
+            top: 0;
+            bottom: 0;
+            width: 56px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            padding: 20px 0;
+            pointer-events: none;
+        }
+
+        .ring {
+            width: 34px;
+            height: 34px;
+            border: 4px solid var(--spiral);
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--bg) 60%, color-mix(in srgb, var(--spiral) 20%, var(--card)));
+            box-shadow: 2px 2px 0 var(--spiral), inset 0 1px 3px rgba(0, 0, 0, 0.18);
+            transition: border-color 0.4s, background 0.4s;
+            animation: ring-shine 3s ease-in-out infinite;
+        }
+
+        .ring:nth-child(odd) {
+            animation-delay: 0s;
+        }
+
+        .ring:nth-child(even) {
+            animation-delay: 1.5s;
+        }
+
+        /* --- PAGE --- */
+        .page {
+            position: absolute;
+            inset: 0;
+            padding: 3rem 4rem 4.5rem 5.5rem;
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 4px 14px 14px 4px;
+            transform-origin: left center;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            backface-visibility: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background-image: repeating-linear-gradient(transparent, transparent 37px, var(--line) 37px, var(--line) 38px);
+            box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.12);
+            transition-property: transform, box-shadow;
+        }
+
+        .page::before {
+            content: '';
+            position: absolute;
+            left: 3.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #ef4444;
+            opacity: 0.3;
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+            box-shadow: none;
+        }
+
+        .page.current {
+            z-index: 10;
+        }
+
+        /* page stacking */
+        .page:nth-child(1) {
+            z-index: 8;
+        }
+
+        .page:nth-child(2) {
+            z-index: 7;
+        }
+
+        .page:nth-child(3) {
+            z-index: 6;
+        }
+
+        .page:nth-child(4) {
+            z-index: 5;
+        }
+
+        .page:nth-child(5) {
+            z-index: 4;
+        }
+
+        .page:nth-child(6) {
+            z-index: 3;
+        }
+
+        .page:nth-child(7) {
+            z-index: 2;
+        }
+
+        .page:nth-child(8) {
+            z-index: 1;
+        }
+
+        /* --- SKETCH BORDER --- */
+        .sketch-border {
+            border: 2.5px solid var(--border);
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 4px 4px 0px var(--shadow);
+            background: var(--card);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.4s, border-color 0.4s;
+        }
+
+        .sketch-border:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--shadow);
+        }
+
+        .sketch-border:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0 var(--shadow);
+        }
+
+        .scribble-underline {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='12' viewBox='0 0 200 12'%3E%3Cpath d='M1 8c30-6 60 4 90-2s60 6 90-1' stroke='%23e85d04' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-position: bottom left;
+            background-repeat: repeat-x;
+            background-size: 120px 10px;
+            padding-bottom: 6px;
+        }
+
+        @keyframes wobble {
+
+            0%,
+            100% {
+                border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            }
+
+            33% {
+                border-radius: 15px 255px 15px 225px/225px 15px 255px 15px;
+            }
+
+            66% {
+                border-radius: 225px 15px 255px 15px/15px 255px 15px 225px;
+            }
+        }
+
+        .wobble-hover {
+            transition: border-radius 0.3s ease, transform 0.2s, box-shadow 0.2s;
+        }
+
+        .wobble-hover:hover {
+            border-radius: 12px !important;
+            animation: none;
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--shadow);
+        }
+
+        .tag-pill {
             display: inline-block;
-            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 3px 12px;
+            border: 1.5px solid var(--border);
+            font-size: 13px;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            font-family: 'Playpen Sans', cursive;
+            transition: border-color 0.4s;
+        }
+
+        /* --- NAV CONTROLS --- */
+        .page-nav {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-nav button {
+            border: 2.5px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            box-shadow: 3px 3px 0 var(--shadow);
+        }
+
+        .page-nav button:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0 var(--shadow);
+        }
+
+        .page-nav button:active {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0 var(--shadow);
+        }
+
+        .page-nav button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .page-counter {
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+            font-weight: 700;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 200;
+            display: flex;
+            gap: 8px;
+        }
+
+        .top-bar button,
+        .top-bar a {
+            border: 2.5px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            padding: 6px 14px;
+            font-family: 'Playpen Sans', cursive;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 3px 3px 0 var(--shadow);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .top-bar button:hover,
+        .top-bar a:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0 var(--shadow);
+        }
+
+        html.dark .icon-moon {
+            display: none;
+        }
+
+        html.dark .icon-sun {
+            display: inline;
+        }
+
+        html:not(.dark) .icon-moon {
+            display: inline;
+        }
+
+        html:not(.dark) .icon-sun {
+            display: none;
+        }
+
+        .page::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .page::-webkit-scrollbar-thumb {
+            background: var(--muted);
+            border-radius: 99px;
+        }
+
+        @media(max-width:768px) {
+            .book {
+                width: 95vw;
+                height: 88vh;
+            }
+
+            .page {
+                padding: 1.5rem 1.2rem 3.5rem 2.5rem;
+            }
+
+            .page::before {
+                left: 1.2rem;
+            }
+
+            .spine {
+                left: -14px;
+                width: 28px;
+                padding: 12px 0;
+            }
+
+            .ring {
+                width: 22px;
+                height: 22px;
+                border-width: 3px;
+            }
         }
     </style>
 </head>
 
-<body class="selection:bg-neon-cyan selection:text-black">
-
-    <div id="custom-cursor"></div>
-
-    <div
-        class="fixed inset-0 z-[-2] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-150 contrast-150 pointer-events-none">
-    </div>
-    <div class="cyber-grid"></div>
-    <canvas id="bg-canvas" class="fixed inset-0 z-[-1]"></canvas>
-
-    <div class="preloader" id="preloader">
-        <div class="console-lines" id="console-output"></div>
-
-        <div class="text-center w-64">
-            <div class="flex justify-between text-xs text-neon-cyan mb-2 uppercase tracking-widest font-bold">
-                <span>System_Boot</span>
-                <span id="loader-text">0%</span>
-            </div>
-            <div class="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
-                <div class="h-full bg-neon-cyan w-0" id="loader-bar"></div>
-            </div>
-        </div>
-    </div>
-
-    <nav class="fixed top-4 left-0 w-full z-50 px-4 md:px-0">
-        <div
-            class="mx-auto max-w-[1200px] px-6 py-4 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full transition-all duration-300 hover:border-neon-cyan/30 shadow-lg shadow-black/50">
-            <div class="flex justify-between items-center">
-                <a href="#" class="text-2xl font-display font-bold text-white tracking-tighter hover-trigger"
-                    data-text="UR">
-                    <span class="text-neon-cyan">&lt;</span>UR<span class="text-neon-cyan">/&gt;</span>
-                </a>
-
-                <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">
-                    <a href="#about" class="magnetic-btn hover:text-white hover-trigger py-2">About</a>
-                    <a href="#skills" class="magnetic-btn hover:text-white hover-trigger py-2">Stack</a>
-                    <a href="#profiles" class="magnetic-btn hover:text-white hover-trigger py-2">Activity</a>
-
-                    <a href="#experience" class="magnetic-btn hover:text-white hover-trigger py-2">Experience</a>
-
-                    <a href="#projects" class="magnetic-btn hover:text-white hover-trigger py-2">Projects</a>
-                </div>
-
-                <div class="flex items-center gap-4">
-                    <a href="#contact" class="hidden md:block magnetic-btn hover-trigger">
-                        <div
-                            class="px-6 py-2 bg-white text-black rounded-full text-xs font-bold uppercase hover:bg-neon-cyan transition-colors">
-                            Contact
-                        </div>
-                    </a>
-                    <button id="menu-btn" class="md:hidden text-white text-2xl hover-trigger p-2">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <div id="mobile-menu"
-        class="fixed inset-0 z-[60] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 text-3xl font-display font-bold text-white uppercase translate-y-[-100%] transition-transform duration-500">
-        <a href="#about" class="mobile-link hover:text-neon-cyan">About</a>
-        <a href="#skills" class="mobile-link hover:text-neon-cyan">Stack</a>
-        <a href="#profiles" class="mobile-link hover:text-neon-yellow">Profiles</a>
-        <a href="#activity" class="mobile-link hover:text-neon-green">Activity</a>
-        <a href="#experience" class="mobile-link hover:text-neon-purple">Timeline</a>
-        <a href="#projects" class="mobile-link hover:text-neon-cyan">Work</a>
-        <a href="#contact"
-            class="mobile-link text-neon-cyan mt-4 text-2xl border border-neon-cyan px-8 py-3 rounded-full">Contact
-            Me</a>
-
-        <button id="close-menu-btn" class="absolute top-8 right-8 text-4xl text-gray-400 p-2">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-    </div>
-
-    <main class="relative w-full">
-
-        <section class="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
-            <div
-                class="absolute top-[15%] left-4 md:top-1/4 md:left-10 w-12 h-12 md:w-24 md:h-24 border-t-2 border-l-2 border-neon-cyan/30 rounded-tl-3xl">
-            </div>
-            <div
-                class="absolute bottom-[15%] right-4 md:bottom-1/4 md:right-10 w-12 h-12 md:w-24 md:h-24 border-b-2 border-r-2 border-neon-purple/30 rounded-br-3xl">
-            </div>
-
-            <div class="container mx-auto px-4 md:px-6 text-center relative z-10">
-                <div
-                    class="inline-block px-4 py-2 rounded-full border border-neon-green/30 bg-neon-green/5 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-6 md:mb-8 animate-fade-up opacity-0 text-neon-green">
-                    <span class="w-1.5 h-1.5 rounded-full bg-neon-green inline-block mr-2 animate-pulse"></span>System
-                    Online
-                </div>
-
-                <h1 class="font-display text-[15vw] md:text-[13vw] leading-[0.9] md:leading-[0.8] font-bold text-white mb-6 md:mb-8 mix-blend-exclusion"
-                    id="hero-title">
-                    UTPAL RAJ
-                </h1>
-
-                <div class="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-12 text-gray-400 text-sm md:text-xl font-mono animate-fade-up opacity-0"
-                    id="hero-subtitle">
-                    <span class="hover:text-neon-cyan transition-colors">CSE_Undergrad</span>
-                    <span class="hidden md:block w-px h-5 bg-gray-700"></span>
-                    <span class="hover:text-neon-purple transition-colors">Full_Stack</span>
-                    <span class="hidden md:block w-px h-5 bg-gray-700"></span>
-                    <span class="hover:text-neon-yellow transition-colors">Problem_Solver</span>
-                    <span class="hidden md:block w-px h-5 bg-gray-700"></span>
-                </div>
-
-                <div class="mt-12 md:mt-16 animate-fade-up opacity-0 pb-10 md:pb-0">
-                    <a href="#projects" class="hover-trigger relative inline-flex group">
-                        <div
-                            class="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt">
-                        </div>
-                        <button
-                            class="relative inline-flex items-center justify-center px-8 py-4 md:px-10 md:py-5 text-sm md:text-base font-bold text-white transition-all duration-200 bg-void font-display uppercase tracking-widest rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                            Explore Work
-                        </button>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="py-20 md:py-32 relative z-10">
-            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
-                <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-                    <div>
-                        <span
-                            class="text-xs md:text-sm font-bold text-neon-cyan uppercase tracking-[0.2em] mb-4 block scramble-text">01
-                            // The Philosophy</span>
-                        <h2
-                            class="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 md:mb-8 leading-tight">
-                            Logic is my <br><span
-                                class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">Language.</span>
-                        </h2>
-                        <p class="text-gray-400 text-base md:text-xl leading-relaxed mb-8">
-                            I construct narratives with data and build digital cathedrals with code. Currently
-                            architecting the future at <span class="text-white font-bold">SRM Institute of Science &
-                                Technology</span>.
-                        </p>
-                        <a href="resume.pdf" download class="mt-4 inline-flex items-center gap-3 px-5 py-3 
-          border border-neon-cyan text-neon-cyan font-bold 
-          rounded-lg text-sm md:text-base 
-          hover:bg-neon-cyan hover:text-black 
-          transition-all duration-300">
-                            <i class="fa-solid fa-download"></i>
-                            Download Resume
-                        </a>
-
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3 md:gap-4">
-                        <div class="tilt-card hover-trigger">
-                            <div class="moving-border p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent group"
-                                style="--border-color: #00f3ff;">
-                                <i
-                                    class="fa-solid fa-code text-3xl md:text-5xl text-gray-500 group-hover:text-neon-cyan mb-2 md:mb-4 transition-colors tilt-content"></i>
-                                <span
-                                    class="font-bold text-xs md:text-lg text-white tracking-widest tilt-content">DSA</span>
-                            </div>
-                        </div>
-                        <div class="tilt-card hover-trigger">
-                            <div class="moving-border p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent group"
-                                style="--border-color: #bd00ff;">
-                                <i
-                                    class="fa-solid fa-brain text-3xl md:text-5xl text-gray-500 group-hover:text-neon-purple mb-2 md:mb-4 transition-colors tilt-content"></i>
-                                <span class="font-bold text-xs md:text-lg text-white tracking-widest tilt-content">AI /
-                                    ML</span>
-                            </div>
-                        </div>
-                        <div class="tilt-card hover-trigger">
-                            <div class="moving-border p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent group"
-                                style="--border-color: #00ff9d;">
-                                <i
-                                    class="fa-solid fa-globe text-3xl md:text-5xl text-gray-500 group-hover:text-neon-green mb-2 md:mb-4 transition-colors tilt-content"></i>
-                                <span
-                                    class="font-bold text-xs md:text-lg text-white tracking-widest tilt-content">WEB</span>
-                            </div>
-                        </div>
-                        <div class="tilt-card hover-trigger">
-                            <div class="moving-border p-4 md:p-8 h-32 md:h-48 flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-white/5 to-transparent group"
-                                style="--border-color: #ffe600;">
-                                <i
-                                    class="fa-solid fa-robot text-3xl md:text-5xl text-gray-500 group-hover:text-neon-yellow mb-2 md:mb-4 transition-colors tilt-content"></i>
-                                <span
-                                    class="font-bold text-xs md:text-lg text-white tracking-widest tilt-content">AGENTS</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="education" class="py-20 md:py-32 relative z-10">
-            <div class="container mx-auto px-4 md:px-6 max-w-7xl text-left">
-                <span
-                    class="text-xs md:text-sm font-bold text-white uppercase tracking-[0.2em] mb-4 block scramble-text">02
-                    // The Foundation</span>
-
-                <div class="grid md:grid-cols-2 gap-12 md:gap-16 mt-8 md:mt-12">
-                    <div class="space-y-8 md:space-y-12">
-                        <div class="relative pl-6 md:pl-8 border-l border-white/10 group">
-                            <div
-                                class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-neon-cyan rounded-full shadow-[0_0_10px_#00f3ff]">
-                            </div>
-                            <h3
-                                class="text-xl md:text-3xl font-bold text-white group-hover:text-neon-cyan transition-colors">
-                                B.Tech CSE (Data Science)</h3>
-                            <p class="text-gray-500 mt-2 text-sm md:text-lg">SRM Institute of Science & Technology</p>
-                            <p class="text-neon-cyan font-mono text-sm mt-1">2023 - 2027</p>
-                        </div>
-                        <div class="relative pl-6 md:pl-8 border-l border-white/10 group">
-                            <div
-                                class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-gray-600 rounded-full group-hover:bg-white transition-colors">
-                            </div>
-                            <h3
-                                class="text-xl md:text-3xl font-bold text-white group-hover:text-white transition-colors">
-                                Intermediate</h3>
-                            <p class="text-gray-500 mt-2 text-sm md:text-lg">St. Thomas Senior Secondary School</p>
-                            <p class="text-gray-600 font-mono text-sm mt-1">2020 - 2022</p>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3 md:gap-4">
-                        <div class="tilt-card hover-trigger">
-                            <div class="moving-border p-4 md:p-8 h-full flex flex-col justify-center rounded-xl bg-[#0a0a0a]"
-                                style="--border-color: #ffe600;">
-                                <div class="text-2xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2">1st place
-                                </div>
-                                <div class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest">OSSome Hacks
-                                    2.0</div>
-                            </div>
-                        </div>
-                        <div class="tilt-card hover-trigger">
-                            <div class="moving-border p-4 md:p-8 h-full flex flex-col justify-center rounded-xl bg-[#0a0a0a]"
-                                style="--border-color: #00ff9d;">
-                                <div class="text-2xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2">300+
-                                </div>
-                                <div class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest">DSA Solved
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tilt-card hover-trigger">
-                            <div class="moving-border p-4 md:p-8 h-full flex flex-col justify-center rounded-xl bg-[#0a0a0a]"
-                                style="--border-color: #00f3ff;">
-                                <div class="text-2xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2">9.53
-                                </div>
-                                <div class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest">CGPA</div>
-                            </div>
-                        </div>
-                        <div class="tilt-card hover-trigger">
-                            <div class="moving-border p-4 md:p-8 h-full flex flex-col justify-center rounded-xl bg-[#0a0a0a]"
-                                style="--border-color: #bd00ff;">
-                                <div class="text-2xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2">1700+
-                                </div>
-                                <div class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest">Rating</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills" class="py-20 md:py-32 relative z-10">
-            <div class="container mx-auto px-4 md:px-6 max-w-7xl text-left">
-
-                <span
-                    class="text-xs md:text-sm font-bold text-neon-purple uppercase tracking-[0.2em] mb-4 block scramble-text">
-                    03 // The Arsenal
-                </span>
-
-                <h2 class="text-4xl md:text-6xl font-display font-bold text-white mb-10 md:mb-16">
-                    Tech Stack
-                </h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                    <!-- ================= LANGUAGES ================= -->
-                    <div class="tilt-card hover-trigger">
-                        <div class="animated-border-card p-6 md:p-8 h-full" style="--border-color:#00f3ff;">
-                            <h3 class="text-xl font-bold text-white mb-8 border-b border-white/10 pb-4 font-mono">
-                                &gt; Languages
-                            </h3>
-
-                            <ul class="grid grid-cols-2 gap-x-12 gap-y-10 place-items-center">
-
-                                <li class="group">
-                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
-                                        class="w-10 h-10 md:w-12 md:h-12 transition-transform duration-300 group-hover:scale-110"
-                                        alt="C++" />
-                                </li>
-
-                                
-
-                                <li class="group">
-                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
-                                        class="w-10 h-10 md:w-12 md:h-12 transition-transform duration-300 group-hover:scale-110"
-                                        alt="Python" />
-                                </li>
-
-
-                            </ul>
-
-                        </div>
-                    </div>
-
-                    <!-- ================= FRAMEWORKS ================= -->
-                    <div class="tilt-card hover-trigger">
-                        <div class="animated-border-card p-6 md:p-8 h-full" style="--border-color:#bd00ff;">
-                            <h3 class="text-xl font-bold text-white mb-8 border-b border-white/10 pb-4 font-mono">
-                                &gt; Frameworks & Runtime
-                            </h3>
-
-                          <ul class="grid grid-cols-4 gap-8 place-items-center mt-6">
-
-    <!-- Frontend -->
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-        class="w-8 h-8" title="HTML5">
-
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
-        class="w-8 h-8" title="CSS3">
-
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-        class="w-8 h-8" title="JavaScript">
-
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
-        class="w-8 h-8" title="React">
-
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
-        class="w-8 h-8 invert" title="Next.js">
-
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
-        class="w-8 h-8" title="Tailwind CSS">
-
-    <!-- Backend -->
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
-        class="w-8 h-8" title="Node.js">
-
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
-        class="w-8 h-8 invert opacity-80" title="Express">
-
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
-        class="w-8 h-8" title="MongoDB">
-
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
-        class="w-8 h-8" title="PostgreSQL">
-
-    <!-- Tools -->
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
-        class="w-8 h-8" title="Git">
-
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
-        class="w-8 h-8 invert opacity-80" title="GitHub">
-
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg"
-        class="w-8 h-8 invert" title="Vercel">
-
-    <!-- Runtime / APIs -->
-    <i class="fa-solid fa-plug text-2xl text-white" title="REST APIs"></i>
-
-    <i class="fa-solid fa-bolt text-2xl text-yellow-400" title="WebSockets"></i>
-
-    <i class="fa-brands fa-chrome text-2xl text-cyan-400" title="Chrome Extensions"></i>
-
-</ul>
-
-                        </div>
-                    </div>
-
-                    <!-- ================= HACKER TERMINAL ================= -->
-                    <div class="tilt-card hover-trigger">
-                        <div class="animated-border-card p-6 md:p-8 h-full font-mono text-sm"
-                            style="--border-color:#00ff9d;">
-
-                            <div class="text-neon-green mb-4 border-b border-neon-green/30 pb-2 text-base font-bold">
-                                root@utpal:~$ system_check
-                            </div>
-
-                            <div class="space-y-2 text-neon-green/80 text-[15px]">
-    <p>[✔] Git / GitHub</p>
-    <p>[✔] Linux / CLI</p>
-    <p>[✔] Chrome Extensions</p>
-    <p>[✔] REST APIs</p>
-    <p>[✔] DSA / OOP</p>
-    <p>[✔] DBMS / SQL</p>
-
-    <p class="mt-4 text-neon-green animate-pulse">
-        STATUS: ACTIVE
-    </p>
-</div> 
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="profiles" class="py-20 md:py-32 relative z-10">
-            <div class="container mx-auto px-4 md:px-6 max-w-7xl text-left">
-
-                <!-- ===== PROFILES HEADER ===== -->
-                <span
-                    class="text-xs md:text-sm font-bold text-neon-yellow uppercase tracking-[0.2em] mb-4 block scramble-text">
-                    04 // The Grind
-                </span>
-
-                <h2 class="text-4xl md:text-6xl font-display font-bold text-white mb-12">
-                    Competitive <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-yellow to-orange-500">
-                        Profiles
-                    </span>
-                </h2>
-
-                <!-- ===== PROFILES GRID ===== -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
-
-                    <!-- LeetCode -->
-                    <a href="https://leetcode.com/u/raj_1609utpal/" target="_blank"
-                        class="tilt-card hover-trigger group">
-                        <div class="moving-border h-full p-6 flex flex-col items-center justify-center gap-4 bg-black/40"
-                            style="--border-color: #FFA116;">
-                            <div
-                                class="w-16 h-16 rounded-full bg-[#FFA116]/10 flex items-center justify-center shadow-[0_0_15px_rgba(255,161,22,0.2)] group-hover:scale-110 transition-transform">
-                                <i class="fa-solid fa-code text-2xl text-[#FFA116]"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-white tracking-wide">LeetCode</h3>
-                            <div
-                                class="px-4 py-1 rounded-full border border-[#FFA116]/30 text-[#FFA116] text-xs font-mono uppercase">
-                                View Profile
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- GFG -->
-                    <a href="https://www.geeksforgeeks.org/user/utpalraxs5e/" target="_blank"
-                        class="tilt-card hover-trigger group">
-                        <div class="moving-border h-full p-6 flex flex-col items-center justify-center gap-4 bg-black/40"
-                            style="--border-color: #2f8d46;">
-                            <div
-                                class="w-16 h-16 rounded-full bg-[#2f8d46]/10 flex items-center justify-center shadow-[0_0_15px_rgba(47,141,70,0.2)] group-hover:scale-110 transition-transform">
-                                <i class="fa-solid fa-terminal text-2xl text-[#2f8d46]"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-white tracking-wide">GeeksForGeeks</h3>
-                            <div
-                                class="px-4 py-1 rounded-full border border-[#2f8d46]/30 text-[#2f8d46] text-xs font-mono uppercase">
-                                View Profile
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Code360 -->
-                    <a href="https://www.naukri.com/code360/profile/raj_utpal1609" target="_blank"
-                        class="tilt-card hover-trigger group">
-                        <div class="moving-border h-full p-6 flex flex-col items-center justify-center gap-4 bg-black/40"
-                            style="--border-color: #DD6C00;">
-                            <div
-                                class="w-16 h-16 rounded-full bg-[#DD6C00]/10 flex items-center justify-center shadow-[0_0_15px_rgba(221,108,0,0.2)] group-hover:scale-110 transition-transform">
-                                <i class="fa-solid fa-ninja text-2xl text-[#DD6C00]"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-white tracking-wide">Code360</h3>
-                            <div
-                                class="px-4 py-1 rounded-full border border-[#DD6C00]/30 text-[#DD6C00] text-xs font-mono uppercase">
-                                View Profile
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Codeforces -->
-                    <a href="https://codeforces.com/profile/utpalraj1609" target="_blank"
-                        class="tilt-card hover-trigger group">
-                        <div class="moving-border h-full p-6 flex flex-col items-center justify-center gap-4 bg-black/40"
-                            style="--border-color: #318CE7;">
-                            <div
-                                class="w-16 h-16 rounded-full bg-[#318CE7]/10 flex items-center justify-center shadow-[0_0_15px_rgba(49,140,231,0.2)] group-hover:scale-110 transition-transform">
-                                <i class="fa-solid fa-chart-simple text-2xl text-[#318CE7]"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-white tracking-wide">CodeForces</h3>
-                            <div
-                                class="px-4 py-1 rounded-full border border-[#318CE7]/30 text-[#318CE7] text-xs font-mono uppercase">
-                                View Profile
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-
-
-                <!-- ===== ACTIVITY GRID ===== -->
-                <!-- ===== ACTIVITY GRID ===== -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-                    <!-- LeetCode Heatmap -->
-                    <div class="tilt-card hover-trigger h-full">
-                        <div class="moving-border p-0 h-full flex flex-col bg-black/60"
-                            style="--border-color: #FFA116;">
-
-                            <div class="p-6 pb-2">
-                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                                    <i class="fa-solid fa-fire text-[#FFA116]"></i> LeetCode Heatmap
-                                </h3>
-                            </div>
-
-                            <div class="p-4 flex-1 flex justify-center items-center overflow-x-auto">
-                                <img src="https://leetcard.jacoblin.cool/raj_1609utpal?ext=heatmap&theme=dark&border=0&radius=10"
-                                    alt="LeetCode Heatmap" class="max-w-full h-auto rounded-lg opacity-90">
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- GitHub Heatmap -->
-                    <div class="tilt-card hover-trigger h-full">
-                        <div class="moving-border p-0 h-full flex flex-col bg-black/60"
-                            style="--border-color: #00f3ff;">
-
-                            <div class="p-6 pb-2">
-                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                                    <i class="fa-brands fa-github text-neon-cyan"></i> GitHub Contributions
-                                </h3>
-                            </div>
-
-                            <div class="p-4 flex-1 flex justify-center items-center overflow-x-auto">
-                                <img src="https://ghchart.rshah.org/00f3ff/utpal16raj09" alt="GitHub Contribution Graph"
-                                    class="max-w-full h-auto min-w-[300px] rounded-lg opacity-80 invert hue-rotate-180 brightness-150 contrast-125">
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </section>
-
-
-        <section id="experience" class="py-20 md:py-32 relative z-10">
-            <div class="container mx-auto px-4 md:px-6 max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-12">
-                <div class="lg:col-span-1">
-                    <div class="sticky top-32">
-                        <span
-                            class="text-xs md:text-sm font-bold text-neon-green uppercase tracking-[0.2em] mb-4 block scramble-text">
-                            05 // The Journey
-                        </span>
-                        <h2 class="text-4xl md:text-6xl font-display font-bold text-white mb-6">
-                            Career <br> <span
-                                class="text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-emerald-600">Timeline</span>
-                        </h2>
-                        <p class="text-gray-400 text-sm">
-                            My professional journey in tech, from internships to active team contributions.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-2 space-y-8">
-                    <div class="tilt-card hover-trigger">
-                        <div class="moving-border p-6 md:p-8 relative group" style="--border-color: #00ff9d;">
-                            <div
-                                class="relative z-10 flex flex-col md:flex-row justify-between items-start gap-3 md:gap-4">
-                                <div>
-                                   <h3 class="text-xl md:text-3xl font-bold text-white">
-  <a
-    href="https://tagzzs.com"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="hover:underline"
-  >
-    Tagzzs
-  </a>
-</h3>
-
-
-                                    <p class="text-neon-green font-mono mt-1 text-sm md:text-base">Developer</p>
-                                </div>
-                                <div
-                                    class="px-3 py-1 border border-white/10 rounded-full text-xs font-mono text-gray-400">
-                                    2025 - Present
-                                </div>
-                            </div>
-                           <p class="relative z-10 text-gray-300 mt-4 md:mt-6 text-sm md:text-base leading-relaxed">
-Building core frontend and backend systems for a knowledge retrieval platform serving 450+ active users. Engineered secure authentication, optimized LLM-powered workflows to reduce latency by ~30%, and developed a Chrome extension for contextual content capture and intelligent search across X, Reddit, and YouTube.
-</p>
-                            <div class="relative z-10 grid grid-cols-2 gap-4 mt-6">
-                                <div>
-                                    <div class="text-xl font-display font-bold text-white">Core Team</div>
-                                    <div class="text-[10px] text-gray-500 uppercase">Active Contributor</div>
-                                </div>
-                                <div>
-                                    <div class="text-xl font-display font-bold text-white">Full-Stack</div>
-                                    <div class="text-[10px] text-gray-500 uppercase">Core Development</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tilt-card hover-trigger">
-                        <div class="moving-border p-6 md:p-8 relative group" style="--border-color: #00f3ff;">
-                            <div
-                                class="relative z-10 flex flex-col md:flex-row justify-between items-start gap-3 md:gap-4">
-                                <div>
-                         <h3 class="text-xl md:text-3xl font-bold text-white">
-  <a
-    href="https://optivix.ai"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="hover:underline"
-  >
-    Optivix AI
-  </a>
-</h3>
-
-
-                                    <p class="text-neon-cyan font-mono mt-1 text-sm md:text-base">Frontend Developer
-                                    </p>
-                                </div>
-                                <div
-                                    class="px-3 py-1 border border-white/10 rounded-full text-xs font-mono text-gray-400">
-                                    Aug '25 - Oct '25
-                                </div>
-                            </div>
-                            <p class="relative z-10 text-gray-300 mt-4 md:mt-6 text-sm md:text-base leading-relaxed">
-                                Led the design and implementation of the dashboard and end-to-end UI/UX for an AI agent
-                                platform, crafting a clean landing page and simplifying complex backend workflows into a
-                                cohesive, user-centric experience.
-                            </p>
-                            <div class="relative z-10 grid grid-cols-2 gap-4 mt-6">
-                                <div>
-                                    <div class="text-xl font-display font-bold text-white">UI Revamp</div>
-                                    <div class="text-[10px] text-gray-500 uppercase">Design & UX Overhaul</div>
-                                </div>
-                                <div>
-                                    <div class="text-xl font-display font-bold text-white">Optimized</div>
-                                    <div class="text-[10px] text-gray-500 uppercase">Reusable UI System</div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="tilt-card hover-trigger">
-                        <div class="moving-border p-6 md:p-8 relative group" style="--border-color: #bd00ff;">
-                            <div
-                                class="relative z-10 flex flex-col md:flex-row justify-between items-start gap-3 md:gap-4">
-                                <div>
-                                    <h3 class="text-xl md:text-3xl font-bold text-white">Freelance</h3>
-                                    <p class="text-neon-purple font-mono mt-1 text-sm md:text-base">Web Developer
-                                    </p>
-                                </div>
-                                <div
-                                    class="px-3 py-1 border border-white/10 rounded-full text-xs font-mono text-gray-400">
-                                    2025 - Present
-                                </div>
-                            </div>
-                            <p class="relative z-10 text-gray-300 mt-4 md:mt-6 text-sm md:text-base leading-relaxed">
-                                Designed dynamic, interactive single-page websites with fully functional UI/UX,
-                                including animations, client-side logic, and working contact and email workflows,
-                                delivering production-ready experiences end to end. </p>
-                            <div class="relative z-10 grid grid-cols-2 gap-4 mt-6">
-                                <div>
-                                    <div class="text-xl font-display font-bold text-white">Multi-Client</div>
-                                    <div class="text-[10px] text-gray-500 uppercase">Landing Pages</div>
-                                </div>
-                                <div>
-                                    <div class="text-xl font-display font-bold text-white">UI/UX Owned</div>
-                                    <div class="text-[10px] text-gray-500 uppercase">Design → Delivery</div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="py-20 md:py-32 relative z-10">
-            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
-                <div class="flex flex-col lg:flex-row gap-12 lg:gap-20">
-
-                    <div class="lg:w-1/3 lg:sticky lg:top-32 lg:self-start h-fit">
-                        <span
-                            class="text-xs md:text-sm font-bold text-neon-cyan uppercase tracking-[0.2em] mb-4 block scramble-text">
-                            06 // The Craft
-                        </span>
-                        <h2 class="text-4xl md:text-7xl font-display font-bold text-white mb-6 md:mb-8">
-                            Selected <br> <span
-                                class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-blue-500">Works</span>
-                        </h2>
-                        <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-8 hidden lg:block">
-                            A collection of digital experiences, tools, and systems architected with precision. Each
-                            project represents a unique challenge solved through code.
-                        </p>
-                        <div class="hidden lg:block w-20 h-1 rounded-full">
-                        </div>
-                    </div>
-
-                    <div class="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                        <div class="project-card cursor-pointer relative tilt-card"
-                            onclick="openProjectModal('architect')">
-                            <div class="moving-border h-64 md:h-[350px] group relative"
-                                style="--border-color: #ffe600;">
-                                <img src="architect.png"
-                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                                <div
-                                    class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
-                                </div>
-                                <div class="absolute bottom-6 left-6 z-20">
-                                    <h3
-                                        class="text-2xl font-bold text-white group-hover:text-neon-yellow transition-colors">
-                                        The Architect</h3>
-                                    <p class="text-neon-yellow text-[10px] font-mono mt-1 uppercase tracking-[0.2em]">AI
-                                        Code Studio</p>
-                                </div>
-                            </div>
-                        </div>
-<div class="project-card cursor-pointer relative tilt-card"
-    onclick="openProjectModal('leetcode-buddy')">
-    <div class="moving-border h-64 md:h-[350px] group relative"
-        style="--border-color: #FFA116;">
-
-        <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1000"
-            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-
-        <div
-            class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
+<body>
+    <div class="notebook mt-8 md:mt-0">
+        <!-- Spiral Binding -->
+        <div class="spine">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
         </div>
 
-        <div class="absolute bottom-6 left-6 z-20">
-            <h3 class="text-2xl font-bold text-white group-hover:text-[#FFA116] transition-colors">
-                LeetCode Buddy Pro
-            </h3>
+        <!-- The Book with Stacked Pages -->
+        <div class="book" id="book">
 
-            <p class="text-[#FFA116] text-xs font-mono mt-1 uppercase tracking-widest">
-                Chrome Extension
-            </p>
-        </div>
-    </div>
-</div>
-                        <div class="project-card cursor-pointer relative tilt-card"
-    onclick="openProjectModal('rtiassist')">
-    <div class="moving-border h-64 md:h-[350px] group relative"
-        style="--border-color: #00ff9d;">
+            <!-- PAGE 1: HERO -->
+            <div class="page current" id="page-1">
+                <div class="flex h-full items-center gap-6">
+                    <!-- Left: Text -->
+                    <div class="flex flex-col justify-center flex-1 min-w-0">
+                        <p class="font-sketch text-sm uppercase tracking-wider mb-3" style="color: var(--muted);">
+                            welcome to my notebook</p>
+                        <h1 class="font-hand text-7xl md:text-[6.5rem] font-bold leading-none mb-4 relative inline-block"
+                            style="width: max-content;">
+                            <span style="color: var(--text);position:relative;z-index:2;">Utpal Raj</span>
+                            <svg class="absolute -bottom-1 left-0 w-full h-8 z-0" viewBox="0 0 200 20"
+                                preserveAspectRatio="none">
+                                <path d="M 5 15 Q 50 5 100 15 T 195 10" stroke="var(--accent)" stroke-width="5"
+                                    fill="none" stroke-linecap="round" class="contact-loop-draw" style="opacity:0.6" />
+                            </svg>
+                        </h1>
+                        <p class="font-sketch text-lg md:text-xl mb-6" style="color: var(--muted);">CSE Undergrad
+                            &middot; Full-Stack Dev &middot; Problem Solver</p>
 
-        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000"
-            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-
-        <div
-            class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
-        </div>
-
-        <div class="absolute bottom-6 left-6 z-20">
-            <h3 class="text-2xl font-bold text-white group-hover:text-neon-green transition-colors">
-                RTIAssist
-            </h3>
-
-            <p class="text-neon-green text-xs font-mono mt-1 uppercase tracking-widest">
-                AI Filing System
-            </p>
-        </div>
-    </div>
-</div>
-                        <div class="project-card cursor-pointer relative tilt-card"
-                            onclick="openProjectModal('docify')">
-                            <div class="moving-border h-64 md:h-[350px] group relative"
-                                style="--border-color: #bd00ff;">
-                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000"
-                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                                <div
-                                    class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
-                                </div>
-                                <div class="absolute bottom-6 left-6 z-20">
-                                    <h3
-                                        class="text-2xl font-bold text-white group-hover:text-neon-purple transition-colors">
-                                        Docify</h3>
-                                    <p class="text-neon-purple text-[10px] font-mono mt-1 uppercase tracking-[0.2em]">
-                                        LLM
-                                        Doc Generator</p>
-                                </div>
-                            </div>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="tag-pill">DSA</span>
+                            <span class="tag-pill">Web Dev</span>
+                            <span class="tag-pill">AI / ML</span>
+                            <span class="tag-pill">Agents</span>
                         </div>
 
-                        <div class="project-card cursor-pointer relative tilt-card"
-                            onclick="openProjectModal('perfwatch')">
-                            <div class="moving-border h-64 md:h-[350px] group relative"
-                                style="--border-color: #00f3ff;">
-                                <img src="perfwatch.png"
-                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                                <div
-                                    class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
-                                </div>
-                                <div class="absolute bottom-6 left-6 z-20">
-                                    <h3
-                                        class="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors">
-                                        PerfWatch</h3>
-                                    <p class="text-neon-cyan text-xs font-mono mt-1 uppercase tracking-widest">Click to
-                                        Expand_</p>
-                                </div>
-                            </div>
+                        <div class="flex gap-3 relative">
+                            <button onclick="goToPage(6)"
+                                class="sketch-border wobble-hover px-5 py-2.5 font-sketch font-bold text-sm"
+                                style="background: var(--accent); color: #fff; border-color: var(--accent);">See My
+                                Work</button>
+                            <a href="resume.pdf" download
+                                class="sketch-border wobble-hover px-5 py-2.5 font-sketch font-bold text-sm no-underline"><i
+                                    class="fa-solid fa-download mr-1.5"></i>Resume</a>
                         </div>
+                        <p class="font-hand text-2xl mt-8 opacity-60" style="color: var(--accent);">use arrows to turn
+                            pages</p>
+                    </div>
 
-                        <div class="project-card cursor-pointer relative tilt-card"
-                            onclick="openProjectModal('text-tool')">
-                            <div class="moving-border h-64 md:h-[350px] group relative"
-                                style="--border-color: #00f3ff;">
-                                <img src="text.png"
-                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                                <div
-                                    class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
-                                </div>
-                                <div class="absolute bottom-6 left-6 z-20">
-                                    <h3
-                                        class="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors">
-                                        Text Comparison Tool</h3>
-                                    <p class="text-neon-cyan text-xs font-mono mt-1 uppercase tracking-widest">Click to
-                                        Expand_</p>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Right: Scribbly Illustration -->
+                    <div class="hidden md:flex items-center justify-center flex-shrink-0"
+                        style="width:42%; height:100%;">
+                        <svg viewBox="0 0 340 420" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            style="width:100%; max-width:320px; height:auto;" aria-hidden="true">
 
-                        <div class="project-card cursor-pointer relative tilt-card"
-                            onclick="openProjectModal('biometrics')">
-                            <div class="moving-border h-64 md:h-[350px] group relative"
-                                style="--border-color: #bd00ff;">
-                                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000"
-                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                                <div
-                                    class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
-                                </div>
-                                <div class="absolute bottom-6 left-6 z-20">
-                                    <h3
-                                        class="text-2xl font-bold text-white group-hover:text-neon-purple transition-colors">
-                                        Age & Gender Detection</h3>
-                                    <p class="text-neon-purple text-xs font-mono mt-1 uppercase tracking-widest">Click
-                                        to
-                                        Expand_</p>
-                                </div>
-                            </div>
-                        </div>
+                            <!-- Floating laptop / monitor scribble -->
+                            <g class="scribble-hero">
+                                <!-- Monitor body -->
+                                <rect x="60" y="80" width="220" height="145" rx="10" ry="10" stroke="var(--border)"
+                                    stroke-width="3.5" fill="var(--card)" class="draw-anim" />
+                                <!-- Screen inner -->
+                                <rect x="74" y="93" width="192" height="118" rx="5" stroke="var(--muted)"
+                                    stroke-width="2" fill="none" class="draw-anim-2" style="opacity:0.45;" />
+                                <!-- Code lines on screen -->
+                                <line x1="90" y1="116" x2="190" y2="116" stroke="var(--accent)" stroke-width="2.5"
+                                    stroke-linecap="round" class="draw-anim-3" />
+                                <line x1="90" y1="130" x2="160" y2="130" stroke="var(--accent2)" stroke-width="2"
+                                    stroke-linecap="round" class="draw-anim-3" style="animation-delay:0.1s;" />
+                                <line x1="98" y1="144" x2="200" y2="144" stroke="var(--accent)" stroke-width="2"
+                                    stroke-linecap="round" class="draw-anim-3" style="animation-delay:0.2s;" />
+                                <line x1="98" y1="158" x2="175" y2="158" stroke="var(--muted)" stroke-width="1.8"
+                                    stroke-linecap="round" class="draw-anim-3" style="animation-delay:0.25s;" />
+                                <line x1="90" y1="172" x2="220" y2="172" stroke="var(--accent2)" stroke-width="2"
+                                    stroke-linecap="round" class="draw-anim-3" style="animation-delay:0.3s;" />
+                                <line x1="90" y1="186" x2="140" y2="186" stroke="var(--accent)" stroke-width="2"
+                                    stroke-linecap="round" class="draw-anim-3" style="animation-delay:0.35s;" />
+                                <!-- Monitor stand -->
+                                <path d="M 160 225 L 160 255 M 135 255 L 185 255" stroke="var(--border)"
+                                    stroke-width="3" stroke-linecap="round" class="draw-anim-2" />
+                            </g>
 
-                        <div class="project-card cursor-pointer relative tilt-card"
-                            onclick="openProjectModal('image-tool')">
-                            <div class="moving-border h-64 md:h-[350px] group relative"
-                                style="--border-color: #00ff9d;">
-                                <img src="image.png"
-                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
-                                <div
-                                    class="absolute inset-0 bg-black/60 opacity-60 group-hover:opacity-20 transition-opacity z-10">
-                                </div>
-                                <div class="absolute bottom-6 left-6 z-20">
-                                    <h3
-                                        class="text-2xl font-bold text-white group-hover:text-neon-green transition-colors">
-                                        Image Enhancement Tool</h3>
-                                    <p class="text-neon-green text-xs font-mono mt-1 uppercase tracking-widest">Click to
-                                        Expand_</p>
-                                </div>
-                            </div>
-                        </div>
+                            <!-- Floating coffee cup -->
+                            <g class="scribble-hero-2" style="transform-origin: 278px 290px;">
+                                <path d="M255 270 Q253 310 262 318 L294 318 Q303 310 301 270 Z" stroke="var(--border)"
+                                    stroke-width="3" fill="var(--card)" class="draw-anim-2" />
+                                <path d="M301 278 Q318 278 318 291 Q318 304 301 304" stroke="var(--border)"
+                                    stroke-width="2.5" fill="none" class="draw-anim-3" />
+                                <!-- Steam -->
+                                <path d="M268 262 Q271 252 268 244" stroke="var(--muted)" stroke-width="2"
+                                    stroke-linecap="round" fill="none" class="draw-anim-3 dot-pulse" />
+                                <path d="M278 258 Q281 246 278 238" stroke="var(--muted)" stroke-width="2"
+                                    stroke-linecap="round" fill="none" class="draw-anim-3 dot-pulse"
+                                    style="animation-delay:0.5s;" />
+                                <path d="M288 262 Q291 250 288 242" stroke="var(--muted)" stroke-width="2"
+                                    stroke-linecap="round" fill="none" class="draw-anim-3 dot-pulse"
+                                    style="animation-delay:1s;" />
+                            </g>
 
+                            <!-- Stars scattered -->
+                            <g class="dot-pulse">
+                                <text x="44" y="68" font-size="18" fill="var(--accent)"
+                                    style="font-family:Caveat;">*</text>
+                                <text x="295" y="60" font-size="14" fill="var(--accent2)">*</text>
+                                <text x="44" y="310" font-size="12" fill="var(--accent2)">*</text>
+                                <text x="228" y="365" font-size="16" fill="var(--accent)"
+                                    style="font-family:Caveat;">*</text>
+                            </g>
+
+                            <!-- Wavy decorative lines at bottom -->
+                            <path d="M40 350 Q80 338 120 350 Q160 362 200 350 Q240 338 280 350 Q310 358 330 350"
+                                stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round"
+                                class="draw-anim-3" style="opacity:0.4;" />
+                            <path d="M40 366 Q80 354 120 366 Q160 378 200 366 Q240 354 280 366 Q310 374 330 366"
+                                stroke="var(--accent2)" stroke-width="1.5" fill="none" stroke-linecap="round"
+                                class="draw-anim-3" style="opacity:0.3; animation-delay:0.2s;" />
+
+                            <!-- Hand-written label -->
+                            <text x="90" y="400" font-size="20" fill="var(--accent)"
+                                style="font-family:Caveat; opacity:0.7;">building cool stuff</text>
+                        </svg>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <div id="project-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
-            <div class="absolute inset-0 bg-black/90 backdrop-blur-xl" onclick="closeProjectModal()"></div>
+            <!-- PAGE 2: ABOUT -->
+            <div class="page" id="page-2">
+                <div class="min-h-[550px]">
+                    <p class="font-hand text-4xl font-bold mb-2" style="color: var(--accent);">01.</p>
+                    <h2 class="font-hand text-5xl md:text-6xl font-bold mb-6"><span class="scribble-underline">About
+                            Me</span></h2>
+                    <p class="text-lg md:text-xl leading-relaxed mb-8" style="color: var(--muted);">
+                        I construct narratives with data and build digital cathedrals with code. Currently studying at
+                        <strong style="color: var(--text);">SRM Institute of Science & Technology</strong>.
+                    </p>
 
-            <div class="relative bg-void border border-white/20 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 md:p-12 shadow-2xl scale-95 transition-transform duration-300"
-                id="modal-container">
-                <button class="absolute top-6 right-6 text-white text-3xl hover:text-neon-cyan transition-colors"
-                    onclick="closeProjectModal()">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="sketch-border p-4 text-center">
+                            <div class="font-hand text-3xl font-bold" style="color: var(--accent);">1st Place</div>
+                            <div class="text-xs md:text-sm font-sketch" style="color: var(--muted);">OSSome Hacks 2.0
+                            </div>
+                        </div>
+                        <div class="sketch-border p-4 text-center">
+                            <div class="font-hand text-3xl font-bold" style="color: var(--accent2);">300+ Solved</div>
+                            <div class="text-xs md:text-sm font-sketch" style="color: var(--muted);">DSA Problems</div>
+                        </div>
+                        <div class="sketch-border p-4 text-center">
+                            <div class="font-hand text-3xl font-bold" style="color: var(--accent);">9.53 CGPA</div>
+                            <div class="text-xs md:text-sm font-sketch" style="color: var(--muted);">Academic Record
+                            </div>
+                        </div>
+                        <div class="sketch-border p-4 text-center">
+                            <div class="font-hand text-3xl font-bold" style="color: var(--accent2);">1700+ Rating</div>
+                            <div class="text-xs md:text-sm font-sketch" style="color: var(--muted);">Codeforces</div>
+                        </div>
+                    </div>
 
-                <div id="modal-body">
+                    <h3 class="font-hand text-3xl font-bold mb-4">Education</h3>
+                    <div class="space-y-4">
+                        <div class="sketch-border p-4">
+                            <h4 class="font-bold text-base">B.Tech CSE (Data Science)</h4>
+                            <p class="text-sm" style="color: var(--muted);">SRM Institute of Science & Technology
+                                &middot; 2023 - 2027</p>
+                        </div>
+                        <div class="sketch-border p-4">
+                            <h4 class="font-bold text-base">Intermediate Schooling</h4>
+                            <p class="text-sm" style="color: var(--muted);">St. Thomas Senior Secondary School &middot;
+                                2020 - 2022</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <section id="certs" class="py-24 relative z-10">
-            <div class="container mx-auto px-6 max-w-7xl text-left">
+            <!-- PAGE 3: TECH STACK -->
+            <div class="page" id="page-3">
+                <div class="min-h-[550px] flex flex-col">
+                    <p class="font-hand text-4xl font-bold mb-1" style="color: var(--accent);">02.</p>
+                    <h2 class="font-hand text-5xl md:text-6xl font-bold mb-5"><span class="scribble-underline">Tech
+                            Stack</span></h2>
 
-                <div class="mb-16">
-                    <span class="text-sm font-bold text-neon-cyan uppercase tracking-[0.2em] scramble-text">
-                        07 // The Proof
-                    </span>
-                    <h2 class="text-4xl md:text-6xl font-display font-bold text-white mt-3">Certifications</h2>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                    <div class="tilt-card hover-trigger">
-                        <div class="moving-border p-6 rounded-2xl bg-black/40 backdrop-blur-md"
-                            style="--border-color: #ffe600;">
-
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="text-xs font-bold uppercase border border-neon-yellow/40 
-                            text-neon-yellow px-2 py-0.5 rounded-full">
-                                    NPTEL
-                                </div>
-                                <i class="fa-brands fa-java text-3xl text-neon-yellow"></i>
+                    <!-- Row 1: Languages - full width with labels -->
+                    <div class="sketch-border p-5 mb-4">
+                        <h3 class="font-hand text-xl font-bold mb-4" style="color: var(--accent2);">Languages</h3>
+                        <div class="flex gap-8 flex-wrap items-end">
+                            <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+                                    class="w-14 h-14 group-hover:-translate-y-1 transition-transform" alt="C++">
+                                <span class="font-sketch text-xs" style="color:var(--muted);">C++</span>
                             </div>
-
-                            <h4 class="text-xl font-bold text-white mb-2">Programming in Java</h4>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-3">
-                                Advanced OOP, DS & system design concepts.
-                            </p>
-
-                            <a href="https://drive.google.com/file/d/1W66dlpwkyN2KLsRsYOoprS2dh9WBt_5h/view"
-                                class="inline-flex items-center gap-2 text-neon-yellow text-sm hover:text-yellow-300">
-                                <i class="fa-solid fa-eye"></i> View
-                            </a>
+                            <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                                    class="w-14 h-14 group-hover:-translate-y-1 transition-transform" alt="Python">
+                                <span class="font-sketch text-xs" style="color:var(--muted);">Python</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                                    class="w-14 h-14 group-hover:-translate-y-1 transition-transform" alt="JS">
+                                <span class="font-sketch text-xs" style="color:var(--muted);">JavaScript</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+                                    class="w-14 h-14 group-hover:-translate-y-1 transition-transform" alt="Java">
+                                <span class="font-sketch text-xs" style="color:var(--muted);">Java</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                                    class="w-14 h-14 group-hover:-translate-y-1 transition-transform" alt="HTML5">
+                                <span class="font-sketch text-xs" style="color:var(--muted);">HTML5</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                                    class="w-14 h-14 group-hover:-translate-y-1 transition-transform" alt="CSS3">
+                                <span class="font-sketch text-xs" style="color:var(--muted);">CSS3</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="tilt-card hover-trigger">
-                        <div class="moving-border p-6 rounded-2xl bg-black/40 backdrop-blur-md"
-                            style="--border-color: #ff00ff;">
-
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="text-xs font-bold uppercase border border-neon-pink/40 
-                            text-neon-pink px-2 py-0.5 rounded-full">
-                                    IBM
+                    <!-- Row 2: Frameworks + DB side by side -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="sketch-border p-4">
+                            <h3 class="font-hand text-xl font-bold mb-3" style="color: var(--accent);">Frameworks</h3>
+                            <div class="flex gap-5 flex-wrap items-end">
+                                <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                                        class="w-11 h-11 group-hover:-translate-y-1 transition-transform">
+                                    <span class="font-sketch text-[10px]" style="color:var(--muted);">React</span>
                                 </div>
-                                <i class="fa-brands fa-python text-3xl text-neon-pink"></i>
+                                <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+                                        class="w-11 h-11 dark:invert group-hover:-translate-y-1 transition-transform">
+                                    <span class="font-sketch text-[10px]" style="color:var(--muted);">Next.js</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                                        class="w-11 h-11 group-hover:-translate-y-1 transition-transform">
+                                    <span class="font-sketch text-[10px]" style="color:var(--muted);">Node.js</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+                                        class="w-11 h-11 dark:invert group-hover:-translate-y-1 transition-transform">
+                                    <span class="font-sketch text-[10px]" style="color:var(--muted);">Express</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
+                                        class="w-11 h-11 group-hover:-translate-y-1 transition-transform">
+                                    <span class="font-sketch text-[10px]" style="color:var(--muted);">Tailwind</span>
+                                </div>
                             </div>
-
-                            <h4 class="text-xl font-bold text-white mb-2">Python for Data Science</h4>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-3">NumPy, Pandas & analytics.</p>
-
-                            <a href="https://drive.google.com/file/d/1NXyKfPURriLZFegIbaDLdxp2qrREX-8C/view"
-                                class="inline-flex items-center gap-2 text-neon-pink text-sm hover:text-pink-300">
-                                <i class="fa-solid fa-eye"></i> View
-                            </a>
+                        </div>
+                        <div class="sketch-border p-4">
+                            <h3 class="font-hand text-xl font-bold mb-3" style="color: var(--accent2);">Databases &amp;
+                                Tools</h3>
+                            <div class="flex gap-5 flex-wrap items-end">
+                                <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                                        class="w-11 h-11 group-hover:-translate-y-1 transition-transform">
+                                    <span class="font-sketch text-[10px]" style="color:var(--muted);">MongoDB</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+                                        class="w-11 h-11 group-hover:-translate-y-1 transition-transform">
+                                    <span class="font-sketch text-[10px]" style="color:var(--muted);">PostgreSQL</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+                                        class="w-11 h-11 group-hover:-translate-y-1 transition-transform">
+                                    <span class="font-sketch text-[10px]" style="color:var(--muted);">Git</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+                                        class="w-11 h-11 dark:invert group-hover:-translate-y-1 transition-transform">
+                                    <span class="font-sketch text-[10px]" style="color:var(--muted);">GitHub</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"
+                                        class="w-11 h-11 group-hover:-translate-y-1 transition-transform">
+                                    <span class="font-sketch text-[10px]" style="color:var(--muted);">VS Code</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="tilt-card hover-trigger">
-                        <div class="moving-border p-6 rounded-2xl bg-black/40 backdrop-blur-md"
-                            style="--border-color: #00ff9d;">
-
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="text-xs font-bold uppercase border border-neon-green/40 
-                            text-neon-green px-2 py-0.5 rounded-full">
-                                    MathWorks
-                                </div>
-                                <i class="fa-solid fa-brain text-3xl text-neon-green"></i>
-                            </div>
-
-                            <h4 class="text-xl font-bold text-white mb-2">Deep Learning & ML</h4>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-3">Neural networks & pipelines.</p>
-
-                            <a href="https://drive.google.com/drive/folders/1kAiZ0PsNvMlEl_L4zcY6qTVjezXV7CJq"
-                                class="inline-flex items-center gap-2 text-neon-green text-sm hover:text-green-300">
-                                <i class="fa-solid fa-eye"></i> View
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="tilt-card hover-trigger">
-                        <div class="moving-border p-6 rounded-2xl bg-black/40 backdrop-blur-md"
-                            style="--border-color: #ff0059;">
-
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="text-xs font-bold uppercase border border-[#ff0059]/40 
-                  text-[#ff0059] px-2 py-0.5 rounded-full">
-                                    MathWorks
-                                </div>
-                                <i class="fa-solid fa-eye text-3xl text-[#ff0059]"></i>
-                            </div>
-
-                            <h4 class="text-xl font-bold text-white mb-2">Image Processing</h4>
-
-                            <p class="text-gray-400 text-sm leading-relaxed mb-3">
-                                MATLAB-based image processing workflows.
-                            </p>
-
-                            <a href="https://drive.google.com/drive/folders/1kAiZ0PsNvMlEl_L4zcY6qTVjezXV7CJq"
-                                class="inline-flex items-center gap-2 text-[#ff0059] text-sm hover:text-[#ff3377] transition-colors">
-                                <i class="fa-solid fa-eye"></i> View
-                            </a>
-
-                        </div>
-                    </div>
-
-                    <div class="tilt-card hover-trigger">
-                        <div class="moving-border p-6 rounded-2xl bg-black/40 backdrop-blur-md"
-                            style="--border-color: #00f3ff;">
-
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="text-xs font-bold uppercase border border-neon-cyan/40 
-                            text-neon-cyan px-2 py-0.5 rounded-full">
-                                    Coursera
-                                </div>
-                                <i class="fa-solid fa-c text-3xl text-neon-cyan"></i>
-                            </div>
-
-                            <h4 class="text-xl font-bold text-white mb-2">C for Everyone</h4>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-3">Pointers & memory handling.</p>
-
-                            <a href="https://drive.google.com/file/d/1568u1C35Ax2E5rOHMtatdxSUNtV5Mgye/view"
-                                class="inline-flex items-center gap-2 text-neon-cyan text-sm hover:text-cyan-300">
-                                <i class="fa-solid fa-eye"></i> View
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="tilt-card hover-trigger">
-                        <div class="moving-border p-6 rounded-2xl bg-black/40 backdrop-blur-md"
-                            style="--border-color: #FF5722;">
-
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="text-xs font-bold uppercase border border-orange-500/40 
-                            text-orange-500 px-2 py-0.5 rounded-full">
-                                    HackWithIndia
-                                </div>
-                                <i class="fa-solid fa-award text-3xl text-orange-500"></i>
-                            </div>
-
-                            <h4 class="text-xl font-bold text-white mb-2">Achievement</h4>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-3">Competitive programming excellence.
-                            </p>
-
-                            <a href="https://drive.google.com/file/d/1C_8rULt-7cnYGXke4fpQ2G05IFLSsF3o/view"
-                                class="inline-flex items-center gap-2 text-orange-500 text-sm hover:text-orange-300">
-                                <i class="fa-solid fa-eye"></i> View
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="py-20 md:py-32 relative z-10 border-t border-white/5">
-            <div class="container mx-auto px-4 md:px-6 text-center">
-                <h2 class="text-5xl md:text-[10rem] font-display font-bold text-white mb-8 md:mb-12 tracking-tighter">
-                    What's Next?</h2>
-                <p class="text-gray-400 text-lg md:text-2xl mb-12 md:mb-16">Open to Internships & Full-Time Roles.</p>
-
-                <a href="mailto:utpalraj1609@gmail.com" class="hover-trigger inline-block relative group max-w-full">
-                    <div class="absolute -inset-1 bg-neon-cyan/40 rounded-xl blur-lg opacity-25 
-    group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
-                    </div>
-
-                    <div
-                        class="relative px-6 py-4 md:px-12 md:py-6 bg-black rounded-xl border border-white/10 text-base md:text-3xl font-bold text-white group-hover:text-white transition-colors break-all">
-                        utpalraj1609@gmail.com
-                    </div>
-                </a>
-
-                <div class="flex justify-center gap-8 md:gap-12 mt-16 md:mt-24">
-                    <a href="https://github.com/utpal16raj09" target="_blank"
-                        class="text-3xl md:text-4xl text-gray-500 hover:text-white hover:scale-125 transition-all hover-trigger"><i
-                            class="fa-brands fa-github"></i></a>
-                    <a href="https://linkedin.com/in/utpal-raj-0380b6284" target="_blank"
-                        class="text-3xl md:text-4xl text-gray-500 hover:text-white hover:scale-125 transition-all hover-trigger"><i
-                            class="fa-brands fa-linkedin"></i></a>
-                    <a href="https://x.com/utpal_raj1609" target="_blank"
-                        class="text-3xl md:text-4xl text-gray-500 hover:text-white hover:scale-125 transition-all hover-trigger"><i
-                            class="fa-brands fa-twitter"></i></a>
-                </div>
-
-                <div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-start text-left">
-
-                    <div class="flex items-center md:items-start justify-center md:justify-end pt-20 md:pt-40 pr-4">
-                        <h2
-                            class="font-display font-bold text-white text-4xl md:text-7xl leading-tight tracking-tight text-right">
-                            <span class="text-neon-cyan">Stay Connected.</span><br>
-                            <span class="text-neon-cyan">Let’s Build</span><br>
-                            The Future.
-                        </h2>
-                    </div>
-
-                    <div class="moving-border p-6 md:p-8 rounded-2xl bg-black/40 backdrop-blur-xl md:mr-12 lg:mr-32"
-                        style="--border-color: #00f3ff;">
-
-                        <h3 class="text-3xl font-display font-bold text-white mb-6 flex items-center gap-2">
-                            <span class="text-neon-cyan">&gt;</span> Contact Me
+                    <!-- Row 3: Skills pills full width -->
+                    <div class="sketch-border p-4">
+                        <h3 class="font-hand text-xl font-bold mb-3" style="color: var(--accent);">Additional Skills
                         </h3>
-
-                        <form class="space-y-5">
-                            <div>
-                                <label class="text-neon-cyan text-xs font-mono uppercase tracking-wider">Your
-                                    Name</label>
-                                <input type="text" placeholder="Enter your name" class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
-                   text-white focus:border-neon-cyan outline-none transition-all text-sm">
-                            </div>
-
-                            <div>
-                                <label class="text-neon-cyan text-xs font-mono uppercase tracking-wider">Your
-                                    Email</label>
-                                <input type="email" placeholder="Enter your email" class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
-                   text-white focus:border-neon-cyan outline-none transition-all text-sm">
-                            </div>
-
-                            <div>
-                                <label class="text-neon-cyan text-xs font-mono uppercase tracking-wider">Subject</label>
-                                <input type="text" placeholder="Enter subject" class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
-                   text-white focus:border-neon-cyan outline-none transition-all text-sm">
-                            </div>
-
-                            <div>
-                                <label class="text-neon-cyan text-xs font-mono uppercase tracking-wider">Message</label>
-                                <textarea rows="4" placeholder="Type your message..." class="mt-1 w-full px-4 py-2 bg-black/60 border border-white/10 rounded-md 
-                   text-white focus:border-neon-cyan outline-none transition-all text-sm resize-none"></textarea>
-                            </div>
-
-                            <button type="submit" class="w-full py-3 bg-black border border-white/10 rounded-lg text-white font-bold 
-                text-base hover:border-neon-cyan hover:text-neon-cyan transition-all">
-                                SEND MESSAGE
-                            </button>
-                        </form>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill hover:-translate-y-1 transition-transform cursor-default">REST
+                                APIs</span>
+                            <span
+                                class="tag-pill hover:-translate-y-1 transition-transform cursor-default">WebSockets</span>
+                            <span class="tag-pill hover:-translate-y-1 transition-transform cursor-default">Chrome
+                                Extensions</span>
+                            <span class="tag-pill hover:-translate-y-1 transition-transform cursor-default">Linux
+                                CLI</span>
+                            <span class="tag-pill hover:-translate-y-1 transition-transform cursor-default">OOP /
+                                OOAD</span>
+                            <span class="tag-pill hover:-translate-y-1 transition-transform cursor-default">DBMS &amp;
+                                SQL</span>
+                            <span class="tag-pill hover:-translate-y-1 transition-transform cursor-default">LLM
+                                Integration</span>
+                            <span class="tag-pill hover:-translate-y-1 transition-transform cursor-default">Prompt
+                                Engineering</span>
+                            <span
+                                class="tag-pill hover:-translate-y-1 transition-transform cursor-default">OpenCV</span>
+                            <span class="tag-pill hover:-translate-y-1 transition-transform cursor-default">NLP</span>
+                        </div>
                     </div>
-
-                </div>
-
-                <div class="mt-16 md:mt-24 text-[10px] md:text-sm text-gray-700 font-mono text-center">
-                    DESIGNED & DEVELOPED BY UTPAL RAJ © 2026
                 </div>
             </div>
-        </section>
-    </main>
 
+            <!-- PAGE 4: PROFILES -->
+            <div class="page" id="page-4">
+                <div class="min-h-[550px]">
+                    <p class="font-hand text-4xl font-bold mb-2" style="color: var(--accent);">03.</p>
+                    <h2 class="font-hand text-5xl md:text-6xl font-bold mb-8"><span class="scribble-underline">Coding
+                            Profiles</span></h2>
+
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <a href="https://leetcode.com/u/raj_1609utpal/" target="_blank"
+                            class="sketch-border wobble-hover p-5 text-center no-underline">
+                            <i class="fa-solid fa-code text-3xl mb-2" style="color: #FFA116;"></i>
+                            <div class="font-sketch font-bold text-sm">LeetCode</div>
+                        </a>
+                        <a href="https://www.geeksforgeeks.org/user/utpalraxs5e/" target="_blank"
+                            class="sketch-border wobble-hover p-5 text-center no-underline">
+                            <i class="fa-solid fa-terminal text-3xl mb-2" style="color: #2f8d46;"></i>
+                            <div class="font-sketch font-bold text-sm">GeeksforGeeks</div>
+                        </a>
+                        <a href="https://www.naukri.com/code360/profile/raj_utpal1609" target="_blank"
+                            class="sketch-border wobble-hover p-5 text-center no-underline">
+                            <i class="fa-solid fa-fire text-3xl mb-2" style="color: #DD6C00;"></i>
+                            <div class="font-sketch font-bold text-sm">Code360</div>
+                        </a>
+                        <a href="https://codeforces.com/profile/utpalraj1609" target="_blank"
+                            class="sketch-border wobble-hover p-5 text-center no-underline">
+                            <i class="fa-solid fa-chart-simple text-3xl mb-2" style="color: #318CE7;"></i>
+                            <div class="font-sketch font-bold text-sm">CodeForces</div>
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="sketch-border p-4 overflow-hidden">
+                            <h4 class="font-hand text-xl font-bold mb-3">LeetCode Performance</h4>
+                            <img src="https://leetcard.jacoblin.cool/raj_1609utpal?ext=heatmap&theme=dark&border=0&radius=10"
+                                alt="LeetCode Heatmap" class="w-full rounded">
+                        </div>
+                        <div class="sketch-border p-4 overflow-hidden">
+                            <h4 class="font-hand text-xl font-bold mb-3">GitHub Contributions</h4>
+                            <img src="https://ghchart.rshah.org/e85d04/utpal16raj09" alt="GitHub Contributions"
+                                class="w-full rounded">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 5: EXPERIENCE -->
+            <div class="page" id="page-5">
+                <div class="min-h-[550px]">
+                    <p class="font-hand text-4xl font-bold mb-2" style="color: var(--accent);">04.</p>
+                    <h2 class="font-hand text-5xl md:text-6xl font-bold mb-6"><span
+                            class="scribble-underline">Experience</span></h2>
+
+                    <div class="space-y-5">
+                        <!-- Tagzzs -->
+                        <div class="sketch-border wobble-hover p-5 cursor-pointer group"
+                            onclick="openExperience('tagzzs')">
+                            <div class="flex justify-between items-center flex-wrap gap-2">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 sketch-border flex items-center justify-center flex-shrink-0"
+                                        style="background:var(--bg);">
+                                        <i class="fa-solid fa-layer-group text-xl" style="color:var(--accent);"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg md:text-xl">Tagzzs</h3>
+                                        <p class="font-sketch text-sm" style="color: var(--accent);">Full-Stack
+                                            Developer</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="tag-pill text-xs">2025 - Present</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-sm group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                                        style="color:var(--muted);"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-3 line-clamp-2" style="color:var(--muted);">Knowledge retrieval
+                                platform &middot; LLM optimization &middot; Chrome Extension</p>
+                        </div>
+
+                        <!-- Optivix AI -->
+                        <div class="sketch-border wobble-hover p-5 cursor-pointer group"
+                            onclick="openExperience('optivix')">
+                            <div class="flex justify-between items-center flex-wrap gap-2">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 sketch-border flex items-center justify-center flex-shrink-0"
+                                        style="background:var(--bg);">
+                                        <i class="fa-solid fa-robot text-xl" style="color:var(--accent2);"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg md:text-xl">Optivix AI</h3>
+                                        <p class="font-sketch text-sm" style="color: var(--accent2);">Frontend Developer
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="tag-pill text-xs">Aug - Oct 2025</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-sm group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                                        style="color:var(--muted);"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-3 line-clamp-2" style="color:var(--muted);">AI agent platform &middot;
+                                Dashboard UI/UX &middot; Landing page design</p>
+                        </div>
+
+                        <!-- Freelance -->
+                        <div class="sketch-border wobble-hover p-5 cursor-pointer group"
+                            onclick="openExperience('freelance')">
+                            <div class="flex justify-between items-center flex-wrap gap-2">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 sketch-border flex items-center justify-center flex-shrink-0"
+                                        style="background:var(--bg);">
+                                        <i class="fa-solid fa-briefcase text-xl" style="color:var(--accent);"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg md:text-xl">Freelance Development</h3>
+                                        <p class="font-sketch text-sm" style="color: var(--accent);">Web Developer</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="tag-pill text-xs">2025 - Present</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-sm group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                                        style="color:var(--muted);"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-3 line-clamp-2" style="color:var(--muted);">Interactive SPAs &middot;
+                                Client-side animations &middot; Email workflows</p>
+                        </div>
+                    </div>
+
+                    <p class="font-hand text-lg mt-6 opacity-60" style="color:var(--accent);">click any card to read
+                        more</p>
+                </div>
+            </div>
+
+            <!-- PAGE 6: PROJECTS -->
+            <div class="page" id="page-6">
+                <div class="min-h-[550px]">
+                    <p class="font-hand text-4xl font-bold mb-2" style="color: var(--accent);">05.</p>
+                    <h2 class="font-hand text-5xl md:text-6xl font-bold mb-8"><span
+                            class="scribble-underline">Projects</span></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="project-grid"></div>
+                </div>
+            </div>
+
+            <!-- PAGE 7: CERTS -->
+            <div class="page" id="page-7">
+                <div class="min-h-[550px]">
+                    <p class="font-hand text-4xl font-bold mb-2" style="color: var(--accent);">06.</p>
+                    <h2 class="font-hand text-5xl md:text-6xl font-bold mb-8"><span
+                            class="scribble-underline">Certifications</span></h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="sketch-border p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="tag-pill">NPTEL</span>
+                                <i class="fa-brands fa-java text-2xl" style="color: var(--accent);"></i>
+                            </div>
+                            <h4 class="font-bold text-base">Programming in Java</h4>
+                            <p class="text-sm mb-3" style="color: var(--muted);">Advanced OOP, DS & system design
+                                concepts.</p>
+                            <a href="https://drive.google.com/file/d/1W66dlpwkyN2KLsRsYOoprS2dh9WBt_5h/view"
+                                class="text-sm font-sketch no-underline animate-pulse" style="color: var(--accent);"><i
+                                    class="fa-solid fa-eye mr-1"></i>View File</a>
+                        </div>
+
+                        <div class="sketch-border p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="tag-pill">IBM</span>
+                                <i class="fa-brands fa-python text-2xl" style="color: var(--accent2);"></i>
+                            </div>
+                            <h4 class="font-bold text-base">Python for Data Science</h4>
+                            <p class="text-sm mb-3" style="color: var(--muted);">NumPy, Pandas & analytics.</p>
+                            <a href="https://drive.google.com/file/d/1NXyKfPURriLZFegIbaDLdxp2qrREX-8C/view"
+                                class="text-sm font-sketch no-underline" style="color: var(--accent2);"><i
+                                    class="fa-solid fa-eye mr-1"></i>View File</a>
+                        </div>
+
+                        <div class="sketch-border p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="tag-pill">MathWorks</span>
+                                <i class="fa-solid fa-brain text-2xl" style="color: var(--accent);"></i>
+                            </div>
+                            <h4 class="font-bold text-base">Deep Learning & ML</h4>
+                            <p class="text-sm mb-3" style="color: var(--muted);">Neural networks & pipelines.</p>
+                            <a href="https://drive.google.com/drive/folders/1kAiZ0PsNvMlEl_L4zcY6qTVjezXV7CJq"
+                                class="text-sm font-sketch no-underline" style="color: var(--accent);"><i
+                                    class="fa-solid fa-eye mr-1"></i>View Files</a>
+                        </div>
+
+                        <div class="sketch-border p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="tag-pill" style="color: #ff0059; border-color: #ff0059;">MathWorks</span>
+                                <i class="fa-solid fa-eye text-2xl" style="color: #ff0059;"></i>
+                            </div>
+                            <h4 class="font-bold text-base">Image Processing</h4>
+                            <p class="text-sm mb-3" style="color: var(--muted);">MATLAB-based image processing
+                                workflows.</p>
+                            <a href="https://drive.google.com/drive/folders/1kAiZ0PsNvMlEl_L4zcY6qTVjezXV7CJq"
+                                class="text-sm font-sketch no-underline" style="color: #ff0059;"><i
+                                    class="fa-solid fa-eye mr-1"></i>View File</a>
+                        </div>
+
+                        <div class="sketch-border p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="tag-pill">Coursera</span>
+                                <i class="fa-solid fa-c text-2xl" style="color: var(--accent2);"></i>
+                            </div>
+                            <h4 class="font-bold text-base">C for Everyone</h4>
+                            <p class="text-sm mb-3" style="color: var(--muted);">Pointers & memory handling.</p>
+                            <a href="https://drive.google.com/file/d/1568u1C35Ax2E5rOHMtatdxSUNtV5Mgye/view"
+                                class="text-sm font-sketch no-underline" style="color: var(--accent2);"><i
+                                    class="fa-solid fa-eye mr-1"></i>View File</a>
+                        </div>
+
+                        <div class="sketch-border p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="tag-pill"
+                                    style="color: #FF5722; border-color: #FF5722;">HackWithIndia</span>
+                                <i class="fa-solid fa-award text-2xl" style="color: #FF5722;"></i>
+                            </div>
+                            <h4 class="font-bold text-base">Achievement</h4>
+                            <p class="text-sm mb-3" style="color: var(--muted);">Competitive programming excellence.</p>
+                            <a href="https://drive.google.com/file/d/1C_8rULt-7cnYGXke4fpQ2G05IFLSsF3o/view"
+                                class="text-sm font-sketch no-underline" style="color: #FF5722;"><i
+                                    class="fa-solid fa-eye mr-1"></i>View File</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 8: CONTACT -->
+            <div class="page" id="page-8">
+                <div class="flex h-full items-center gap-8">
+                    <!-- Left: Contact Info + Form -->
+                    <div class="flex flex-col justify-center flex-1 min-w-0">
+                        <p class="font-hand text-4xl font-bold mb-1" style="color: var(--accent);">07.</p>
+                        <h2 class="font-hand text-5xl md:text-6xl font-bold mb-3"><span class="scribble-underline">Get
+                                in Touch</span></h2>
+                        <p class="text-base mb-5" style="color: var(--muted);">Available for opportunities and
+                            internships</p>
+
+                        <div class="mb-5">
+                            <a href="mailto:utpalraj1609@gmail.com"
+                                class="sketch-border wobble-hover inline-block px-5 py-2.5 font-bold text-base no-underline">utpalraj1609@gmail.com</a>
+                        </div>
+
+                        <div class="flex gap-5 mb-6">
+                            <a href="https://github.com/utpal16raj09" target="_blank"
+                                class="text-3xl hover:scale-110 transition-transform" style="color: var(--muted);"><i
+                                    class="fa-brands fa-github"></i></a>
+                            <a href="https://linkedin.com/in/utpal-raj-0380b6284" target="_blank"
+                                class="text-3xl hover:scale-110 transition-transform" style="color: var(--muted);"><i
+                                    class="fa-brands fa-linkedin"></i></a>
+                            <a href="https://x.com/utpal_raj1609" target="_blank"
+                                class="text-3xl hover:scale-110 transition-transform" style="color: var(--muted);"><i
+                                    class="fa-brands fa-twitter"></i></a>
+                        </div>
+
+                        <div class="sketch-border p-4" style="max-width:340px;">
+                            <h3 class="font-hand text-xl font-bold mb-3">Drop a message</h3>
+                            <form class="space-y-3">
+                                <input type="text" placeholder="Name"
+                                    class="w-full px-3 py-2 border rounded-md bg-transparent text-sm outline-none"
+                                    style="border-color: var(--line);">
+                                <input type="email" placeholder="Email"
+                                    class="w-full px-3 py-2 border rounded-md bg-transparent text-sm outline-none"
+                                    style="border-color: var(--line);">
+                                <textarea rows="2" placeholder="Message"
+                                    class="w-full px-3 py-2 border rounded-md bg-transparent text-sm outline-none resize-none"
+                                    style="border-color: var(--line);"></textarea>
+                                <button type="submit"
+                                    class="sketch-border wobble-hover w-full py-2.5 font-sketch font-bold text-sm"
+                                    style="background: var(--accent); color: #fff; border-color: var(--accent);">Send</button>
+                            </form>
+                        </div>
+                        <p class="mt-5 text-xs font-sketch" style="color: var(--muted);">Designed and coded by Utpal Raj
+                            &copy; 2026</p>
+                    </div>
+
+                    <!-- Right: Continuously Drawing Scribble Canvas -->
+                    <div class="hidden md:flex items-center justify-center flex-shrink-0 contact-float"
+                        style="width:40%; height:100%;">
+                        <svg id="contact-svg" viewBox="0 0 300 420" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            style="width:100%; max-width:280px; height:auto;" aria-hidden="true">
+
+                            <!-- Envelope outline - continuously drawing -->
+                            <g class="scribble-hero-3">
+                                <rect x="30" y="120" width="240" height="160" rx="10" stroke="var(--border)"
+                                    stroke-width="3.5" fill="var(--card)" class="contact-loop-draw"
+                                    style="stroke-dasharray:800; stroke-dashoffset:800;" />
+                                <!-- Envelope flap V -->
+                                <path d="M30 130 L150 210 L270 130" stroke="var(--accent)" stroke-width="3"
+                                    stroke-linecap="round" stroke-linejoin="round" fill="none"
+                                    class="contact-loop-draw-2" style="stroke-dasharray:340; stroke-dashoffset:340;" />
+                                <!-- Envelope bottom corners -->
+                                <path d="M30 280 L100 210 M270 280 L200 210" stroke="var(--muted)" stroke-width="2"
+                                    stroke-linecap="round" fill="none" class="contact-loop-draw-3"
+                                    style="stroke-dasharray:200; stroke-dashoffset:200;" />
+                            </g>
+
+                            <!-- Floating sparkles -->
+                            <g>
+                                <circle cx="55" cy="88" r="4" fill="var(--accent)" class="dot-pulse"
+                                    style="animation-delay:0s;" />
+                                <circle cx="245" cy="72" r="3" fill="var(--accent2)" class="dot-pulse"
+                                    style="animation-delay:0.8s;" />
+                                <circle cx="270" cy="340" r="4" fill="var(--accent)" class="dot-pulse"
+                                    style="animation-delay:1.4s;" />
+                                <circle cx="35" cy="360" r="3" fill="var(--accent2)" class="dot-pulse"
+                                    style="animation-delay:2s;" />
+                            </g>
+
+                            <!-- Spinning gear / atom ring top-right -->
+                            <g class="spin-glyph" style="transform-origin:248px 68px;">
+                                <circle cx="248" cy="68" r="18" stroke="var(--accent2)" stroke-width="2" fill="none"
+                                    stroke-dasharray="5 4" />
+                                <circle cx="248" cy="68" r="5" fill="var(--accent2)" opacity="0.7" />
+                            </g>
+
+                            <!-- Looping wavy lines from top to bottom -->
+                            <path d="M20 50 Q60 36 100 50 Q140 64 180 50 Q220 36 270 50" stroke="var(--accent)"
+                                stroke-width="2.5" fill="none" stroke-linecap="round" class="contact-loop-draw"
+                                style="stroke-dasharray:560; stroke-dashoffset:560; opacity:0.45;" />
+                            <path d="M20 64 Q60 50 100 64 Q140 78 180 64 Q220 50 270 64" stroke="var(--accent2)"
+                                stroke-width="1.8" fill="none" stroke-linecap="round" class="contact-loop-draw-2"
+                                style="stroke-dasharray:560; stroke-dashoffset:560; opacity:0.3;" />
+
+                            <!-- Bottom doodle text -->
+                            <text x="50" y="390" font-size="19" fill="var(--accent)"
+                                style="font-family:Caveat; opacity:0.75;">let's work together</text>
+
+                            <!-- Star burst pattern below envelope -->
+                            <line x1="150" y1="295" x2="150" y2="318" stroke="var(--muted)" stroke-width="1.5"
+                                stroke-linecap="round" class="dot-pulse" />
+                            <line x1="138" y1="300" x2="162" y2="313" stroke="var(--muted)" stroke-width="1.5"
+                                stroke-linecap="round" class="dot-pulse" style="animation-delay:0.3s;" />
+                            <line x1="138" y1="313" x2="162" y2="300" stroke="var(--muted)" stroke-width="1.5"
+                                stroke-linecap="round" class="dot-pulse" style="animation-delay:0.6s;" />
+
+                            <!-- Scribble circles orbiting a center -->
+                            <g class="scribble-hero-2">
+                                <circle cx="150" cy="55" r="22" stroke="var(--border)" stroke-width="2.5" fill="none"
+                                    stroke-dasharray="6 4" />
+                                <circle cx="150" cy="55" r="8" stroke="var(--accent)" stroke-width="2" fill="none" />
+                                <circle cx="150" cy="55" r="2" fill="var(--accent)" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Page Flip Controls -->
+        <div class="page-nav">
+            <button id="prev-btn" disabled onclick="prevPage()"><i class="fa-solid fa-arrow-left"></i></button>
+            <span class="page-counter" id="page-counter">1 / 8</span>
+            <button id="next-btn" onclick="nextPage()"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <button id="theme-toggle"><i class="fa-solid fa-moon icon-moon"></i><i
+                class="fa-solid fa-sun icon-sun"></i></button>
+    </div>
+    <audio id="page-turn-sound" src="https://www.soundjay.com/misc/sounds/page-flip-01a.mp3" preload="auto"></audio>
     <script>
+        // --- PROJECT DATA ---
         const projectData = {
             'leetcode-buddy': {
-    title: 'LeetCode Buddy Pro',
-    description: 'Built a Chrome extension implementing a 3-stage reasoning pipeline (DOM scraping → static analysis → structured feedback) to simulate interview-style problem solving. Engineered Tree-sitter based analysis modules supporting 12+ algorithmic patterns and implemented a controlled hint system to encourage structured thinking.',
-    tech: ['React', 'Vite', 'Tailwind CSS', 'Tree-sitter', 'Groq API'],
-    features: [
-        '3-Stage Reasoning Pipeline',
-        '12+ Algorithm Pattern Detection',
-        'Controlled Hint System'
-    ],
-    link: 'https://github.com/utpal16raj09/lcbuddy',
-    color: '#FFA116'
-},
-
-'rtiassist': {
-    title: 'RTIAssist',
-    description: 'Built an end-to-end AI-powered RTI filing system that converts multilingual voice and text inputs into structured RTI applications. Designed semantic authority mapping using Pinecone and integrated Gemini with Web Speech API for automated draft generation and complaint routing.',
-    tech: ['Next.js', 'Node.js', 'Gemini API', 'Pinecone', 'Web Speech API'],
-    features: [
-        'Voice-to-RTI Pipeline',
-        'Semantic Authority Mapping',
-        'Automated Draft Generation'
-    ],
-    link: 'https://github.com/utpal16raj09/rtiassist',
-    color: '#00ff9d'
-},
+                title: 'LeetCode Buddy Pro',
+                description: 'Built a Chrome extension implementing a 3-stage reasoning pipeline (DOM scraping → static analysis → structured feedback) to simulate interview-style problem solving. Engineered Tree-sitter based analysis modules supporting 12+ algorithmic patterns and implemented a controlled hint system to encourage structured thinking.',
+                tech: ['React', 'Vite', 'Tailwind CSS', 'Tree-sitter', 'Groq API'],
+                features: ['3-Stage Reasoning Pipeline', '12+ Algorithm Pattern Detection', 'Controlled Hint System'],
+                link: 'https://github.com/utpal16raj09/lcbuddy',
+                color: '#FFA116',
+                img: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=600'
+            },
+            'rtiassist': {
+                title: 'RTIAssist',
+                description: 'Built an end-to-end AI-powered RTI filing system that converts multilingual voice and text inputs into structured RTI applications. Designed semantic authority mapping using Pinecone and integrated Gemini with Web Speech API for automated draft generation and complaint routing.',
+                tech: ['Next.js', 'Node.js', 'Gemini API', 'Pinecone', 'Web Speech API'],
+                features: ['Voice-to-RTI Pipeline', 'Semantic Authority Mapping', 'Automated Draft Generation'],
+                link: 'https://github.com/utpal16raj09/rtiassist',
+                color: '#00ff9d',
+                img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600'
+            },
             'architect': {
                 title: 'The Architect',
                 description: 'A deep static code analysis studio powered by AI. It features a configurable prompt-engine with multiple depth levels (from summary to god-mode). I implemented modular analysis layers including design intent, trust boundaries, mental models, simulator scenarios, and knowledge checks.',
                 tech: ['JavaScript', 'HTML5', 'CSS3', 'API Integration'],
                 features: ['Configurable Prompt Engine', 'Modular Analysis Layers', 'Deep Static Analysis'],
                 link: 'https://github.com/utpal16raj09/architect.git',
-                color: '#ffe600'
+                color: '#ffe600',
+                img: 'architect.png'
             },
             'docify': {
                 title: 'Docify',
@@ -1496,39 +1307,8 @@ Building core frontend and backend systems for a knowledge retrieval platform se
                 tech: ['Python', 'NLP', 'LLM APIs', 'Git'],
                 features: ['Repo Parsing Pipeline', 'Auto-README Generation', 'LLM Context Inference'],
                 link: 'https://github.com/utpal16raj09/docify.git',
-                color: '#bd00ff'
-            },
-            'text-tool': {
-                title: 'Text Comparison Tool',
-                description: 'Developed a desktop-based NLP application to compare textual documents word-by-word, achieving over 95% accuracy in textual similarity detection. Implemented similarity scoring and difference highlighting using nltk and difflib.',
-                tech: ['Python', 'Tkinter', 'NLTK', 'difflib'],
-                features: ['Word-by-word comparison', 'Similarity scoring', 'Difference highlighting'],
-                link: 'https://github.com/utpal16raj09/Text_Comparison_Tool',
-                color: '#00f3ff'
-            },
-            'biometrics': {
-                title: 'Age & Gender Detection',
-                description: 'Built a real-time computer vision system to detect faces and predict age and gender from webcam input with 93% face detection accuracy and 88% gender classification accuracy.',
-                tech: ['Python', 'OpenCV', 'Deep Learning', 'Caffe'],
-                features: ['Real-time facial prediction', ' Landmark detection integration', 'Gender classification'],
-                link: 'https://github.com/utpal16raj09/Age_Gender_Detection',
-                color: '#bd00ff'
-            },
-            'editor': {
-                title: 'Personal Text Editor',
-                description: 'Developed a lightweight text editor supporting basic formatting and file operations with a focus on clean UI design.Implemented features such as bold, italic, font resizing, and file save/load.',
-                tech: ['Python', 'Tkinter', 'HTML', 'CSS', 'JS'],
-                features: ['Bold/Italic formatting', 'Font resizing', 'File save/load operations'],
-                link: 'https://github.com/utpal16raj09/BlahBlahBlah.git',
-                color: '#ffe600'
-            },
-            'image-tool': {
-                title: 'Image Enhancement Tool',
-                description: ' Developed a desktop-based image processing tool with real-time previews. Implemented background removal, grayscale conversion, cropping, and Gaussian blur. Integrated AI-based rembg for accurate background rem',
-                tech: ['Python', 'OpenCV', 'rembg', 'Pillow', 'Tkinter'],
-                features: ['AI Background removal', 'Grayscale & Cropping', 'Gaussian blur filters'],
-                link: 'https://github.com/utpal16raj09/image_enhancement',
-                color: '#00ff9d'
+                color: '#bd00ff',
+                img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600'
             },
             'perfwatch': {
                 title: 'PerfWatch',
@@ -1536,416 +1316,230 @@ Building core frontend and backend systems for a knowledge retrieval platform se
                 tech: ['React', 'Node.js', 'WebSockets', 'Express', 'Tailwind'],
                 features: ['Client-side Performance SDK', 'Analytics Dashboard', 'Live Waterfall views'],
                 link: 'https://github.com/utpal16raj09/PerformaMeter.git',
-                color: '#00f3ff'
+                color: '#00f3ff',
+                img: 'perfwatch.png'
+            },
+            'text-tool': {
+                title: 'Text Comparison Tool',
+                description: 'Developed a desktop-based NLP application to compare textual documents word-by-word, achieving over 95% accuracy in textual similarity detection. Implemented similarity scoring and difference highlighting using nltk and difflib.',
+                tech: ['Python', 'Tkinter', 'NLTK', 'difflib'],
+                features: ['Word-by-word comparison', 'Similarity scoring', 'Difference highlighting'],
+                link: 'https://github.com/utpal16raj09/Text_Comparison_Tool',
+                color: '#00f3ff',
+                img: 'text.png'
+            },
+            'biometrics': {
+                title: 'Age & Gender Detection',
+                description: 'Built a real-time computer vision system to detect faces and predict age and gender from webcam input with 93% face detection accuracy and 88% gender classification accuracy.',
+                tech: ['Python', 'OpenCV', 'Deep Learning', 'Caffe'],
+                features: ['Real-time facial prediction', 'Landmark detection integration', 'Gender classification'],
+                link: 'https://github.com/utpal16raj09/Age_Gender_Detection',
+                color: '#bd00ff',
+                img: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=600'
+            },
+            'image-tool': {
+                title: 'Image Enhancement Tool',
+                description: 'Developed a desktop-based image processing tool with real-time previews. Implemented background removal, grayscale conversion, cropping, and Gaussian blur. Integrated AI-based rembg for accurate background removal.',
+                tech: ['Python', 'OpenCV', 'rembg', 'Pillow', 'Tkinter'],
+                features: ['AI Background removal', 'Grayscale & Cropping', 'Gaussian blur filters'],
+                link: 'https://github.com/utpal16raj09/image_enhancement',
+                color: '#00ff9d',
+                img: 'image.png'
             }
         };
-        function openProjectModal(id) {
-            const data = projectData[id];
-            const modal = document.getElementById('project-modal');
-            const container = document.getElementById('modal-container');
-            const body = document.getElementById('modal-body');
 
-            if (!data) return;
-
-            body.innerHTML = `
-        <div class="mb-10 flex justify-between items-start">
-            <div class="max-w-[80%]">
-                <div class="flex items-center gap-3 mb-3">
-                    <span class="h-[1px] w-8 bg-neon-cyan/50"></span>
-                    <span class="text-[10px] font-mono tracking-[0.4em] uppercase text-gray-500">Project Overview</span>
-                </div>
-                <h2 class="text-4xl md:text-5xl font-display font-medium leading-tight tracking-tight text-white uppercase">
-                    ${data.title}
-                </h2>
+        // Render project cards
+        const grid = document.getElementById('project-grid');
+        if (grid) {
+            Object.entries(projectData).forEach(([id, p]) => {
+                grid.innerHTML += `
+        <div class="sketch-border wobble-hover overflow-hidden cursor-pointer group" onclick="openProject('${id}')">
+            <img src="${p.img}" class="w-full h-32 object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="${p.title}" onerror="this.style.display='none'">
+            <div class="p-4">
+                <h3 class="font-bold text-base mb-2">${p.title}</h3>
+                <p class="text-xs leading-normal mb-3 line-clamp-3" style="color: var(--muted);">${p.description}</p>
+                <div class="flex flex-wrap gap-1.5">${p.tech.map(t => `<span class="tag-pill text-xs px-2 py-0.5">${t}</span>`).join('')}</div>
             </div>
-            
-            <a href="${data.link}" target="_blank" 
-               class="p-3 rounded-full border border-white/10 text-gray-400 hover:text-white hover:border-neon-cyan hover:bg-neon-cyan/10 transition-all duration-300"
-               title="View on GitHub">
-                <i class="fa-brands fa-github text-2xl"></i>
-            </a>
-        </div>
-        
-        <div class="grid md:grid-cols-5 gap-8 md:gap-12">
-            <div class="md:col-span-3 space-y-8">
-                <div>
-                    <h4 class="text-neon-green text-[10px] font-mono uppercase tracking-widest mb-3 opacity-70">01 // Brief</h4>
-                    <p class="text-gray-400 text-base leading-relaxed font-light">
-                        ${data.description}
-                    </p>
-                </div>
-
-                <div>
-                    <h4 class="text-neon-green text-[10px] font-mono uppercase tracking-widest mb-4 opacity-70">02 // Key Features</h4>
-                    <ul class="grid grid-cols-1 gap-3">
-                        ${data.features.map(f => `
-                            <li class="flex items-start gap-3 text-gray-400 text-sm">
-                                <span class="mt-2 w-1 h-1 bg-neon-cyan rotate-45 flex-shrink-0 shadow-[0_0_8px_#00f3ff]"></span>
-                                ${f}
-                            </li>
-                        `).join('')}
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="md:col-span-2">
-                <div class="sticky top-0 bg-white/5 rounded-2xl p-5 md:p-6 border border-white/10 backdrop-blur-md shadow-2xl">
-                    <h4 class="text-white text-[10px] font-mono uppercase tracking-[0.3em] mb-5 opacity-60 flex items-center gap-2">
-                        <span class="w-2 h-[1px] bg-neon-cyan"></span>
-                        System_Stack
-                    </h4>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        ${data.tech.map(t => `
-                            <div class="flex items-center gap-2.5 px-3 py-2 bg-white/5 border border-white/5 rounded-lg hover:border-white/20 transition-colors group">
-                                <div class="w-1 h-1 rounded-full" style="background: ${data.color}; box-shadow: 0 0 6px ${data.color}"></div>
-                                <span class="text-sm font-sans font-medium text-gray-200 tracking-wide">${t}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                    
-                    <div class="mt-8 pt-5 border-t border-white/10">
-                        <div class="flex justify-between text-[10px] font-mono text-gray-500 mb-2 tracking-widest">
-                            <span>CORE_INTEGRITY</span>
-                            <span class="text-neon-green">VERIFIED</span>
-                        </div>
-                        <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-neon-green/20 via-neon-green to-neon-green/20 w-full animate-pulse"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-
-            modal.classList.remove('hidden');
-            void container.offsetWidth;
-            container.classList.add('scale-100', 'opacity-100');
-            document.body.style.overflow = 'hidden';
+        </div>`;
+            });
         }
-        function closeProjectModal() {
-            const modal = document.getElementById('project-modal');
-            const container = document.getElementById('modal-container');
 
-            container.classList.remove('scale-100', 'opacity-100');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }, 300);
+        // Project Modal
+        function openProject(id) {
+            const p = projectData[id]; if (!p) return;
+            const m = document.createElement('div');
+            m.id = 'proj-modal';
+            m.style.cssText = 'position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem;';
+
+            let featuresHTML = '';
+            if (p.features && p.features.length > 0) {
+                featuresHTML = `
+            <div class="mt-6 mb-6">
+                <h4 class="font-hand text-2xl font-bold mb-3">Key Features</h4>
+                <ul class="space-y-2 pl-5 list-disc marker:text-gray-400">
+                    ${p.features.map(f => `<li class="text-base md:text-lg" style="color:var(--muted);">${f}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+            }
+
+            m.innerHTML = `
+    <style>@keyframes modalPop { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } } .modal-pop { animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }</style>
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);" onclick="this.parentElement.remove()"></div>
+    <div class="sketch-border modal-pop" style="position:relative;max-width:800px;width:100%;max-height:85vh;overflow-y:auto;padding:2.5rem;z-index:1;background:var(--card);">
+        <button onclick="this.closest('#proj-modal').remove()" style="position:absolute;top:1.5rem;right:1.5rem;font-size:1.5rem;background:none;border:none;cursor:pointer;color:var(--text);transition:transform 0.2s;" onmouseover="this.style.transform='rotate(90deg)'" onmouseout="this.style.transform='none'">✕</button>
+        <h2 class="font-hand text-5xl md:text-6xl font-bold mb-4">${p.title}</h2>
+        <p class="text-lg md:text-xl mb-6 leading-relaxed" style="color:var(--muted);">${p.description}</p>
+        ${featuresHTML}
+        <div class="flex flex-wrap gap-2 mb-8">${p.tech.map(t => `<span class="tag-pill text-sm px-3 py-1">${t}</span>`).join('')}</div>
+        <a href="${p.link}" target="_blank" class="sketch-border wobble-hover inline-block px-6 py-3 font-sketch font-bold text-sm no-underline" style="background:var(--accent);color:#fff;border-color:var(--accent);">View Code <i class="fa-solid fa-code ml-2"></i></a>
+    </div>`;
+            document.body.appendChild(m);
         }
-        class TextScramble {
-            constructor(el) {
-                this.el = el;
-                this.chars = '!<>-_\\/[]{}—=+*^?#________';
-                this.update = this.update.bind(this);
+
+        // --- EXPERIENCE DATA ---
+        const experienceData = {
+            'tagzzs': {
+                title: 'Tagzzs',
+                role: 'Full-Stack Developer',
+                period: '2025 - Present',
+                description: 'Building core frontend and backend systems for a knowledge retrieval platform serving 450+ active users. Engineered secure authentication, optimized LLM-powered workflows to reduce latency by ~30%, and developed a Chrome extension for contextual content capture and intelligent search across X, Reddit, and YouTube.',
+                link: 'https://tagzzs.com',
+                color: 'var(--accent)'
+            },
+            'optivix': {
+                title: 'Optivix AI',
+                role: 'Frontend Developer',
+                period: 'Aug - Oct 2025',
+                description: 'Led the design and implementation of the dashboard and end-to-end UI/UX for an AI agent platform, crafting a clean landing page and simplifying complex backend workflows into a cohesive, user-centric experience.',
+                link: 'https://optivix.ai',
+                color: 'var(--accent2)'
+            },
+            'freelance': {
+                title: 'Freelance Development',
+                role: 'Web Developer',
+                period: '2025 - Present',
+                description: 'Designed dynamic, interactive single-page websites with fully functional UI/UX, including animations, client-side logic, and working contact and email workflows, delivering production-ready experiences end to end.',
+                link: '#',
+                color: 'var(--accent)'
             }
-            setText(newText) {
-                const oldText = this.el.innerText;
-                const length = Math.max(oldText.length, newText.length);
-                const promise = new Promise((resolve) => this.resolve = resolve);
-                this.queue = [];
-                for (let i = 0; i < length; i++) {
-                    const from = oldText[i] || '';
-                    const to = newText[i] || '';
-                    const start = Math.floor(Math.random() * 40);
-                    const end = start + Math.floor(Math.random() * 40);
-                    this.queue.push({ from, to, start, end });
-                }
-                cancelAnimationFrame(this.frameRequest);
-                this.frame = 0;
-                this.update();
-                return promise;
+        };
+
+        function openExperience(id) {
+            const e = experienceData[id]; if (!e) return;
+            const m = document.createElement('div');
+            m.id = 'exp-modal';
+            m.style.cssText = 'position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem;';
+
+            m.innerHTML = `
+    <style>@keyframes modalPop { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } } .modal-pop { animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }</style>
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);" onclick="this.parentElement.remove()"></div>
+    <div class="sketch-border modal-pop" style="position:relative;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;padding:3rem;z-index:1;background:var(--card);">
+        <button onclick="this.closest('#exp-modal').remove()" style="position:absolute;top:1.5rem;right:1.5rem;font-size:1.8rem;background:none;border:none;cursor:pointer;color:var(--text);transition:transform 0.2s;" onmouseover="this.style.transform='rotate(90deg)'" onmouseout="this.style.transform='none'">&times;</button>
+        <h2 class="font-hand text-5xl md:text-6xl font-bold mb-2">${e.title}</h2>
+        <p class="font-sketch text-xl md:text-2xl mb-6" style="color:${e.color};">${e.role} &bull; ${e.period}</p>
+        <div class="w-full h-[2px] mb-6" style="background:var(--line);"></div>
+        <p class="text-lg md:text-xl leading-relaxed mb-8" style="color:var(--muted);">${e.description}</p>
+        ${e.link !== '#' ? `<div><a href="${e.link}" target="_blank" class="sketch-border wobble-hover inline-block px-6 py-3 font-sketch font-bold text-sm no-underline" style="background:${e.color};color:#fff;border-color:${e.color};">Visit Company <i class="fa-solid fa-arrow-up-right-from-square ml-2"></i></a></div>` : ''}
+    </div>`;
+            document.body.appendChild(m);
+        }
+
+        // --- PAGE NAVIGATION LOGIC ---
+        let currentPage = 1;
+        const totalPages = 8;
+        const turnSound = document.getElementById('page-turn-sound');
+
+        function updatePageNav() {
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            document.getElementById('next-btn').disabled = (currentPage === totalPages);
+            document.getElementById('page-counter').innerText = `${currentPage} / ${totalPages}`;
+        }
+
+        function goToPage(pageNumber) {
+            if (pageNumber < 1 || pageNumber > totalPages) return;
+
+            // Play page turn sound
+            if (turnSound) {
+                turnSound.currentTime = 0;
+                turnSound.play().catch(e => console.log('Audio play blocked:', e));
             }
-            update() {
-                let output = '';
-                let complete = 0;
-                for (let i = 0, n = this.queue.length; i < n; i++) {
-                    let { from, to, start, end, char } = this.queue[i];
-                    if (this.frame >= end) {
-                        complete++;
-                        output += to;
-                    } else if (this.frame >= start) {
-                        if (!char || Math.random() < 0.8) {
-                            char = this.randomChar();
-                            this.queue[i].char = char;
-                        }
-                        output += `<span class="text-neon-cyan">${char}</span>`;
+
+            currentPage = pageNumber;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageEl = document.getElementById(`page-${i}`);
+                if (pageEl) {
+                    if (i < currentPage) {
+                        pageEl.classList.add('flipped');
+                        pageEl.classList.remove('current');
+                    } else if (i === currentPage) {
+                        pageEl.classList.remove('flipped');
+                        pageEl.classList.add('current');
                     } else {
-                        output += from;
+                        pageEl.classList.remove('flipped');
+                        pageEl.classList.remove('current');
                     }
                 }
-                this.el.innerHTML = output;
-                if (complete === this.queue.length) {
-                    this.resolve();
-                } else {
-                    this.frameRequest = requestAnimationFrame(this.update);
-                    this.frame++;
-                }
             }
-            randomChar() {
-                return this.chars[Math.floor(Math.random() * this.chars.length)];
-            }
+            updatePageNav();
         }
 
-        // --- 2. SYSTEM INITIALIZING PRELOADER ---
-        const preloader = document.getElementById('preloader');
-        const loaderBar = document.getElementById('loader-bar');
-        const loaderText = document.getElementById('loader-text');
-        const consoleOutput = document.getElementById('console-output');
-
-        const bootLogs = [
-            "Bootstrapping runtime environment...",
-            "Loading core modules: scheduler, I/O, memory...",
-            "Initializing network stack (TCP/IP)...",
-            "Verifying system integrity...",
-            "User context loaded successfully.",
-            "Interface ready."
-        ];
-
-
-        let logIndex = 0;
-
-        function addLog() {
-            if (logIndex < bootLogs.length) {
-                const p = document.createElement('div');
-                p.innerHTML = `> ${bootLogs[logIndex]}`;
-                consoleOutput.appendChild(p);
-                consoleOutput.scrollTop = consoleOutput.scrollHeight; // Auto scroll
-                logIndex++;
-                setTimeout(addLog, Math.random() * 300 + 100);
+        window.prevPage = function () {
+            if (currentPage > 1) {
+                goToPage(currentPage - 1);
             }
-        }
-
-        // Start logs immediately
-        addLog();
-
-        const removePreloader = () => {
-            if (typeof gsap === 'undefined') {
-                preloader.style.display = 'none';
-                return;
-            }
-
-            gsap.to(preloader, {
-                yPercent: -100,
-                duration: 1,
-                ease: "power4.inOut",
-                onComplete: () => {
-                    const heroTitle = document.getElementById('hero-title');
-                    const fx = new TextScramble(heroTitle);
-                    fx.setText('UTPAL RAJ');
-
-                    gsap.to('.animate-fade-up', {
-                        opacity: 1,
-                        y: 0,
-                        duration: 1,
-                        stagger: 0.2
-                    });
-                }
-            });
         };
 
-        let progress = 0;
-        const loadInterval = setInterval(() => {
-            progress += Math.random() * 5;
-            if (progress > 100) progress = 100;
-
-            if (loaderBar) loaderBar.style.width = `${progress}%`;
-            if (loaderText) loaderText.innerText = `${Math.floor(progress)}%`;
-
-            if (progress >= 100) {
-                clearInterval(loadInterval);
-                // Ensure logs are done before removing
-                setTimeout(removePreloader, 800);
+        window.nextPage = function () {
+            if (currentPage < totalPages) {
+                goToPage(currentPage + 1);
             }
-        }, 50);
+        };
 
-        // --- 3. LENIS SMOOTH SCROLL ---
-        try {
-            const lenis = new Lenis({
-                duration: 1.2,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                direction: 'vertical',
-                gestureDirection: 'vertical',
-                smooth: true,
-                mouseMultiplier: 1,
-                smoothTouch: false,
-                touchMultiplier: 2,
-            });
-
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
+        // Keyboard Arrows
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft') {
+                prevPage();
+            } else if (e.key === 'ArrowRight') {
+                nextPage();
             }
-            requestAnimationFrame(raf);
-        } catch (e) {
-            console.warn("Lenis Scroll failed:", e);
-        }
-
-        // --- 4. CUSTOM CURSOR (Only logic needed, CSS handles visibility) ---
-        const cursor = document.getElementById('custom-cursor');
-        const hoverTriggers = document.querySelectorAll('.hover-trigger');
-
-        if (cursor) {
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-
-            hoverTriggers.forEach(trigger => {
-                trigger.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-                trigger.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-            });
-        }
-
-        // --- 5. TEXT SCRAMBLE ON SCROLL ---
-        const titles = document.querySelectorAll('.scramble-text');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    const fx = new TextScramble(el);
-                    fx.setText(el.innerText);
-                    observer.unobserve(el);
-                }
-            });
         });
-        titles.forEach(title => observer.observe(title));
 
-        // --- 6. 3D TILT EFFECT (Disabled on mobile to prevent scrolling issues) ---
-        if (window.innerWidth > 768) {
-            const tiltCards = document.querySelectorAll('.tilt-card');
-            tiltCards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
+        // Swipe Gesture Detection
+        let touchStartX = 0;
+        let touchEndX = 0;
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
 
-                    const xPct = x / rect.width;
-                    const yPct = y / rect.height;
-                    const xRot = (0.5 - yPct) * 10;
-                    const yRot = (xPct - 0.5) * 10;
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (diff > 60) nextPage();
+            else if (diff < -60) prevPage();
+        }, { passive: true });
 
-                    card.style.transform = `perspective(1000px) rotateX(${xRot}deg) rotateY(${yRot}deg) scale3d(1.05, 1.05, 1.05)`;
-
-                    // Removed holo logic here as we removed the class
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-                });
+        // --- THEME TOGGLE ---
+        const themeToggle = document.getElementById('theme-toggle');
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            localStorage.setItem('theme', theme);
+        }
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                setTheme(isDark ? 'light' : 'dark');
             });
         }
 
-        // --- 7. MAGNETIC BUTTONS (Desktop only) ---
-        if (window.innerWidth > 768) {
-            const magneticBtns = document.querySelectorAll('.magnetic-btn');
-            magneticBtns.forEach(btn => {
-                btn.addEventListener('mousemove', (e) => {
-                    const rect = btn.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-                });
-                btn.addEventListener('mouseleave', () => {
-                    btn.style.transform = 'translate(0px, 0px)';
-                });
-            });
-        }
-
-        // --- 8. CANVAS BACKGROUND (Optimized for Mobile) ---
-        try {
-            const canvas = document.getElementById('bg-canvas');
-            const ctx = canvas.getContext('2d');
-            let w, h;
-            let particles = [];
-            // Reduce particle count divisor for mobile (higher number = fewer particles)
-            const particleDivisor = window.innerWidth < 768 ? 25000 : 15000;
-
-            function resize() {
-                w = canvas.width = window.innerWidth;
-                h = canvas.height = window.innerHeight;
-                initParticles();
-            }
-
-            function initParticles() {
-                particles = [];
-                const count = Math.floor(w * h / particleDivisor);
-                for (let i = 0; i < count; i++) {
-                    particles.push({
-                        x: Math.random() * w,
-                        y: Math.random() * h,
-                        vx: (Math.random() - 0.5) * 0.5,
-                        vy: (Math.random() - 0.5) * 0.5,
-                        size: Math.random() * 1.5
-                    });
-                }
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, w, h);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                ctx.strokeStyle = 'rgba(0, 243, 255, 0.1)';
-
-                for (let i = 0; i < particles.length; i++) {
-                    let p = particles[i];
-                    p.x += p.vx;
-                    p.y += p.vy;
-
-                    if (p.x < 0) p.x = w;
-                    if (p.x > w) p.x = 0;
-                    if (p.y < 0) p.y = h;
-                    if (p.y > h) p.y = 0;
-
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Reduce connection distance check on mobile for performance
-                    const connectDist = window.innerWidth < 768 ? 60 : 100;
-
-                    for (let j = i + 1; j < particles.length; j++) {
-                        let p2 = particles[j];
-                        let dx = p.x - p2.x;
-                        let dy = p.y - p2.y;
-                        let dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist < connectDist) {
-                            ctx.lineWidth = 1 - (dist / connectDist);
-                            ctx.beginPath();
-                            ctx.moveTo(p.x, p.y);
-                            ctx.lineTo(p2.x, p2.y);
-                            ctx.stroke();
-                        }
-                    }
-                }
-                requestAnimationFrame(animate);
-            }
-
-            window.addEventListener('resize', resize);
-            resize();
-            animate();
-        } catch (e) {
-            console.warn("Canvas failed:", e);
-        }
-
-        // --- 9. MOBILE MENU TOGGLE ---
-        const menuBtn = document.getElementById('menu-btn');
-        const closeMenuBtn = document.getElementById('close-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        function toggleMenu() {
-            const isOpen = mobileMenu.style.transform === 'translateY(0%)';
-            mobileMenu.style.transform = isOpen ? 'translateY(-100%)' : 'translateY(0%)';
-        }
-
-        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
-        if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
-        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+        // Initial Call
+        updatePageNav();
     </script>
 </body>
 
 </html>
-
-
-
